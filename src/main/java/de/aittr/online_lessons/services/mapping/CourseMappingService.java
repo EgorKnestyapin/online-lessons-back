@@ -2,7 +2,9 @@ package de.aittr.online_lessons.services.mapping;
 
 import de.aittr.online_lessons.domain.dto.CourseDto;
 import de.aittr.online_lessons.domain.jpa.Course;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CourseMappingService {
 
     public Course mapDtoToEntity(CourseDto courseDto) {
