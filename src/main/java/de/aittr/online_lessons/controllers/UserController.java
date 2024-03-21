@@ -1,12 +1,11 @@
 package de.aittr.online_lessons.controllers;
 
 import de.aittr.online_lessons.domain.dto.UserDto;
-import de.aittr.online_lessons.domain.jpa.User;
 import de.aittr.online_lessons.services.jpa.UserService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/users")
 public class UserController {
     private final UserService service;
 
