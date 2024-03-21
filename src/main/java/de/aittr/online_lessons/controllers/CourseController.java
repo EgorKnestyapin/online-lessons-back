@@ -4,6 +4,7 @@ import de.aittr.online_lessons.domain.dto.CourseDto;
 import de.aittr.online_lessons.services.jpa.CourseService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class CourseController {
             description = "Сохранение в базу данных нового курса, переданного в теле запроса"
     )
     public CourseDto createCourse(
+            @Valid
             @RequestBody
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Объект ДТО курса")
             CourseDto courseDto
