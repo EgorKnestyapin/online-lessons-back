@@ -62,9 +62,9 @@ public class CourseController {
     @PatchMapping("/{id}")
     public CourseDto updateCourse(
             @PathVariable int id,
+            @Valid
             @RequestBody CourseDto courseDto) {
-        courseDto.setId(id);
-        return service.update(courseDto);
+        return service.update(id, courseDto);
     }
 
 
