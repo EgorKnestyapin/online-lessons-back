@@ -12,7 +12,7 @@ public interface ICourseService {
 
     CourseDto getCourseById(int id);
 
-    void update(CourseDto courseDto);
+    CourseDto update(int id, CourseDto courseDto);
 
     void deleteById(int id);
 

@@ -50,12 +50,31 @@ public class CourseService implements ICourseService {
     }
 
     @Override
-    public void update(CourseDto courseDto) {
+    public CourseDto update(int id, CourseDto courseDto) {
+        Course existingCourse = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Course not found with id " + id));
 
+        if (courseDto.getName() != null) {
+            existingCourse.setName(courseDto.getName());
+        }
+        if (courseDto.getFileName() != null) {
+            existingCourse.setFileName(courseDto.getFileName());
+        }
+        if (courseDto.getDescription() != null) {
+            existingCourse.setDescription(courseDto.getDescription());
+        }
+
+        existingCourse = repository.save(existingCourse);
+
+        return mappingService.mapEntityToDto(existingCourse);
     }
 
     @Override
     public void deleteById(int id) {
+        if (!repository.existsById(id)) {
+            throw new RuntimeException("Course not found with id " + id);
+        }
 
+        repository.deleteById(id);
     }
 }

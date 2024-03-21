@@ -54,4 +54,26 @@ public class CourseController {
     ) {
         return service.getCourseById(id);
     }
+
+    @Operation(
+            summary = "Обновление курса",
+            description = "Обновление данных курса с заданным ID"
+    )
+    @PatchMapping("/{id}")
+    public CourseDto updateCourse(
+            @PathVariable int id,
+            @Valid
+            @RequestBody CourseDto courseDto) {
+        return service.update(id, courseDto);
+    }
+
+
+    @Operation(
+            summary = "Удаление курса",
+            description = "Удаление курса с заданным ID"
+    )
+    @DeleteMapping("/{id}")
+    public void deleteCourse(@PathVariable int id) {
+        service.deleteById(id);
+    }
 }
