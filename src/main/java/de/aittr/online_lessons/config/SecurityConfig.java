@@ -26,11 +26,13 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         x -> x
-                                .requestMatchers(HttpMethod.POST, "/user/register").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
+                                .requestMatchers(HttpMethod.PUT, "/api/users/set_admin/{username}")
+                                .hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.GET, "/api/courses").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/courses/{id}").hasRole("USER")
                                 .requestMatchers(HttpMethod.POST, "/api/courses").hasRole("ADMIN")
-                                .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 ).httpBasic(Customizer.withDefaults());
         return http.build();
     }
