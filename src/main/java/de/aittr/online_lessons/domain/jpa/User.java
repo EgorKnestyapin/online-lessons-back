@@ -2,8 +2,10 @@ package de.aittr.online_lessons.domain.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,14 +23,15 @@ public class User implements UserDetails {
     @Column(name = "id")
     private int id;
     @Column(name = "username")
+    @Length(min = 3, max = 10)
     private String username;
     @Column(name = "email")
-    @NotNull
-    @NotBlank
+    @Email
     private String email;
     @Column(name = "password")
     @NotNull
     @NotBlank
+    @Length(min = 8)
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
