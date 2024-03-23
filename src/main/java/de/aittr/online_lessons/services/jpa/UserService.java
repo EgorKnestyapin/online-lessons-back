@@ -17,12 +17,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService implements UserDetailsService {
     private final UserRepository repository;
-    private final BCryptPasswordEncoder encoder;
     private final UserMappingService mappingService;
 
-    public UserService(UserRepository repository, BCryptPasswordEncoder encoder, UserMappingService mappingService) {
+    public UserService(UserRepository repository, UserMappingService mappingService) {
         this.repository = repository;
-        this.encoder = encoder;
         this.mappingService = mappingService;
     }
 
@@ -47,9 +45,8 @@ public class UserService implements UserDetailsService {
         user.clearRoles();
         Role role = new Role(1, "ROLE_USER");
         user.addRole(role);
+        System.out.println(user);
 
-        String encodedPassword = encoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
         user = repository.save(user);
 
         return mappingService.mapEntityToDto(user);

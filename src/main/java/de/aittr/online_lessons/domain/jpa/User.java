@@ -102,6 +102,7 @@ public class User implements UserDetails {
         this.email = email;
     }
 
+
     public List<Course> getCourseList() {
         return courseList;
     }
