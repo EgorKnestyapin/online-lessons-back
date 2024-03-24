@@ -5,13 +5,9 @@ public interface ICourse {
 
     void setId(int id);
 
-    String getName();
+    String getTitle();
 
-    void setName(String name);
-
-    String getFileName();
-
-    void setFileName(String fileName);
+    void setTitle(String title);
 
     String getDescription();
 

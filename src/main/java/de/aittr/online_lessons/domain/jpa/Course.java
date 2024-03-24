@@ -16,26 +16,28 @@ public class Course implements ICourse {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "title")
     @NotNull
     @NotBlank
-    private String name;
+    private String title;
 
-    @Column(name = "fileName")
+    @Column(name = "price")
     @NotNull
     @NotBlank
-    private String fileName;
+    private double price;
 
     @Column(name = "description")
+    @NotNull
+    @NotBlank
     private String description;
 
     public Course() {
     }
 
-    public Course(int id, String name, String fileName, String description) {
+    public Course(int id, String title, double price, String description) {
         this.id = id;
-        this.name = name;
-        this.fileName = fileName;
+        this.title = title;
+        this.price = price;
         this.description = description;
     }
 
@@ -45,27 +47,12 @@ public class Course implements ICourse {
     }
 
     @Override
-    public void setId(int id) {
-        this.id = id;
+    public String getTitle() {
+        return title;
     }
 
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public double getPrice() {
+        return price;
     }
 
     @Override
@@ -73,6 +60,21 @@ public class Course implements ICourse {
         return description;
     }
 
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    @Override
     public void setDescription(String description) {
         this.description = description;
     }
@@ -82,20 +84,20 @@ public class Course implements ICourse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Course course = (Course) o;
-        return id == course.id && Objects.equals(name, course.name) && Objects.equals(fileName, course.fileName) && Objects.equals(description, course.description);
+        return id == course.id && Double.compare(course.price, price) == 0 && Objects.equals(title, course.title) && Objects.equals(description, course.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, fileName, description);
+        return Objects.hash(id, title, price, description);
     }
 
     @Override
     public String toString() {
         return "Course{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", fileName='" + fileName + '\'' +
+                ", title='" + title + '\'' +
+                ", price=" + price +
                 ", description='" + description + '\'' +
                 '}';
     }

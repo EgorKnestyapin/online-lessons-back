@@ -25,6 +25,7 @@ public class CourseService implements ICourseService {
     public CourseDto save(CourseDto courseDto) {
         Course course = mappingService.mapDtoToEntity(courseDto);
         course.setId(0);
+        System.out.println(course);
         try {
             course = repository.save(course);
         } catch (Exception e) {
@@ -54,11 +55,11 @@ public class CourseService implements ICourseService {
         Course existingCourse = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Course not found with id " + id));
 
-        if (courseDto.getName() != null) {
-            existingCourse.setName(courseDto.getName());
+        if (courseDto.getTitle() != null) {
+            existingCourse.setTitle(courseDto.getTitle());
         }
-        if (courseDto.getFileName() != null) {
-            existingCourse.setFileName(courseDto.getFileName());
+        if (courseDto.getPrice() != 0) {
+            existingCourse.setPrice(courseDto.getPrice());
         }
         if (courseDto.getDescription() != null) {
             existingCourse.setDescription(courseDto.getDescription());
