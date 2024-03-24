@@ -1,6 +1,5 @@
 package de.aittr.online_lessons.domain.jpa;
 
-import de.aittr.online_lessons.domain.interfaces.ICourse;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -9,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "course")
-public class Course implements ICourse {
+public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,27 +38,22 @@ public class Course implements ICourse {
         this.description = description;
     }
 
-    @Override
     public int getId() {
         return id;
     }
 
-    @Override
     public void setId(int id) {
         this.id = id;
     }
 
-    @Override
     public String getName() {
         return name;
     }
 
-    @Override
     public void setName(String name) {
         this.name = name;
     }
 
-    @Override
     public String getFileName() {
         return fileName;
     }
@@ -68,7 +62,6 @@ public class Course implements ICourse {
         this.fileName = fileName;
     }
 
-    @Override
     public String getDescription() {
         return description;
     }
@@ -77,7 +70,6 @@ public class Course implements ICourse {
         this.description = description;
     }
 
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -85,12 +77,10 @@ public class Course implements ICourse {
         return id == course.id && Objects.equals(name, course.name) && Objects.equals(fileName, course.fileName) && Objects.equals(description, course.description);
     }
 
-    @Override
     public int hashCode() {
         return Objects.hash(id, name, fileName, description);
     }
 
-    @Override
     public String toString() {
         return "Course{" +
                 "id=" + id +
