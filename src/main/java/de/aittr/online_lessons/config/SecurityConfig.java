@@ -30,8 +30,8 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.PUT, "/api/users/set_admin/{username}")
                                 .hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.GET, "/api/courses").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/courses/{id}").hasRole("USER")
-                                .requestMatchers(HttpMethod.POST, "/api/courses").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/api/courses/{id}").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/courses").permitAll()
                                 .anyRequest().permitAll()
                 ).httpBasic(Customizer.withDefaults());
         return http.build();
