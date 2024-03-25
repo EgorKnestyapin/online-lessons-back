@@ -3,14 +3,13 @@ package de.aittr.online_lessons.services.jpa;
 import de.aittr.online_lessons.domain.dto.CourseDto;
 import de.aittr.online_lessons.domain.jpa.Course;
 import de.aittr.online_lessons.repositories.jpa.CourseRepository;
-import de.aittr.online_lessons.services.interfaces.ICourseService;
 import de.aittr.online_lessons.services.mapping.CourseMappingService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CourseService implements ICourseService {
+public class CourseService{
     private final CourseRepository repository;
 
     private final CourseMappingService mappingService;
@@ -21,7 +20,6 @@ public class CourseService implements ICourseService {
         this.mappingService = mappingService;
     }
 
-    @Override
     public CourseDto save(CourseDto courseDto) {
         Course course = mappingService.mapDtoToEntity(courseDto);
         course.setId(0);
@@ -34,14 +32,12 @@ public class CourseService implements ICourseService {
         return mappingService.mapEntityToDto(course);
     }
 
-    @Override
     public List<CourseDto> getAllCourses() {
         return repository.findAll().stream()
                 .map(mappingService::mapEntityToDto)
                 .toList();
     }
 
-    @Override
     public CourseDto getCourseById(int id) {
         Course course = repository.findById(id).orElse(null);
         if (course != null) {
@@ -50,7 +46,6 @@ public class CourseService implements ICourseService {
         return null;
     }
 
-    @Override
     public CourseDto update(int id, CourseDto courseDto) {
         Course existingCourse = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Course not found with id " + id));
@@ -70,7 +65,6 @@ public class CourseService implements ICourseService {
         return mappingService.mapEntityToDto(existingCourse);
     }
 
-    @Override
     public void deleteById(int id) {
         if (!repository.existsById(id)) {
             throw new RuntimeException("Course not found with id " + id);

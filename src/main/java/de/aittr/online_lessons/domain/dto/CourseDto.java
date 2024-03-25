@@ -5,10 +5,10 @@ import java.util.Objects;
 public class CourseDto {
     private int id;
     private String title;
-    private double price;
+    private int price;
     private String description;
 
-    public CourseDto(int id, String title, double price, String description) {
+    public CourseDto(int id, String title, int price, String description) {
         this.id = id;
         this.title = title;
         this.price = price;
@@ -23,7 +23,7 @@ public class CourseDto {
         return title;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
@@ -39,7 +39,7 @@ public class CourseDto {
         this.title = title;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

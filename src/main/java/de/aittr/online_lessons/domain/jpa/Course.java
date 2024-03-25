@@ -1,15 +1,13 @@
 package de.aittr.online_lessons.domain.jpa;
 
-import de.aittr.online_lessons.domain.interfaces.ICourse;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 
 import java.util.Objects;
 
 @Entity
 @Table(name = "course")
-public class Course implements ICourse {
+public class Course{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,67 +17,68 @@ public class Course implements ICourse {
     @Column(name = "title")
     @NotNull
     @NotBlank
+    @Pattern(
+            regexp = "[A-ZА-Я][a-zа-я]{5,}",
+            message = "The title field must contain only letters and be a minimum of 5 characters."
+    )
     private String title;
 
     @Column(name = "price")
     @NotNull
-    @NotBlank
-    private double price;
+    @Max(value = 9999, message = "The price cannot be more than 9999.")
+    private int price;
 
     @Column(name = "description")
     @NotNull
-    @NotBlank
+    @Pattern(
+            regexp = "[\\p{L}\\p{N}\\p{P}]*",
+            message = "The description field must contain letters, numbers, and symbols."
+    )
+    @Min(value = 300, message = "The description field must contain minimum 300 characters.")
     private String description;
 
     public Course() {
     }
 
-    public Course(int id, String title, double price, String description) {
+    public Course(int id, String title, int price, String description) {
         this.id = id;
         this.title = title;
         this.price = price;
         this.description = description;
     }
 
-    @Override
     public int getId() {
         return id;
     }
 
-    @Override
     public String getTitle() {
         return title;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    @Override
     public String getDescription() {
         return description;
     }
 
-    @Override
     public void setId(int id) {
         this.id = id;
     }
 
-    @Override
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
-    @Override
     public void setDescription(String description) {
         this.description = description;
     }
 
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -87,12 +86,10 @@ public class Course implements ICourse {
         return id == course.id && Double.compare(course.price, price) == 0 && Objects.equals(title, course.title) && Objects.equals(description, course.description);
     }
 
-    @Override
     public int hashCode() {
         return Objects.hash(id, title, price, description);
     }
 
-    @Override
     public String toString() {
         return "Course{" +
                 "id=" + id +
