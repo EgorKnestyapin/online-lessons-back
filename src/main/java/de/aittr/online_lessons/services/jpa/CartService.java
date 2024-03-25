@@ -3,11 +3,13 @@ package de.aittr.online_lessons.services.jpa;
 import de.aittr.online_lessons.domain.dto.CourseDto;
 import de.aittr.online_lessons.domain.jpa.Cart;
 import de.aittr.online_lessons.domain.jpa.Course;
+import de.aittr.online_lessons.domain.jpa.User;
 import de.aittr.online_lessons.repositories.jpa.CartRepository;
 import de.aittr.online_lessons.services.mapping.CourseMappingService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -64,5 +66,10 @@ public class CartService {
     public void clearCart(int cartId) {
         Cart cart = getCartById(cartId);
         cart.getCourseList().clear();
+    }
+
+    public Cart saveCart(User user) {
+        Cart cart = new Cart(0, new ArrayList<>(), user);
+        return repository.save(cart);
     }
 }

@@ -1,6 +1,7 @@
 package de.aittr.online_lessons.services.jpa;
 
 import de.aittr.online_lessons.domain.dto.UserDto;
+import de.aittr.online_lessons.domain.jpa.Cart;
 import de.aittr.online_lessons.domain.jpa.Role;
 import de.aittr.online_lessons.domain.jpa.User;
 import de.aittr.online_lessons.exceptions.UserAlreadyExistsException;
@@ -18,10 +19,12 @@ import org.springframework.stereotype.Service;
 public class UserService implements UserDetailsService {
     private final UserRepository repository;
     private final UserMappingService mappingService;
+    private final CartService cartService;
 
-    public UserService(UserRepository repository, UserMappingService mappingService) {
+    public UserService(UserRepository repository, UserMappingService mappingService, CartService cartService) {
         this.repository = repository;
         this.mappingService = mappingService;
+        this.cartService = cartService;
     }
 
     @Override
@@ -35,6 +38,7 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+    @Transactional
     public UserDto register(UserDto userDto) {
         User user = mappingService.mapDtoToEntity(userDto);
         User foundUser = repository.findByUsername(user.getUsername());
@@ -45,7 +49,8 @@ public class UserService implements UserDetailsService {
         user.clearRoles();
         Role role = new Role(1, "ROLE_USER");
         user.addRole(role);
-        System.out.println(user);
+        Cart cart = cartService.saveCart(user);
+        user.setCart(cart);
 
         user = repository.save(user);
 
