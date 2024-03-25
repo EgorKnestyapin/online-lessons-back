@@ -4,6 +4,7 @@ import de.aittr.online_lessons.domain.dto.CourseDto;
 import de.aittr.online_lessons.domain.jpa.Course;
 import de.aittr.online_lessons.repositories.jpa.CourseRepository;
 import de.aittr.online_lessons.services.mapping.CourseMappingService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +15,6 @@ public class CourseService{
 
     private final CourseMappingService mappingService;
 
-
     public CourseService(CourseRepository repository, CourseMappingService mappingService) {
         this.repository = repository;
         this.mappingService = mappingService;
@@ -23,7 +23,6 @@ public class CourseService{
     public CourseDto save(CourseDto courseDto) {
         Course course = mappingService.mapDtoToEntity(courseDto);
         course.setId(0);
-        System.out.println(course);
         try {
             course = repository.save(course);
         } catch (Exception e) {

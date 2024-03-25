@@ -2,6 +2,7 @@ package de.aittr.online_lessons.domain.jpa;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.Length;
 
 import java.util.Objects;
 
@@ -18,7 +19,7 @@ public class Course{
     @NotNull
     @NotBlank
     @Pattern(
-            regexp = "[A-ZА-Я][a-zа-я]{5,}",
+            regexp = "[A-ZА-Яa-zа-я]{5,}",
             message = "The title field must contain only letters and be a minimum of 5 characters."
     )
     private String title;
@@ -28,13 +29,9 @@ public class Course{
     @Max(value = 9999, message = "The price cannot be more than 9999.")
     private int price;
 
-    @Column(name = "description")
+    @Column(name = "description", length=1000)
     @NotNull
-    @Pattern(
-            regexp = "[\\p{L}\\p{N}\\p{P}]*",
-            message = "The description field must contain letters, numbers, and symbols."
-    )
-    @Min(value = 300, message = "The description field must contain minimum 300 characters.")
+    @Length(min = 300, message = "The description field must contain minimum 300 characters.")
     private String description;
 
     public Course() {
