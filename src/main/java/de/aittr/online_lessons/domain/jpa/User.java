@@ -48,6 +48,9 @@ public class User implements UserDetails {
     )
     private Set<Role> roles = new HashSet<>();
 
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
+
     public User() {
     }
 
@@ -102,6 +105,13 @@ public class User implements UserDetails {
         this.email = email;
     }
 
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
 
     public List<Course> getCourseList() {
         return courseList;
