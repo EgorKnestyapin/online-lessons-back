@@ -1,76 +1,88 @@
 package de.aittr.online_lessons.domain.jpa;
 
-import de.aittr.online_lessons.domain.interfaces.ICourse;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.Length;
 
 import java.util.Objects;
 
 @Entity
 @Table(name = "course")
-public class Course implements ICourse {
+public class Course{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "title")
     @NotNull
     @NotBlank
-    private String name;
+    @Pattern(
+            regexp = "[A-ZА-Яa-zа-я]{5,}",
+            message = "The title field must contain only letters and be a minimum of 5 characters."
+    )
+    private String title;
 
-    @Column(name = "fileName")
+    @Column(name = "price")
     @NotNull
-    @NotBlank
-    private String fileName;
+    @Max(value = 9999, message = "The price cannot be more than 9999.")
+    private int price;
 
-    @Column(name = "description")
+    @Column(name = "description", length=1000)
+    @NotNull
+    @Length(min = 300, message = "The description field must contain minimum 300 characters.")
     private String description;
+
+    @Column(name = "author_id")
+    @NotNull
+    private int authorId;
 
     public Course() {
     }
 
-    public Course(int id, String name, String fileName, String description) {
+    public Course(int id, String title, int price, String description, int authorId) {
         this.id = id;
-        this.name = name;
-        this.fileName = fileName;
+        this.title = title;
+        this.price = price;
         this.description = description;
+        this.authorId = authorId;
     }
 
-    @Override
+    public int getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
+    }
+
     public int getId() {
         return id;
     }
 
-    @Override
+    public String getTitle() {
+        return title;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
 
-    @Override
-    public String getName() {
-        return name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    @Override
-    public String getDescription() {
-        return description;
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public void setDescription(String description) {
@@ -82,21 +94,22 @@ public class Course implements ICourse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Course course = (Course) o;
-        return id == course.id && Objects.equals(name, course.name) && Objects.equals(fileName, course.fileName) && Objects.equals(description, course.description);
+        return id == course.id && price == course.price && authorId == course.authorId && Objects.equals(title, course.title) && Objects.equals(description, course.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, fileName, description);
+        return Objects.hash(id, title, price, description, authorId);
     }
 
     @Override
     public String toString() {
         return "Course{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", fileName='" + fileName + '\'' +
+                ", title='" + title + '\'' +
+                ", price=" + price +
                 ", description='" + description + '\'' +
+                ", authorId=" + authorId +
                 '}';
     }
 }
