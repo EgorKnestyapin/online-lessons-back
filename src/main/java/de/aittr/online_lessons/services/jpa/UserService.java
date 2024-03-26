@@ -4,14 +4,14 @@ import de.aittr.online_lessons.domain.dto.UserDto;
 import de.aittr.online_lessons.domain.jpa.Cart;
 import de.aittr.online_lessons.domain.jpa.Role;
 import de.aittr.online_lessons.domain.jpa.User;
-import de.aittr.online_lessons.exceptions.UserAlreadyExistsException;
+import de.aittr.online_lessons.exception_handling.exceptions.UserValidationException;
+import de.aittr.online_lessons.exception_handling.exceptions.UserAlreadyExistsException;
 import de.aittr.online_lessons.repositories.jpa.UserRepository;
 import de.aittr.online_lessons.services.mapping.UserMappingService;
 import jakarta.transaction.Transactional;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -44,7 +44,7 @@ public class UserService implements UserDetailsService {
         User foundUser = repository.findByUsername(user.getUsername());
 
         if (foundUser != null) {
-            throw new UserAlreadyExistsException("Пользователь с таким именем уже существует");
+            throw new UserAlreadyExistsException("User with the same nickname already exists");
         }
         user.clearRoles();
         Role role = new Role(1, "ROLE_USER");
@@ -52,7 +52,11 @@ public class UserService implements UserDetailsService {
         Cart cart = cartService.saveCart(user);
         user.setCart(cart);
 
-        user = repository.save(user);
+        try {
+            user = repository.save(user);
+        } catch (Exception e) {
+            throw new UserValidationException("Incorrect values of user fields.", e);
+        }
 
         return mappingService.mapEntityToDto(user);
     }

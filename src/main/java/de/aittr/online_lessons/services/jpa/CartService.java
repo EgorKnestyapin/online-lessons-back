@@ -4,6 +4,8 @@ import de.aittr.online_lessons.domain.dto.CourseDto;
 import de.aittr.online_lessons.domain.jpa.Cart;
 import de.aittr.online_lessons.domain.jpa.Course;
 import de.aittr.online_lessons.domain.jpa.User;
+import de.aittr.online_lessons.exception_handling.exceptions.CartNotFoundException;
+import de.aittr.online_lessons.exception_handling.exceptions.CourseNotFoundException;
 import de.aittr.online_lessons.repositories.jpa.CartRepository;
 import de.aittr.online_lessons.services.mapping.CourseMappingService;
 import jakarta.transaction.Transactional;
@@ -26,7 +28,7 @@ public class CartService {
 
     public List<CourseDto> getCourses(int cartId) {
         Cart cart = getCartById(cartId);
-        List<Course> courseList =  cart.getCourseList();
+        List<Course> courseList = cart.getCourseList();
         return courseList.stream()
                 .map(courseMappingService::mapEntityToDto)
                 .toList();
@@ -42,7 +44,7 @@ public class CartService {
     private Course getCourseById(int courseId) {
         Course course = courseService.getCourseEntityById(courseId);
         if (course == null) {
-            throw new RuntimeException("Course not found");
+            throw new CourseNotFoundException("Course not found");
         }
         return course;
     }
@@ -50,7 +52,7 @@ public class CartService {
     private Cart getCartById(int cartId) {
         Cart cart = repository.findById(cartId).orElse(null);
         if (cart == null) {
-            throw new RuntimeException("Cart not found");
+            throw new CartNotFoundException("Cart not found");
         }
         return cart;
     }
