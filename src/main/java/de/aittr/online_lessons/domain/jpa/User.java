@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,9 +13,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
 
+@Setter
+@Getter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "user")
 public class User implements UserDetails {
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -22,6 +30,7 @@ public class User implements UserDetails {
     @Column(name = "username")
     @Length(min = 3, max = 10)
     private String username;
+    @Getter
     @Column(name = "email")
     @Email
     private String email;
@@ -37,8 +46,10 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
+    @ToString.Exclude
     private List<Course> courseList = new ArrayList<>();
 
+    @Getter
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnore
     @JoinTable(
@@ -50,17 +61,6 @@ public class User implements UserDetails {
 
     @OneToOne(mappedBy = "user")
     private Cart cart;
-
-    public User() {
-    }
-
-    public User(int id, String username, String email, String password, Set<Role> roles) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -75,54 +75,6 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return username;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
-
-    public List<Course> getCourseList() {
-        return courseList;
-    }
-
-    public void setCourseList(List<Course> courseList) {
-        this.courseList = courseList;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     @Override
@@ -160,17 +112,6 @@ public class User implements UserDetails {
     @Override
     public int hashCode() {
         return Objects.hash(id, username, email, password, roles);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", roles=" + roles +
-                '}';
     }
 
     public void addRole(Role role) {

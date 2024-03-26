@@ -4,11 +4,18 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.Date;
 import java.util.Objects;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Builder
 @Entity
 @Table(name = "user_course")
 public class UserCourse {
@@ -25,39 +32,6 @@ public class UserCourse {
     @NotBlank
     private String status;
 
-    public UserCourse() {
-    }
-
-    public UserCourse(int id, Date enrollmentDate, String status) {
-        this.id = id;
-        this.enrollmentDate = enrollmentDate;
-        this.status = status;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Date getEnrollmentDate() {
-        return enrollmentDate;
-    }
-
-    public void setEnrollmentDate(Date enrollmentDate) {
-        this.enrollmentDate = enrollmentDate;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -69,14 +43,5 @@ public class UserCourse {
     @Override
     public int hashCode() {
         return Objects.hash(id, enrollmentDate, status);
-    }
-
-    @Override
-    public String toString() {
-        return "UserCourse{" +
-                "id=" + id +
-                ", enrollmentDate=" + enrollmentDate +
-                ", status='" + status + '\'' +
-                '}';
     }
 }

@@ -3,10 +3,17 @@ package de.aittr.online_lessons.domain.jpa;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Objects;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Builder
 @Entity
 @Table(name = "role")
 public class Role implements GrantedAuthority {
@@ -24,14 +31,6 @@ public class Role implements GrantedAuthority {
         return name;
     }
 
-    public Role() {
-    }
-
-    public Role(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -43,13 +42,5 @@ public class Role implements GrantedAuthority {
     @Override
     public int hashCode() {
         return Objects.hash(id, name);
-    }
-
-    @Override
-    public String toString() {
-        return "Role{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
     }
 }

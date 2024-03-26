@@ -2,13 +2,20 @@ package de.aittr.online_lessons.domain.jpa;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.Objects;
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Builder
 @Entity
 @Table(name = "course")
-public class Course{
+public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +36,7 @@ public class Course{
     @Max(value = 9999, message = "The price cannot be more than 9999.")
     private int price;
 
-    @Column(name = "description", length=1000)
+    @Column(name = "description", length = 1000)
     @NotNull
     @Length(min = 300, message = "The description field must contain minimum 300 characters.")
     private String description;
@@ -37,57 +44,6 @@ public class Course{
     @Column(name = "author_id")
     @NotNull
     private int authorId;
-
-    public Course() {
-    }
-
-    public Course(int id, String title, int price, String description, int authorId) {
-        this.id = id;
-        this.title = title;
-        this.price = price;
-        this.description = description;
-        this.authorId = authorId;
-    }
-
-    public int getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -100,16 +56,5 @@ public class Course{
     @Override
     public int hashCode() {
         return Objects.hash(id, title, price, description, authorId);
-    }
-
-    @Override
-    public String toString() {
-        return "Course{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", price=" + price +
-                ", description='" + description + '\'' +
-                ", authorId=" + authorId +
-                '}';
     }
 }
