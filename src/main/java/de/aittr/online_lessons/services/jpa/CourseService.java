@@ -37,11 +37,16 @@ public class CourseService{
     }
 
     public CourseDto getCourseById(int id) {
-        Course course = repository.findById(id).orElse(null);
+        Course course = getCourseEntityById(id);
         if (course != null) {
             return mappingService.mapEntityToDto(course);
         }
         return null;
+    }
+
+
+    public Course getCourseEntityById(int id) {
+        return repository.findById(id).orElse(null);
     }
 
     public CourseDto update(int id, CourseDto courseDto) {
