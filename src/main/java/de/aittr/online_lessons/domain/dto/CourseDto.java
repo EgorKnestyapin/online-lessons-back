@@ -7,12 +7,22 @@ public class CourseDto {
     private String title;
     private int price;
     private String description;
+    private int authorId;
 
-    public CourseDto(int id, String title, int price, String description) {
+    public CourseDto(int id, String title, int price, String description, int authorId) {
         this.id = id;
         this.title = title;
         this.price = price;
         this.description = description;
+        this.authorId = authorId;
+    }
+
+    public int getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
     }
 
     public int getId() {
@@ -52,12 +62,12 @@ public class CourseDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CourseDto courseDto = (CourseDto) o;
-        return id == courseDto.id && Double.compare(courseDto.price, price) == 0 && Objects.equals(title, courseDto.title) && Objects.equals(description, courseDto.description);
+        return id == courseDto.id && price == courseDto.price && authorId == courseDto.authorId && Objects.equals(title, courseDto.title) && Objects.equals(description, courseDto.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, price, description);
+        return Objects.hash(id, title, price, description, authorId);
     }
 
     @Override
@@ -67,6 +77,7 @@ public class CourseDto {
                 ", title='" + title + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +
+                ", authorId=" + authorId +
                 '}';
     }
 }

@@ -34,14 +34,27 @@ public class Course{
     @Length(min = 300, message = "The description field must contain minimum 300 characters.")
     private String description;
 
+    @Column(name = "author_id")
+    @NotNull
+    private int authorId;
+
     public Course() {
     }
 
-    public Course(int id, String title, int price, String description) {
+    public Course(int id, String title, int price, String description, int authorId) {
         this.id = id;
         this.title = title;
         this.price = price;
         this.description = description;
+        this.authorId = authorId;
+    }
+
+    public int getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
     }
 
     public int getId() {
@@ -76,23 +89,27 @@ public class Course{
         this.description = description;
     }
 
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Course course = (Course) o;
-        return id == course.id && Double.compare(course.price, price) == 0 && Objects.equals(title, course.title) && Objects.equals(description, course.description);
+        return id == course.id && price == course.price && authorId == course.authorId && Objects.equals(title, course.title) && Objects.equals(description, course.description);
     }
 
+    @Override
     public int hashCode() {
-        return Objects.hash(id, title, price, description);
+        return Objects.hash(id, title, price, description, authorId);
     }
 
+    @Override
     public String toString() {
         return "Course{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +
+                ", authorId=" + authorId +
                 '}';
     }
 }
