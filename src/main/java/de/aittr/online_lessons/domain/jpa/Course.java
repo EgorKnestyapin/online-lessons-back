@@ -21,10 +21,19 @@ public class Course {
     private Integer id;
 
     @Column(name = "title")
+    @NotNull
     private String title;
 
     @Column(name = "price")
+    @NotNull
     private int price;
+
+    @Column(name = "photo_path")
+    @NotNull
+    private String photoPath;
+
+    @Column(name = "presentation_path")
+    private String presentationPath;
 
     @Column(name = "description", length = 1000)
     private String description;

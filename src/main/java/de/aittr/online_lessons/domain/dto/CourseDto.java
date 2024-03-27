@@ -29,9 +29,15 @@ public class CourseDto {
     private int price;
 
     @NotNull
+    private String photoPath;
+
+    private String presentationPath;
+
+    @NotNull
     @Length(min = 300, message = "The description field must contain minimum 300 characters.")
     private String description;
 
+    @NotNull
     private int authorId;
 
     public int getId() {
