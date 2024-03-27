@@ -2,6 +2,7 @@ package de.aittr.online_lessons.services.jpa;
 
 import de.aittr.online_lessons.domain.dto.CourseDto;
 import de.aittr.online_lessons.domain.jpa.Course;
+import de.aittr.online_lessons.exception_handling.exceptions.CourseValidationException;
 import de.aittr.online_lessons.repositories.jpa.CourseRepository;
 import de.aittr.online_lessons.services.mapping.CourseMappingService;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class CourseService{
         try {
             course = repository.save(course);
         } catch (Exception e) {
-            throw new RuntimeException("Incorrect values of course fields");
+            throw new CourseValidationException("Incorrect values of course fields", e);
         }
         return mappingService.mapEntityToDto(course);
     }
@@ -61,9 +62,6 @@ public class CourseService{
         }
         if (courseDto.getDescription() != null) {
             existingCourse.setDescription(courseDto.getDescription());
-        }
-        if (courseDto.getAuthorId() != 0) {
-            existingCourse.setAuthorId(courseDto.getAuthorId());
         }
 
         existingCourse = repository.save(existingCourse);

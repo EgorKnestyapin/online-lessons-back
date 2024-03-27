@@ -1,4 +1,4 @@
-package de.aittr.online_lessons.exceptions;
+package de.aittr.online_lessons.exception_handling.exceptions;
 
 public class UserAlreadyExistsException extends RuntimeException {
     public UserAlreadyExistsException(String message) {

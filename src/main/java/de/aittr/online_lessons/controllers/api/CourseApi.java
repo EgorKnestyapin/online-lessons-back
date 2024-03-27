@@ -42,7 +42,7 @@ public interface CourseApi {
             description = "Получение объекта курса, соответствующего переданному идентификатору"
     )
     @GetMapping("/{id}")
-    public CourseDto getById(
+    CourseDto getById(
             @PathVariable
             @Parameter(description = "Идентификатор курса")
             int id
@@ -53,7 +53,7 @@ public interface CourseApi {
             description = "Обновление данных курса с заданным ID"
     )
     @PatchMapping("/{id}")
-    public CourseDto updateCourse(
+    CourseDto updateCourse(
             @PathVariable int id,
             @Valid
             @RequestBody CourseDto courseDto);
@@ -63,6 +63,6 @@ public interface CourseApi {
             description = "Удаление курса с заданным ID"
     )
     @DeleteMapping("/{id}")
-    public void deleteCourse(@PathVariable int id);
+    void deleteCourse(@PathVariable int id);
 }
 
