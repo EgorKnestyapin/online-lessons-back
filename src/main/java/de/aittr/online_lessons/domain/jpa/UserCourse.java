@@ -24,12 +24,11 @@ public class UserCourse {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
+
     @Column(name = "enrollment_date")
-    @NotNull
     private Date enrollmentDate;
+
     @Column(name = "status")
-    @NotNull
-    @NotBlank
     private String status;
 
     @Override
@@ -37,7 +36,7 @@ public class UserCourse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserCourse that = (UserCourse) o;
-        return id == that.id && Objects.equals(enrollmentDate, that.enrollmentDate) && Objects.equals(status, that.status);
+        return Objects.equals(id, that.id) && Objects.equals(enrollmentDate, that.enrollmentDate) && Objects.equals(status, that.status);
     }
 
     @Override

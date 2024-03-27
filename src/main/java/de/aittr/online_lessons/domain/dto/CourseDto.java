@@ -1,6 +1,11 @@
 package de.aittr.online_lessons.domain.dto;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import java.util.Objects;
 
@@ -10,10 +15,23 @@ import java.util.Objects;
 @ToString
 @Builder
 public class CourseDto {
+
     private int id;
+
+    @Pattern(
+            regexp = "[A-ZА-Яa-zа-я]{5,}",
+            message = "The title field must contain only letters and be a minimum of 5 characters."
+    )
     private String title;
+
+    @NotNull
+    @Max(value = 9999, message = "The price cannot be more than 9999.")
     private int price;
+
+    @NotNull
+    @Length(min = 300, message = "The description field must contain minimum 300 characters.")
     private String description;
+
     private int authorId;
 
     public int getId() {

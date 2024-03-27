@@ -21,9 +21,8 @@ public class Role implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
+
     @Column(name = "name")
-    @NotNull
-    @NotBlank
     private String name;
 
     @Override
@@ -36,7 +35,7 @@ public class Role implements GrantedAuthority {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Role role = (Role) o;
-        return id == role.id && Objects.equals(name, role.name);
+        return Objects.equals(id, role.id) && Objects.equals(name, role.name);
     }
 
     @Override

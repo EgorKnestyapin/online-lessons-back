@@ -49,7 +49,7 @@ public class Cart {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cart cart = (Cart) o;
-        return id == cart.id && Objects.equals(courseList, cart.courseList) && Objects.equals(user, cart.user);
+        return Objects.equals(id, cart.id) && Objects.equals(courseList, cart.courseList) && Objects.equals(user, cart.user);
     }
 
     @Override

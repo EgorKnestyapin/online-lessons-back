@@ -26,17 +26,12 @@ public class User implements UserDetails {
     private Integer id;
 
     @Column(name = "username")
-    @Length(min = 3, max = 10)
     private String username;
 
     @Column(name = "email")
-    @Email
     private String email;
 
     @Column(name = "password")
-    @NotNull
-    @NotBlank
-    @Length(min = 8)
     private String password;
 
     @ManyToMany
@@ -164,7 +159,7 @@ public class User implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles);
+        return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles);
     }
 
     @Override

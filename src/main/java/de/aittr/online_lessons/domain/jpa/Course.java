@@ -21,27 +21,16 @@ public class Course {
     private Integer id;
 
     @Column(name = "title")
-    @NotNull
-    @NotBlank
-    @Pattern(
-            regexp = "[A-ZА-Яa-zа-я]{5,}",
-            message = "The title field must contain only letters and be a minimum of 5 characters."
-    )
     private String title;
 
     @Column(name = "price")
-    @NotNull
-    @Max(value = 9999, message = "The price cannot be more than 9999.")
     private int price;
 
     @Column(name = "description", length = 1000)
-    @NotNull
-    @Length(min = 300, message = "The description field must contain minimum 300 characters.")
     private String description;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @NotNull
     private User user;
 
     public int getId() {
@@ -89,7 +78,7 @@ public class Course {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Course course = (Course) o;
-        return id == course.id && price == course.price && Objects.equals(title, course.title) && Objects.equals(description, course.description) && Objects.equals(user, course.user);
+        return Objects.equals(id, course.id) && price == course.price && Objects.equals(title, course.title) && Objects.equals(description, course.description) && Objects.equals(user, course.user);
     }
 
     @Override
