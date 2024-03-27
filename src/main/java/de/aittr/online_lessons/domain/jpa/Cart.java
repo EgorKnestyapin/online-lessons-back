@@ -20,7 +20,7 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private int id;
+    private Integer id;
 
     @ManyToMany
     @JoinTable(

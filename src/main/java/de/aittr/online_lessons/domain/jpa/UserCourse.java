@@ -23,7 +23,7 @@ public class UserCourse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
     @Column(name = "enrollment_date")
     @NotNull
     private Date enrollmentDate;
