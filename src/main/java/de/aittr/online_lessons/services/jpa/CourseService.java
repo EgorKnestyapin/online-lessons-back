@@ -63,9 +63,6 @@ public class CourseService{
         if (courseDto.getDescription() != null) {
             existingCourse.setDescription(courseDto.getDescription());
         }
-        if (courseDto.getAuthorId() != 0) {
-            existingCourse.setAuthorId(courseDto.getAuthorId());
-        }
 
         existingCourse = repository.save(existingCourse);
 

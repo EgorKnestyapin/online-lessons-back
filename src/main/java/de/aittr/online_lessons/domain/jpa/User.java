@@ -13,8 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
 
-@Setter
-@Getter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,18 +20,19 @@ import java.util.*;
 @Entity
 @Table(name = "user")
 public class User implements UserDetails {
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
     @Column(name = "username")
     @Length(min = 3, max = 10)
     private String username;
-    @Getter
+
     @Column(name = "email")
     @Email
     private String email;
+
     @Column(name = "password")
     @NotNull
     @NotBlank
@@ -47,9 +46,11 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
     @ToString.Exclude
-    private List<Course> courseList = new ArrayList<>();
+    private List<Course> availableCourses = new ArrayList<>();
 
-    @Getter
+    @OneToMany(mappedBy = "user")
+    private List<Course> createdCourses = new ArrayList<>();
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnore
     @JoinTable(
@@ -61,6 +62,62 @@ public class User implements UserDetails {
 
     @OneToOne(mappedBy = "user")
     private Cart cart;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setAvailableCourses(List<Course> availableCourses) {
+        this.availableCourses = availableCourses;
+    }
+
+    public void setCreatedCourses(List<Course> createdCourses) {
+        this.createdCourses = createdCourses;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public List<Course> getAvailableCourses() {
+        return availableCourses;
+    }
+
+    public List<Course> getCreatedCourses() {
+        return createdCourses;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -100,6 +157,7 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 
     @Override
     public boolean equals(Object o) {
