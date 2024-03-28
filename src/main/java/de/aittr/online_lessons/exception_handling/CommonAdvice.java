@@ -4,6 +4,7 @@ import de.aittr.online_lessons.exception_handling.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -42,6 +43,12 @@ public class CommonAdvice {
     @ExceptionHandler(CourseValidationException.class)
     public ResponseEntity<Response> handleException(CourseValidationException e) {
         ValidationResponse response = new ValidationResponse(e.getMessage(), e.getCause().getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Response> handleException(MethodArgumentNotValidException e) {
+        Response response = new Response(e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }
