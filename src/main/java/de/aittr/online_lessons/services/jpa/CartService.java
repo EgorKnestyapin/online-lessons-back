@@ -70,13 +70,13 @@ public class CartService {
 
     @Transactional
     public void buyCourses(int cartId) {
-        Enrollment enrollment = new Enrollment(0, LocalDateTime.now(), "active");
-        Cart cart = getCartById(cartId);
-        System.out.println(cart.getUser());
-        List<Course> courses = cart.getCourseList();
-        User user = cart.getUser();
-        user.getAvailableCourses().addAll(courses);
-//        userRepository.save(user);
-        enrollmentRepository.save(enrollment);
+//        Enrollment enrollment = new Enrollment(0, LocalDateTime.now(), "active");
+//        Cart cart = getCartById(cartId);
+//        System.out.println(cart.getUser());
+//        List<Course> courses = cart.getCourseList();
+//        User user = cart.getUser();
+//        user.getAvailableCourses().addAll(courses);
+////        userRepository.save(user);
+//        enrollmentRepository.save(enrollment);
     }
 }
