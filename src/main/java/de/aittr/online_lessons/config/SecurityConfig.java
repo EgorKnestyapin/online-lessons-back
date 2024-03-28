@@ -36,6 +36,8 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/api/courses").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/courses/{id}").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/courses").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/files/**").permitAll()
+//                                .requestMatchers(HttpMethod.POST, "/api/files/**").authenticated()
                                 .anyRequest().permitAll()
                 ).httpBasic(Customizer.withDefaults());
         return http.build();
