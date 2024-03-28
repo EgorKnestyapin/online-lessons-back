@@ -82,6 +82,26 @@ public class Course {
         this.user = user;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
+    }
+
+    public String getPresentationPath() {
+        return presentationPath;
+    }
+
+    public void setPresentationPath(String presentationPath) {
+        this.presentationPath = presentationPath;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

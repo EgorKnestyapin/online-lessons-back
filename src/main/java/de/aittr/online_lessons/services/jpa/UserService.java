@@ -6,6 +6,7 @@ import de.aittr.online_lessons.domain.jpa.Role;
 import de.aittr.online_lessons.domain.jpa.User;
 import de.aittr.online_lessons.exception_handling.exceptions.UserValidationException;
 import de.aittr.online_lessons.exception_handling.exceptions.UserAlreadyExistsException;
+import de.aittr.online_lessons.repositories.jpa.CartRepository;
 import de.aittr.online_lessons.repositories.jpa.UserRepository;
 import de.aittr.online_lessons.services.mapping.UserMappingService;
 import jakarta.transaction.Transactional;
@@ -14,22 +15,24 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 
 @Service
 public class UserService implements UserDetailsService {
-    private final UserRepository repository;
+    private final UserRepository userRepository;
     private final UserMappingService mappingService;
-    private final CartService cartService;
+    private final CartRepository cartRepository;
 
-    public UserService(UserRepository repository, UserMappingService mappingService, CartService cartService) {
-        this.repository = repository;
+    public UserService(UserRepository userRepository, UserMappingService mappingService, CartRepository cartRepository) {
+        this.userRepository = userRepository;
         this.mappingService = mappingService;
-        this.cartService = cartService;
+        this.cartRepository = cartRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = repository.findByUsername(username);
+        User user = userRepository.findByUsername(username);
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
@@ -41,7 +44,7 @@ public class UserService implements UserDetailsService {
     @Transactional
     public UserDto register(UserDto userDto) {
         User user = mappingService.mapDtoToEntity(userDto);
-        User foundUser = repository.findByUsername(user.getUsername());
+        User foundUser = userRepository.findByUsername(user.getUsername());
 
         if (foundUser != null) {
             throw new UserAlreadyExistsException("User with the same nickname already exists");
@@ -51,11 +54,12 @@ public class UserService implements UserDetailsService {
         user.addRole(role);
 
         try {
-            user = repository.save(user);
+            user = userRepository.save(user);
         } catch (Exception e) {
             throw new UserValidationException("Incorrect values of user fields.", e);
         }
-        cartService.saveCart(user);
+        Cart cart = new Cart(0, new ArrayList<>(), user);
+        cartRepository.save(cart);
 
         return mappingService.mapEntityToDto(user);
     }
@@ -64,5 +68,14 @@ public class UserService implements UserDetailsService {
     public void setRoleAdmin(String username) {
         User user = (User) loadUserByUsername(username);
         user.addRole(new Role(2, "ROLE_ADMIN"));
+    }
+
+    @Transactional
+    public User getUserById(int id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        return user;
     }
 }

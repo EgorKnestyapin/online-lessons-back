@@ -37,8 +37,6 @@ public class CourseDto {
     @Length(min = 300, message = "The description field must contain minimum 300 characters.")
     private String description;
 
-    @NotNull
-    private int authorId;
 
     public int getId() {
         return id;
@@ -72,11 +70,19 @@ public class CourseDto {
         this.description = description;
     }
 
-    public int getAuthorId() {
-        return authorId;
+    public String getPhotoPath() {
+        return photoPath;
     }
 
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
+    }
+
+    public String getPresentationPath() {
+        return presentationPath;
+    }
+
+    public void setPresentationPath(String presentationPath) {
+        this.presentationPath = presentationPath;
     }
 }

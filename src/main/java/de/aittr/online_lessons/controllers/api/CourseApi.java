@@ -18,7 +18,7 @@ import java.util.List;
 public interface CourseApi {
 
 
-    @PostMapping
+    @PostMapping("/{authorId}")
     @Operation(
             summary = "Создание курса",
             description = "Сохранение в базу данных нового курса, переданного в теле запроса"
@@ -27,7 +27,8 @@ public interface CourseApi {
             @Valid
             @RequestBody
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Объект ДТО курса")
-            CourseDto courseDto
+            CourseDto courseDto,
+            @PathVariable int authorId
     );
 
     @GetMapping
