@@ -28,6 +28,14 @@ public class Enrollment {
     @Column(name = "status")
     private String status;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

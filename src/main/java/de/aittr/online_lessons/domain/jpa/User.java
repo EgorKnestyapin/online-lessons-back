@@ -34,14 +34,9 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany
-    @JoinTable(
-            name = "enrollment",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id")
-    )
+    @OneToMany
     @ToString.Exclude
-    private List<Course> availableCourses = new ArrayList<>();
+    private List<Enrollment> enrollments = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<Course> createdCourses = new ArrayList<>();
@@ -74,9 +69,6 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public void setAvailableCourses(List<Course> availableCourses) {
-        this.availableCourses = availableCourses;
-    }
 
     public void setCreatedCourses(List<Course> createdCourses) {
         this.createdCourses = createdCourses;
@@ -96,10 +88,6 @@ public class User implements UserDetails {
 
     public int getId() {
         return id;
-    }
-
-    public List<Course> getAvailableCourses() {
-        return availableCourses;
     }
 
     public List<Course> getCreatedCourses() {
@@ -169,10 +157,6 @@ public class User implements UserDetails {
 
     public void addRole(Role role) {
         roles.add(role);
-    }
-
-    public void addAvailableCourse(Course course) {
-        availableCourses.add(course);
     }
 
     public void clearRoles() {
