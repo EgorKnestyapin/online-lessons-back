@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Setter
 @Getter
@@ -29,7 +27,7 @@ public class Cart {
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
     @ToString.Exclude
-    private List<Course> courseList = new ArrayList<>();
+    private List<Course> courses = new ArrayList<>();
 
     @OneToOne
     @JsonIgnore
@@ -38,11 +36,11 @@ public class Cart {
     private User user;
 
     public void addCourse(Course course) {
-        courseList.add(course);
+        courses.add(course);
     }
 
     public void removeCourse(Course course) {
-        courseList.removeIf(c -> c.getId() == course.getId());
+        courses.removeIf(c -> c.getId() == course.getId());
     }
 
     @Override
@@ -50,11 +48,11 @@ public class Cart {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cart cart = (Cart) o;
-        return Objects.equals(id, cart.id) && Objects.equals(courseList, cart.courseList) && Objects.equals(user, cart.user);
+        return Objects.equals(id, cart.id) && Objects.equals(courses, cart.courses) && Objects.equals(user, cart.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, courseList, user);
+        return Objects.hash(id, courses, user);
     }
 }

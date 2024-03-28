@@ -51,4 +51,10 @@ public class CommonAdvice {
         Response response = new Response(e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(EnrollmentValidationException.class)
+    public ResponseEntity<Response> handleException(EnrollmentValidationException e) {
+        ValidationResponse response = new ValidationResponse(e.getMessage(), e.getCause().getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 }

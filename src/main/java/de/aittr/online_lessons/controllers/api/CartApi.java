@@ -66,8 +66,8 @@ public interface CartApi {
 
     @PutMapping("/buy/{cartId}")
     @Operation(
-            summary = "Очищение корзины",
-            description = "Удаление всех курсов из базы данных корзины, идентификатор которой передан в строке запроса"
+            summary = "Покупка всех курсов в корзине",
+            description = "Добавление новой записи в базу данных таблицы enrollment и очищение корзины"
     )
     void buyCourses(
             @PathVariable
