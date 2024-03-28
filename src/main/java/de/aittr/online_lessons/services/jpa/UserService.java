@@ -49,14 +49,13 @@ public class UserService implements UserDetailsService {
         user.clearRoles();
         Role role = new Role(1, "ROLE_USER");
         user.addRole(role);
-        Cart cart = cartService.saveCart(user);
-        user.setCart(cart);
 
         try {
             user = repository.save(user);
         } catch (Exception e) {
             throw new UserValidationException("Incorrect values of user fields.", e);
         }
+        cartService.saveCart(user);
 
         return mappingService.mapEntityToDto(user);
     }
