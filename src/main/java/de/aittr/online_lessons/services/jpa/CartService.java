@@ -40,12 +40,14 @@ public class CartService {
     }
 
     @Transactional
-    public void addCourseToCart(int cartId, int courseId) {
+    public boolean addCourseToCart(int cartId, int courseId) {
         Cart cart = getCartById(cartId);
         Course course = courseService.getCourseEntityById(courseId);
         if (!cart.getCourses().contains(course)) {
             cart.addCourse(course);
+            return true;
         }
+        return false;
     }
 
     private Cart getCartById(int cartId) {

@@ -19,7 +19,7 @@ public class CourseDto {
     private int id;
 
     @Pattern(
-            regexp = "[A-ZА-Яa-zа-я]{5,}",
+            regexp = "[A-ZА-Яa-zа-я\\s]{5,}",
             message = "The title field must contain only letters and be a minimum of 5 characters."
     )
     private String title;
