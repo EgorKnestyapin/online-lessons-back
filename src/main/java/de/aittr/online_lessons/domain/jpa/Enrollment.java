@@ -3,6 +3,7 @@ package de.aittr.online_lessons.domain.jpa;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -22,7 +23,7 @@ public class Enrollment {
     private Integer id;
 
     @Column(name = "enrollment_date")
-    private Date enrollmentDate;
+    private LocalDateTime enrollmentDate;
 
     @Column(name = "status")
     private String status;

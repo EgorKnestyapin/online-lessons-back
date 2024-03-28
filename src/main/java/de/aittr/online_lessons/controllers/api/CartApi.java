@@ -63,4 +63,15 @@ public interface CartApi {
             @Parameter(description = "Идентификатор корзины")
             int cartId
     );
+
+    @PutMapping("/buy/{cartId}")
+    @Operation(
+            summary = "Очищение корзины",
+            description = "Удаление всех курсов из базы данных корзины, идентификатор которой передан в строке запроса"
+    )
+    void buyCourses(
+            @PathVariable
+            @Parameter(description = "Идентификатор корзины")
+            int cartId
+    );
 }

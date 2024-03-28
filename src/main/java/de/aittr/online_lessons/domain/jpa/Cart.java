@@ -33,6 +33,7 @@ public class Cart {
 
     @OneToOne
     @JsonIgnore
+    @ToString.Exclude
     @JoinColumn(name = "user_id")
     private User user;
 

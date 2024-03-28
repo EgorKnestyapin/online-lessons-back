@@ -3,6 +3,7 @@ package de.aittr.online_lessons.services.jpa;
 import de.aittr.online_lessons.domain.dto.CourseDto;
 import de.aittr.online_lessons.domain.jpa.Course;
 import de.aittr.online_lessons.domain.jpa.User;
+import de.aittr.online_lessons.exception_handling.exceptions.CourseNotFoundException;
 import de.aittr.online_lessons.exception_handling.exceptions.CourseValidationException;
 import de.aittr.online_lessons.repositories.jpa.CourseRepository;
 import de.aittr.online_lessons.services.mapping.CourseMappingService;
@@ -46,17 +47,18 @@ public class CourseService {
                 .toList();
     }
 
-    public CourseDto getCourseById(int id) {
-        Course course = getCourseEntityById(id);
-        if (course != null) {
-            return mappingService.mapEntityToDto(course);
-        }
-        return null;
+    public CourseDto getCourseById(int courseId) {
+        Course course = getCourseEntityById(courseId);
+        return mappingService.mapEntityToDto(course);
     }
 
 
     public Course getCourseEntityById(int id) {
-        return repository.findById(id).orElse(null);
+        Course course = repository.findById(id).orElse(null);
+        if (course == null) {
+            throw new CourseNotFoundException("Course not found");
+        }
+        return course;
     }
 
     public CourseDto update(int id, CourseDto courseDto) {

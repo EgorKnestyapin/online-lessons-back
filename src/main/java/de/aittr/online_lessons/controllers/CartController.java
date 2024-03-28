@@ -37,4 +37,9 @@ public class CartController implements CartApi {
     public void clearCart(int cartId) {
         cartService.clearCart(cartId);
     }
+
+    @Override
+    public void buyCourses(int cartId) {
+        cartService.buyCourses(cartId);
+    }
 }

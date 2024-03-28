@@ -171,8 +171,8 @@ public class User implements UserDetails {
         roles.add(role);
     }
 
-    public void addCourse(Course course) {
-        createdCourses.add(course);
+    public void addAvailableCourse(Course course) {
+        availableCourses.add(course);
     }
 
     public void clearRoles() {
