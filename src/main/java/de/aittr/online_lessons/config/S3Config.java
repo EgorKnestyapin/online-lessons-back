@@ -6,20 +6,31 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class AppConfig {
+@ConfigurationProperties(prefix = "s3")
+public class S3Config {
+
+    private String secretKey;
+
+    private String accessKey;
+
+    private String endpoint;
+
+    private String region;
 
     @Bean
     public AmazonS3 amazonS3() {
         AWSCredentials credentials = new BasicAWSCredentials(
-                "DO00P8HYZMEUTKZMDKKM", "AcFZEFdmbO6qAGHx54Uzyw6v6cYVgwjt4ra7HFyUdj4"
+                accessKey, secretKey
         );
 
         AwsClientBuilder.EndpointConfiguration endpointConfiguration = new AwsClientBuilder.EndpointConfiguration(
-                "https://fra1.digitaloceanspaces.com", "fra1"
+                endpoint, region
         );
 
         AmazonS3ClientBuilder amazonS3ClientBuilder = AmazonS3ClientBuilder
