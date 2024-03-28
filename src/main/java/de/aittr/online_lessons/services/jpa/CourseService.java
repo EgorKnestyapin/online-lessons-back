@@ -64,14 +64,13 @@ public class CourseService {
     public CourseDto update(int id, CourseDto courseDto) {
         repository.findById(id)
                 .orElseThrow(() -> new CourseNotFoundException("Course not found with id " + id));
-        Course existingCourse;
 
         Course course = mappingService.mapDtoToEntity(courseDto);
         course.setId(id);
 
-        existingCourse = repository.save(course);
+        course = repository.save(course);
 
-        return mappingService.mapEntityToDto(existingCourse);
+        return mappingService.mapEntityToDto(course);
     }
 
     public void deleteById(int id) {
