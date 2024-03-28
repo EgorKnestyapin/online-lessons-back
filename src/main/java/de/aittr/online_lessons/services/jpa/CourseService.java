@@ -62,20 +62,14 @@ public class CourseService {
     }
 
     public CourseDto update(int id, CourseDto courseDto) {
-        Course existingCourse = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Course not found with id " + id));
+        repository.findById(id)
+                .orElseThrow(() -> new CourseNotFoundException("Course not found with id " + id));
+        Course existingCourse;
 
-        if (courseDto.getTitle() != null) {
-            existingCourse.setTitle(courseDto.getTitle());
-        }
-        if (courseDto.getPrice() != 0) {
-            existingCourse.setPrice(courseDto.getPrice());
-        }
-        if (courseDto.getDescription() != null) {
-            existingCourse.setDescription(courseDto.getDescription());
-        }
+        Course course = mappingService.mapDtoToEntity(courseDto);
+        course.setId(id);
 
-        existingCourse = repository.save(existingCourse);
+        existingCourse = repository.save(course);
 
         return mappingService.mapEntityToDto(existingCourse);
     }

@@ -53,7 +53,7 @@ public interface CourseApi {
             summary = "Обновление курса",
             description = "Обновление данных курса с заданным ID"
     )
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     CourseDto updateCourse(
             @PathVariable int id,
             @Valid
