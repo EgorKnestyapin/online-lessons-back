@@ -37,9 +37,11 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
+    @JsonIgnore
     private Set<Enrollment> enrollments = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private Set<Course> createdCourses = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)

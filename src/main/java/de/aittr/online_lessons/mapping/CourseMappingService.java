@@ -30,9 +30,13 @@ import de.aittr.online_lessons.domain.dto.CourseDto;
 import de.aittr.online_lessons.domain.jpa.Course;
 import org.mapstruct.Mapper;
 
+import java.util.Set;
+
 @Mapper(componentModel = "spring")
 public interface CourseMappingService {
     Course mapDtoToEntity(CourseDto dto);
 
     CourseDto mapEntityToDto(Course user);
+
+    Set<CourseDto> mapSetEntityToSetDto(Set<Course> courses);
 }

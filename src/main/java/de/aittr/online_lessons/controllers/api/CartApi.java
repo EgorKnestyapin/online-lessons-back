@@ -25,7 +25,7 @@ public interface CartApi {
             int cartId
     );
 
-    @PutMapping("/{cartId}/{courseId}")
+    @PutMapping("/add/{cartId}/{courseId}")
     @Operation(
             summary = "Добавление курса в корзину",
             description = "Сохранение курса в базу данных корзины по идентификатору, переданному в строке запроса"
@@ -53,7 +53,7 @@ public interface CartApi {
             int courseId
     );
 
-    @DeleteMapping("/{cartId}")
+    @DeleteMapping("/clear/{cartId}")
     @Operation(
             summary = "Очищение корзины",
             description = "Удаление всех курсов из базы данных корзины, идентификатор которой передан в строке запроса"
