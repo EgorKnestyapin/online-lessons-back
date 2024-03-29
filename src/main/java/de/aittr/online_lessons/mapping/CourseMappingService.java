@@ -29,7 +29,6 @@ package de.aittr.online_lessons.mapping;
 import de.aittr.online_lessons.domain.dto.CourseDto;
 import de.aittr.online_lessons.domain.jpa.Course;
 import org.mapstruct.Mapper;
-import org.springframework.stereotype.Service;
 
 @Mapper(componentModel = "spring")
 public interface CourseMappingService {

@@ -2,6 +2,7 @@ package de.aittr.online_lessons.services;
 
 import de.aittr.online_lessons.domain.dto.CourseDto;
 import de.aittr.online_lessons.domain.jpa.Course;
+import de.aittr.online_lessons.domain.jpa.Enrollment;
 import de.aittr.online_lessons.domain.jpa.User;
 import de.aittr.online_lessons.exception_handling.exceptions.CourseNotFoundException;
 import de.aittr.online_lessons.exception_handling.exceptions.CourseValidationException;
@@ -11,6 +12,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class CourseService {
@@ -79,5 +81,10 @@ public class CourseService {
         }
 
         repository.deleteById(id);
+    }
+
+    public Set<Enrollment> getEnrollmentsByUsername(String username) {
+        User user = (User) userService.loadUserByUsername(username);
+        return user.getEnrollments();
     }
 }
