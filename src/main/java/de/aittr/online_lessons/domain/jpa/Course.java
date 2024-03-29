@@ -35,7 +35,7 @@ public class Course {
     @Column(name = "presentation_path")
     private String presentationPath;
 
-    @Column(name = "description", length = 1000)
+    @Column(name = "description", length = 1800)
     private String description;
 
     @ManyToOne

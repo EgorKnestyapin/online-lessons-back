@@ -7,30 +7,32 @@ import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConfigurationProperties(prefix = "s3")
 public class S3Config {
+    
+    @Value("${s3.accessKey}")
+    private String s3AccessKey;
 
-    private String secretKey;
+    @Value("${s3.secretKey}")
+    private String s3SecretKey;
 
-    private String accessKey;
+    @Value("${s3.endpoint}")
+    private String s3Endpoint;
 
-    private String endpoint;
-
-    private String region;
+    @Value("${s3.region}")
+    private String s3Region;
 
     @Bean
     public AmazonS3 amazonS3() {
         AWSCredentials credentials = new BasicAWSCredentials(
-                accessKey, secretKey
+                s3AccessKey, s3SecretKey
         );
 
         AwsClientBuilder.EndpointConfiguration endpointConfiguration = new AwsClientBuilder.EndpointConfiguration(
-                endpoint, region
+                s3Endpoint, s3Region
         );
 
         AmazonS3ClientBuilder amazonS3ClientBuilder = AmazonS3ClientBuilder
