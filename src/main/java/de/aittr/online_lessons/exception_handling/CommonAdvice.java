@@ -57,4 +57,10 @@ public class CommonAdvice {
         ValidationResponse response = new ValidationResponse(e.getMessage(), e.getCause().getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(PasswordMismatchException.class)
+    public ResponseEntity<Response> handleException(PasswordMismatchException e) {
+        Response response = new Response(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 }

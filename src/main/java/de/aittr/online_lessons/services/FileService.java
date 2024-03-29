@@ -1,4 +1,4 @@
-package de.aittr.online_lessons.services.jpa;
+package de.aittr.online_lessons.services;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;

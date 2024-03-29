@@ -24,7 +24,7 @@
 //    }
 //}
 
-package de.aittr.online_lessons.services.mapping;
+package de.aittr.online_lessons.mapping;
 
 import de.aittr.online_lessons.domain.dto.CourseDto;
 import de.aittr.online_lessons.domain.jpa.Course;

@@ -1,4 +1,4 @@
-package de.aittr.online_lessons.services.mapping;
+package de.aittr.online_lessons.mapping;
 
 import de.aittr.online_lessons.domain.dto.UserDto;
 import de.aittr.online_lessons.domain.jpa.Role;

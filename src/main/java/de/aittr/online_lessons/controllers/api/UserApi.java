@@ -1,19 +1,18 @@
 package de.aittr.online_lessons.controllers.api;
 
+import de.aittr.online_lessons.domain.dto.ChangePasswordDto;
 import de.aittr.online_lessons.domain.dto.UserDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 @Tags(
         @Tag(name = "Users")
 )
+@RequestMapping("/api/users")
 public interface UserApi {
     @PostMapping("/register")
     @Operation(
@@ -36,5 +35,28 @@ public interface UserApi {
             @Parameter(description = "Никнейм пользователя")
             String username
 
+    );
+
+    @GetMapping("/account_info/{username}")
+    @Operation(
+            summary = "Получение информации об аккаунте пользователя"
+    )
+    UserDto getUserInfo(
+            @PathVariable
+            @Parameter(description = "Никнейм пользователя")
+            String username
+    );
+
+    @PutMapping("/change_password/{username}")
+    @Operation(
+            summary = "Смена пароля пользователя"
+    )
+    boolean changePassword(
+            @PathVariable
+            @Parameter(description = "Никнейм пользователя")
+            String username,
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Объект ДТО для смены пароля")
+            @RequestBody
+            ChangePasswordDto dto
     );
 }

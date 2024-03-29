@@ -1,18 +1,21 @@
-package de.aittr.online_lessons.services.jpa;
+package de.aittr.online_lessons.services;
 
+import de.aittr.online_lessons.domain.dto.ChangePasswordDto;
 import de.aittr.online_lessons.domain.dto.UserDto;
 import de.aittr.online_lessons.domain.jpa.Cart;
 import de.aittr.online_lessons.domain.jpa.Role;
 import de.aittr.online_lessons.domain.jpa.User;
+import de.aittr.online_lessons.exception_handling.exceptions.PasswordMismatchException;
 import de.aittr.online_lessons.exception_handling.exceptions.UserValidationException;
 import de.aittr.online_lessons.exception_handling.exceptions.UserAlreadyExistsException;
 import de.aittr.online_lessons.repositories.jpa.CartRepository;
 import de.aittr.online_lessons.repositories.jpa.UserRepository;
-import de.aittr.online_lessons.services.mapping.UserMappingService;
+import de.aittr.online_lessons.mapping.UserMappingService;
 import jakarta.transaction.Transactional;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,10 +27,13 @@ public class UserService implements UserDetailsService {
     private final UserMappingService mappingService;
     private final CartRepository cartRepository;
 
-    public UserService(UserRepository userRepository, UserMappingService mappingService, CartRepository cartRepository) {
+    private final BCryptPasswordEncoder encoder;
+
+    public UserService(UserRepository userRepository, UserMappingService mappingService, CartRepository cartRepository, BCryptPasswordEncoder encoder) {
         this.userRepository = userRepository;
         this.mappingService = mappingService;
         this.cartRepository = cartRepository;
+        this.encoder = encoder;
     }
 
     @Override
@@ -77,5 +83,25 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found");
         }
         return user;
+    }
+
+    public UserDto getUserByUsername(String username) {
+        User user = (User) loadUserByUsername(username);
+        return mappingService.mapEntityToDto(user);
+    }
+
+    @Transactional
+    public boolean changePassword(String username, ChangePasswordDto dto) {
+        User user = (User) loadUserByUsername(username);
+        String oldPassword = dto.getOldPassword();
+
+        if (!dto.getNewPassword().equals(dto.getConfirmNewPassword())) {
+            throw new PasswordMismatchException("New password and confirm password mismatch");
+        }
+        if (encoder.matches(oldPassword, user.getPassword())) {
+            user.setPassword(encoder.encode(dto.getNewPassword()));
+            return true;
+        }
+        return false;
     }
 }

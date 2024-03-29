@@ -1,5 +1,6 @@
 package de.aittr.online_lessons.domain.jpa;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -23,6 +24,7 @@ public class Role implements GrantedAuthority {
     private Integer id;
 
     @Column(name = "name")
+    @JsonIgnore
     private String name;
 
     @Override
