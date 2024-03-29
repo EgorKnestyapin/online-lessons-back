@@ -3,13 +3,12 @@ package de.aittr.online_lessons.services;
 import de.aittr.online_lessons.domain.dto.CourseDto;
 import de.aittr.online_lessons.domain.dto.EnrollmentDto;
 import de.aittr.online_lessons.domain.jpa.Course;
-import de.aittr.online_lessons.domain.jpa.Enrollment;
 import de.aittr.online_lessons.domain.jpa.User;
 import de.aittr.online_lessons.exception_handling.exceptions.CourseNotFoundException;
 import de.aittr.online_lessons.exception_handling.exceptions.CourseValidationException;
+import de.aittr.online_lessons.mapping.CourseMappingService;
 import de.aittr.online_lessons.mapping.EnrollmentMappingService;
 import de.aittr.online_lessons.repositories.jpa.CourseRepository;
-import de.aittr.online_lessons.mapping.CourseMappingService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
