@@ -6,6 +6,7 @@ import de.aittr.online_lessons.domain.jpa.Course;
 import de.aittr.online_lessons.domain.jpa.Enrollment;
 import de.aittr.online_lessons.domain.jpa.User;
 import de.aittr.online_lessons.exception_handling.exceptions.CartNotFoundException;
+import de.aittr.online_lessons.exception_handling.exceptions.EnrollmentAlreadyExistsException;
 import de.aittr.online_lessons.exception_handling.exceptions.EnrollmentValidationException;
 import de.aittr.online_lessons.repositories.jpa.CartRepository;
 import de.aittr.online_lessons.repositories.jpa.EnrollmentRepository;
@@ -76,8 +77,11 @@ public class CartService {
         Cart cart = getCartById(cartId);
         User user = cart.getUser();
         List<Course> courses = cart.getCourses();
-        Enrollment enrollment;
         for (Course course : courses) {
+            Enrollment enrollment = enrollmentRepository.findByCourseId(course.getId());
+            if (enrollment != null) {
+                throw new EnrollmentAlreadyExistsException("Enrollment with that course already exists");
+            }
             enrollment = new Enrollment(0, LocalDateTime.now(), "active", user, course);
             try {
                 enrollmentRepository.save(enrollment);
