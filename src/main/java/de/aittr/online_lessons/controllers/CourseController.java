@@ -19,8 +19,8 @@ public class CourseController implements CourseApi {
     }
 
     @Override
-    public CourseDto createCourse(CourseDto courseDto, int authorId) {
-        return service.save(courseDto, authorId);
+    public CourseDto createCourse(CourseDto courseDto, String username) {
+        return service.save(courseDto, username);
     }
 
     @Override

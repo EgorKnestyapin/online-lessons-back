@@ -29,10 +29,10 @@ public class CourseService {
     }
 
     @Transactional
-    public CourseDto save(CourseDto courseDto, int authorId) {
+    public CourseDto save(CourseDto courseDto, String username) {
         Course course = mappingService.mapDtoToEntity(courseDto);
         course.setId(0);
-        User user = userService.getUserById(authorId);
+        User user = (User) userService.loadUserByUsername(username);
         course.setUser(user);
 
         try {

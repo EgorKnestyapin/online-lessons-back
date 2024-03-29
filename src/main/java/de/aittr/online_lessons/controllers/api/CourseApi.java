@@ -20,7 +20,7 @@ import java.util.Set;
 public interface CourseApi {
 
 
-    @PostMapping("/{authorId}")
+    @PostMapping("/{username}")
     @Operation(
             summary = "Создание курса",
             description = "Сохранение в базу данных нового курса, переданного в теле запроса"
@@ -30,7 +30,7 @@ public interface CourseApi {
             @RequestBody
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Объект ДТО курса")
             CourseDto courseDto,
-            @PathVariable int authorId
+            @PathVariable String username
     );
 
     @GetMapping
