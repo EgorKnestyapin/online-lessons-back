@@ -35,7 +35,7 @@ public class Course {
     @Column(name = "presentation_path")
     private String presentationPath;
 
-    @Column(name = "description", length = 1000)
+    @Column(name = "description", length = 1800)
     private String description;
 
     @ManyToOne
@@ -80,6 +80,26 @@ public class Course {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
+    }
+
+    public String getPresentationPath() {
+        return presentationPath;
+    }
+
+    public void setPresentationPath(String presentationPath) {
+        this.presentationPath = presentationPath;
     }
 
     @Override

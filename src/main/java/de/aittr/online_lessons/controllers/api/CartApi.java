@@ -30,7 +30,7 @@ public interface CartApi {
             summary = "Добавление курса в корзину",
             description = "Сохранение курса в базу данных корзины по идентификатору, переданному в строке запроса"
     )
-    void addProductToCart(
+    boolean addCourseToCart(
             @PathVariable
             @Parameter(description = "Идентификатор корзины")
             int cartId,
@@ -44,7 +44,7 @@ public interface CartApi {
             summary = "Удаление курса из корзины",
             description = "Удаление курса из базы данных корзины по идентификатору, переданному в строке запроса"
     )
-    void deleteProductFromCart(
+    void deleteCourseFromCart(
             @PathVariable
             @Parameter(description = "Идентификатор корзины")
             int cartId,
@@ -59,6 +59,17 @@ public interface CartApi {
             description = "Удаление всех курсов из базы данных корзины, идентификатор которой передан в строке запроса"
     )
     void clearCart(
+            @PathVariable
+            @Parameter(description = "Идентификатор корзины")
+            int cartId
+    );
+
+    @PutMapping("/buy/{cartId}")
+    @Operation(
+            summary = "Покупка всех курсов в корзине",
+            description = "Добавление новой записи в базу данных таблицы enrollment и очищение корзины"
+    )
+    void buyCourses(
             @PathVariable
             @Parameter(description = "Идентификатор корзины")
             int cartId

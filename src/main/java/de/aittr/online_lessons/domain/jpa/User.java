@@ -2,16 +2,17 @@ package de.aittr.online_lessons.domain.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.UniqueElements;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @ToString
 @NoArgsConstructor
@@ -34,17 +35,12 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany
-    @JoinTable(
-            name = "enrollment",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id")
-    )
+    @OneToMany(mappedBy = "user")
     @ToString.Exclude
-    private List<Course> availableCourses = new ArrayList<>();
+    private Set<Enrollment> enrollments = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Course> createdCourses = new ArrayList<>();
+    private Set<Course> createdCourses = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnore
@@ -74,14 +70,6 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public void setAvailableCourses(List<Course> availableCourses) {
-        this.availableCourses = availableCourses;
-    }
-
-    public void setCreatedCourses(List<Course> createdCourses) {
-        this.createdCourses = createdCourses;
-    }
-
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
@@ -98,12 +86,24 @@ public class User implements UserDetails {
         return id;
     }
 
-    public List<Course> getAvailableCourses() {
-        return availableCourses;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public List<Course> getCreatedCourses() {
+    public Set<Enrollment> getEnrollments() {
+        return enrollments;
+    }
+
+    public void setEnrollments(Set<Enrollment> enrollments) {
+        this.enrollments = enrollments;
+    }
+
+    public Set<Course> getCreatedCourses() {
         return createdCourses;
+    }
+
+    public void setCreatedCourses(Set<Course> createdCourses) {
+        this.createdCourses = createdCourses;
     }
 
     public Set<Role> getRoles() {
