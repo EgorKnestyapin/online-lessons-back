@@ -1,4 +1,4 @@
-package de.aittr.online_lessons.services.jpa;
+package de.aittr.online_lessons.services;
 
 import de.aittr.online_lessons.domain.dto.CourseDto;
 import de.aittr.online_lessons.domain.jpa.Cart;
@@ -9,7 +9,7 @@ import de.aittr.online_lessons.exception_handling.exceptions.CartNotFoundExcepti
 import de.aittr.online_lessons.exception_handling.exceptions.EnrollmentValidationException;
 import de.aittr.online_lessons.repositories.jpa.CartRepository;
 import de.aittr.online_lessons.repositories.jpa.EnrollmentRepository;
-import de.aittr.online_lessons.services.mapping.CourseMappingService;
+import de.aittr.online_lessons.mapping.CourseMappingService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 

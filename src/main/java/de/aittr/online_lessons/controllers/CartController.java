@@ -2,9 +2,7 @@ package de.aittr.online_lessons.controllers;
 
 import de.aittr.online_lessons.controllers.api.CartApi;
 import de.aittr.online_lessons.domain.dto.CourseDto;
-import de.aittr.online_lessons.services.jpa.CartService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
+import de.aittr.online_lessons.services.CartService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

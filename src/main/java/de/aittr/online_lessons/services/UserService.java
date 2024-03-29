@@ -1,4 +1,4 @@
-package de.aittr.online_lessons.services.jpa;
+package de.aittr.online_lessons.services;
 
 import de.aittr.online_lessons.domain.dto.UserDto;
 import de.aittr.online_lessons.domain.jpa.Cart;
@@ -8,7 +8,7 @@ import de.aittr.online_lessons.exception_handling.exceptions.UserValidationExcep
 import de.aittr.online_lessons.exception_handling.exceptions.UserAlreadyExistsException;
 import de.aittr.online_lessons.repositories.jpa.CartRepository;
 import de.aittr.online_lessons.repositories.jpa.UserRepository;
-import de.aittr.online_lessons.services.mapping.UserMappingService;
+import de.aittr.online_lessons.mapping.UserMappingService;
 import jakarta.transaction.Transactional;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
