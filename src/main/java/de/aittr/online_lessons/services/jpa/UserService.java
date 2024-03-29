@@ -78,4 +78,9 @@ public class UserService implements UserDetailsService {
         }
         return user;
     }
+
+    public UserDto getUserByUsername(String username) {
+        User user = (User) loadUserByUsername(username);
+        return mappingService.mapEntityToDto(user);
+    }
 }

@@ -9,7 +9,6 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/users")
 public class UserController implements UserApi {
     private final UserService service;
 
@@ -25,5 +24,10 @@ public class UserController implements UserApi {
     @Override
     public void setRoleAdmin(String username) {
         service.setRoleAdmin(username);
+    }
+
+    @Override
+    public UserDto getUserInfo(String username) {
+        return service.getUserByUsername(username);
     }
 }

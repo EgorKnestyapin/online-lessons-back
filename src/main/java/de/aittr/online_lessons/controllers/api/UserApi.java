@@ -6,14 +6,12 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 @Tags(
         @Tag(name = "Users")
 )
+@RequestMapping("/api/users")
 public interface UserApi {
     @PostMapping("/register")
     @Operation(
@@ -37,4 +35,15 @@ public interface UserApi {
             String username
 
     );
+
+    @GetMapping("/account_info/{username}")
+    @Operation(
+            summary = "Добавление пользователю роли админа"
+    )
+    UserDto getUserInfo(
+            @PathVariable
+            @Parameter(description = "Никнейм пользователя")
+            String username
+    );
+
 }
