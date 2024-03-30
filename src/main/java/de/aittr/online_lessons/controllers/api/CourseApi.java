@@ -14,7 +14,7 @@ import java.util.Set;
 
 
 @Tags(
-        @Tag(name = "Courses")
+        @Tag(name = "Course controller", description = "Controller for some operations with courses")
 )
 @RequestMapping("/api/courses")
 public interface CourseApi {

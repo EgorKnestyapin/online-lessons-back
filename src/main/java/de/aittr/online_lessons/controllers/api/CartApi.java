@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Tags(
-        @Tag(name = "Cart")
+        @Tag(name = "Cart controller", description = "Controller for some operations with cart")
 )
 @RequestMapping("/api/cart")
 public interface CartApi {

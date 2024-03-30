@@ -1,15 +1,23 @@
 package de.aittr.online_lessons.security.sec_dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 import java.util.Objects;
 
+@Schema(
+        description = "Dto that transfer to user after successfully authentication and contains access" +
+                " and refresh tokens"
+)
 public class TokenResponseDto {
 
+    @Schema(description = "Access token")
     String accessToken;
 
+    @Schema(description = "Refresh token")
     String refreshToken;
 
+    @Schema(description = "Message about error reasons (if some error occurs)")
     String message;
 
     public TokenResponseDto(String accessToken, String refreshToken) {
