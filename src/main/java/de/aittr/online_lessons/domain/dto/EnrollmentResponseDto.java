@@ -1,10 +1,6 @@
 package de.aittr.online_lessons.domain.dto;
 
 import de.aittr.online_lessons.domain.jpa.Course;
-import de.aittr.online_lessons.domain.jpa.User;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -14,7 +10,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @ToString
 @Builder
-public class EnrollmentDto {
+public class EnrollmentResponseDto {
 
     private int id;
 

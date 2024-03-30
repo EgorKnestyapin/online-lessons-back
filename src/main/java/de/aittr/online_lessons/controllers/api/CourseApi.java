@@ -1,8 +1,7 @@
 package de.aittr.online_lessons.controllers.api;
 
 import de.aittr.online_lessons.domain.dto.CourseDto;
-import de.aittr.online_lessons.domain.dto.EnrollmentDto;
-import de.aittr.online_lessons.domain.jpa.Enrollment;
+import de.aittr.online_lessons.domain.dto.EnrollmentResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
@@ -74,7 +73,7 @@ public interface CourseApi {
             summary = "Получение курсов, доступных пользователю",
             description = "Получение списка курсов из базы данных, доступные конкретному пользователю"
     )
-    Set<EnrollmentDto> getAvailableCourses(
+    Set<EnrollmentResponseDto> getAvailableCourses(
             @PathVariable
             @Parameter(description = "Никнейм пользователя")
             String username
