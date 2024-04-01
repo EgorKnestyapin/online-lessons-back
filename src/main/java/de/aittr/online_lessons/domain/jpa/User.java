@@ -1,6 +1,7 @@
 package de.aittr.online_lessons.domain.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +15,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@Schema(description = "User entity")
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,17 +23,22 @@ import java.util.Set;
 @Entity
 @Table(name = "user")
 public class User implements UserDetails {
+
+    @Schema(description = "User unique identifier", example = "11")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
+    @Schema(description = "Username that use for logging in", example = "Stas9n")
     @Column(name = "username")
     private String username;
 
+    @Schema(description = "User's email", example = "john@gmail.com")
     @Column(name = "email")
     private String email;
 
+    @Schema(description = "User's raw password for logging in", example = "Qwerty123$")
     @Column(name = "password")
     private String password;
 
@@ -116,6 +123,10 @@ public class User implements UserDetails {
         return cart;
     }
 
+    @Schema(
+            description = "List of authorities granted to user",
+            accessMode = Schema.AccessMode.READ_ONLY
+    )
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
@@ -131,24 +142,39 @@ public class User implements UserDetails {
         return username;
     }
 
+    @Schema(
+            description = "True if user's account is not expired",
+            accessMode = Schema.AccessMode.READ_ONLY
+    )
     @Override
     @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    @Schema(
+            description = "True if user's account is not locked",
+            accessMode = Schema.AccessMode.READ_ONLY
+    )
     @Override
     @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    @Schema(
+            description = "True if user's credentials is not expired",
+            accessMode = Schema.AccessMode.READ_ONLY
+    )
     @Override
     @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    @Schema(description = "True if user is enabled",
+            accessMode = Schema.AccessMode.READ_ONLY
+    )
     @Override
     @JsonIgnore
     public boolean isEnabled() {

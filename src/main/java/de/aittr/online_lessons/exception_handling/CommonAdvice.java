@@ -1,8 +1,10 @@
 package de.aittr.online_lessons.exception_handling;
 
 import de.aittr.online_lessons.exception_handling.exceptions.*;
+import jakarta.security.auth.message.AuthException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -66,6 +68,18 @@ public class CommonAdvice {
 
     @ExceptionHandler(EnrollmentAlreadyExistsException.class)
     public ResponseEntity<Response> handleException(EnrollmentAlreadyExistsException e) {
+        Response response = new Response(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AuthException.class)
+    public ResponseEntity<Response> handleException(AuthException e) {
+        Response response = new Response(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Response> handleException(UserNotFoundException e) {
         Response response = new Response(e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }

@@ -10,7 +10,7 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @Tags(
-        @Tag(name = "Users")
+        @Tag(name = "User controller", description = "Controller for some operations with users")
 )
 @RequestMapping("/api/users")
 public interface UserApi {

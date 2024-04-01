@@ -1,5 +1,6 @@
 package de.aittr.online_lessons.domain.jpa;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -7,6 +8,7 @@ import org.hibernate.validator.constraints.Length;
 
 import java.util.Objects;
 
+@Schema(description = "Course entity")
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -15,26 +17,38 @@ import java.util.Objects;
 @Table(name = "course")
 public class Course {
 
+    @Schema(description = "Course unique identifier", example = "14")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
+    @Schema(description = "Course name", example = "Data science")
     @Column(name = "title")
     @NotNull
     private String title;
 
+    @Schema(description = "Course price", example = "300.0")
     @Column(name = "price")
     @NotNull
     private int price;
 
+    @Schema(
+            description = "Storage path of the course photo",
+            example = "https://online-lessons-files.fra1.digitaloceanspaces.com/photos/GJGKvfw.jpg"
+    )
     @Column(name = "photo_path")
     @NotNull
     private String photoPath;
 
+    @Schema(
+            description = "Storage path of the course presentation",
+            example = "https://online-lessons-files.fra1.digitaloceanspaces.com/presentation/Flgssb.pptx"
+    )
     @Column(name = "presentation_path")
     private String presentationPath;
 
+    @Schema(description = "Course description", example = "This course will cover topics related to...")
     @Column(name = "description", length = 1800)
     private String description;
 

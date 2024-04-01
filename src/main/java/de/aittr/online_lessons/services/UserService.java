@@ -6,6 +6,7 @@ import de.aittr.online_lessons.domain.jpa.Cart;
 import de.aittr.online_lessons.domain.jpa.Role;
 import de.aittr.online_lessons.domain.jpa.User;
 import de.aittr.online_lessons.exception_handling.exceptions.PasswordMismatchException;
+import de.aittr.online_lessons.exception_handling.exceptions.UserNotFoundException;
 import de.aittr.online_lessons.exception_handling.exceptions.UserValidationException;
 import de.aittr.online_lessons.exception_handling.exceptions.UserAlreadyExistsException;
 import de.aittr.online_lessons.repositories.jpa.CartRepository;
@@ -88,6 +89,14 @@ public class UserService implements UserDetailsService {
     public UserDto getUserByUsername(String username) {
         User user = (User) loadUserByUsername(username);
         return mappingService.mapEntityToDto(user);
+    }
+
+    public User getUserByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new UserNotFoundException("User with this email was not found");
+        }
+        return user;
     }
 
     @Transactional
