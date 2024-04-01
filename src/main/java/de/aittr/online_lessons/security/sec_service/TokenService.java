@@ -1,8 +1,10 @@
 package de.aittr.online_lessons.security.sec_service;
 
 import de.aittr.online_lessons.domain.jpa.Role;
+import de.aittr.online_lessons.domain.jpa.Token;
 import de.aittr.online_lessons.domain.jpa.User;
 import de.aittr.online_lessons.repositories.jpa.RoleRepository;
+import de.aittr.online_lessons.repositories.jpa.TokenRepository;
 import de.aittr.online_lessons.security.sec_dto.AuthInfo;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -27,14 +29,17 @@ public class TokenService {
 
     private RoleRepository roleRepository;
 
+    private TokenRepository tokenRepository;
+
     public TokenService(
             @Value("${access.key}") String accessKey,
             @Value("${refresh.key}") String refreshKey,
-            RoleRepository roleRepository
+            RoleRepository roleRepository, TokenRepository tokenRepository
     ) {
         this.accessKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(accessKey));
         this.refreshKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(refreshKey));
         this.roleRepository = roleRepository;
+        this.tokenRepository = tokenRepository;
     }
 
     public String generateAccessToken(@Nonnull User user) {
@@ -82,6 +87,15 @@ public class TokenService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public Token saveRefreshToken(String refreshToken, User user) {
+        int id = 0;
+        if (user.getToken() != null) {
+            id = user.getToken().getId();
+        }
+        Token newToken = new Token(id, refreshToken, user);
+        return tokenRepository.save(newToken);
     }
 
     public Claims getAccessClaims(@Nonnull String accessToken) {

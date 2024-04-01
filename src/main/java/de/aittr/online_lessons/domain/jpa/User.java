@@ -61,7 +61,12 @@ public class User implements UserDetails {
     private Set<Role> roles = new HashSet<>();
 
     @OneToOne(mappedBy = "user")
+    @ToString.Exclude
     private Cart cart;
+
+    @OneToOne(mappedBy = "user")
+    @ToString.Exclude
+    private Token token;
 
     public void setId(int id) {
         this.id = id;
@@ -121,6 +126,14 @@ public class User implements UserDetails {
 
     public Cart getCart() {
         return cart;
+    }
+
+    public Token getToken() {
+        return token;
+    }
+
+    public void setToken(Token token) {
+        this.token = token;
     }
 
     @Schema(

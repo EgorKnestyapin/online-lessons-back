@@ -53,6 +53,7 @@ public class Course {
     private String description;
 
     @ManyToOne
+    @ToString.Exclude
     @JoinColumn(name = "user_id")
     private User user;
 

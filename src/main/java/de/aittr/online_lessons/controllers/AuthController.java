@@ -1,6 +1,7 @@
 package de.aittr.online_lessons.controllers;
 
 import de.aittr.online_lessons.controllers.api.AuthApi;
+import de.aittr.online_lessons.security.sec_dto.AuthInfo;
 import de.aittr.online_lessons.security.sec_dto.RefreshRequestDto;
 import de.aittr.online_lessons.security.sec_dto.TokenResponseDto;
 import de.aittr.online_lessons.security.sec_dto.UserLoginDto;
@@ -54,5 +55,10 @@ public class AuthController implements AuthApi {
         cookie.setHttpOnly(true);
         cookie.setMaxAge(0);
         response.addCookie(cookie);
+    }
+
+    @Override
+    public AuthInfo getAuthInfo() {
+        return service.getAuthInfo();
     }
 }
