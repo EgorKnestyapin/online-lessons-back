@@ -3,6 +3,7 @@ package de.aittr.online_lessons.domain.jpa;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.Objects;
@@ -23,6 +24,7 @@ public class Token {
     private Integer id;
 
     @Column(name = "refresh_token")
+    @NotNull
     private String refreshToken;
 
     @OneToOne

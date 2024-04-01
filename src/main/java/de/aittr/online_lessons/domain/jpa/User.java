@@ -3,6 +3,7 @@ package de.aittr.online_lessons.domain.jpa;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -31,14 +32,17 @@ public class User implements UserDetails {
     private Integer id;
 
     @Schema(description = "Username that use for logging in", example = "Stas9n")
+    @NotNull
     @Column(name = "username")
     private String username;
 
     @Schema(description = "User's email", example = "john@gmail.com")
+    @NotNull
     @Column(name = "email")
     private String email;
 
     @Schema(description = "User's raw password for logging in", example = "Qwerty123$")
+    @NotNull
     @Column(name = "password")
     private String password;
 

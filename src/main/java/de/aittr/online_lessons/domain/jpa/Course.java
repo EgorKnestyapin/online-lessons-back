@@ -49,6 +49,7 @@ public class Course {
     private String presentationPath;
 
     @Schema(description = "Course description", example = "This course will cover topics related to...")
+    @NotNull
     @Column(name = "description", length = 1800)
     private String description;
 

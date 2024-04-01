@@ -1,11 +1,10 @@
 package de.aittr.online_lessons.domain.jpa;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Objects;
 
 @NoArgsConstructor
@@ -22,9 +21,11 @@ public class Enrollment {
     private Integer id;
 
     @Column(name = "enrollment_date")
+    @NotNull
     private LocalDateTime enrollmentDate;
 
     @Column(name = "status")
+    @NotNull
     private String status;
 
     @ManyToOne
