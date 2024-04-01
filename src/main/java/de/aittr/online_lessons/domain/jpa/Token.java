@@ -1,48 +1,48 @@
 package de.aittr.online_lessons.domain.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Objects;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Builder
 @Entity
-@Table(name = "role")
-public class Role implements GrantedAuthority {
+@Table(name = "token")
+public class Token {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name")
+    @Column(name = "refresh_token")
     @NotNull
-    @JsonIgnore
-    private String name;
+    private String refreshToken;
 
-    @Override
-    public String getAuthority() {
-        return name;
-    }
+    @OneToOne
+    @JsonIgnore
+    @ToString.Exclude
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Role role = (Role) o;
-        return Objects.equals(id, role.id) && Objects.equals(name, role.name);
+        Token token = (Token) o;
+        return Objects.equals(id, token.id) && Objects.equals(refreshToken, token.refreshToken) && Objects.equals(user, token.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id, refreshToken, user);
     }
 }

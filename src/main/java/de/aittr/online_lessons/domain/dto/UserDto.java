@@ -2,6 +2,7 @@ package de.aittr.online_lessons.domain.dto;
 
 import de.aittr.online_lessons.domain.jpa.Role;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
@@ -18,13 +19,16 @@ public class UserDto {
 
     private int id;
 
-    @Length(min = 3, max = 10)
+    @Pattern(regexp = "^[a-zA-Z0-9_-]{3,10}$", message = "Invalid nickname format")
     private String nickname;
 
     @Email
     private String email;
 
-    @Length(min = 8)
+    @Pattern(
+            regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!$#%])[a-zA-Z0-9!$#%]{8,}$",
+            message = "Invalid password format"
+    )
     private String password;
 
     private Set<Role> roles = new HashSet<>();

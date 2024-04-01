@@ -1,6 +1,7 @@
 package de.aittr.online_lessons.controllers;
 
 import de.aittr.online_lessons.controllers.api.AuthApi;
+import de.aittr.online_lessons.security.sec_dto.AuthInfo;
 import de.aittr.online_lessons.security.sec_dto.RefreshRequestDto;
 import de.aittr.online_lessons.security.sec_dto.TokenResponseDto;
 import de.aittr.online_lessons.security.sec_dto.UserLoginDto;
@@ -8,12 +9,16 @@ import de.aittr.online_lessons.security.sec_service.AuthService;
 import jakarta.security.auth.message.AuthException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class AuthController implements AuthApi {
+
+    private final Logger logger = LoggerFactory.getLogger(AuthController.class);
     private AuthService service;
 
     public AuthController(AuthService service) {
@@ -50,5 +55,10 @@ public class AuthController implements AuthApi {
         cookie.setHttpOnly(true);
         cookie.setMaxAge(0);
         response.addCookie(cookie);
+    }
+
+    @Override
+    public AuthInfo getAuthInfo() {
+        return service.getAuthInfo();
     }
 }

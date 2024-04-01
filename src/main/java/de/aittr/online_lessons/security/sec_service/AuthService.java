@@ -1,6 +1,8 @@
 package de.aittr.online_lessons.security.sec_service;
 
+import de.aittr.online_lessons.domain.jpa.Token;
 import de.aittr.online_lessons.domain.jpa.User;
+import de.aittr.online_lessons.exception_handling.exceptions.UserNotAuthenticated;
 import de.aittr.online_lessons.security.sec_dto.AuthInfo;
 import de.aittr.online_lessons.security.sec_dto.TokenResponseDto;
 import de.aittr.online_lessons.security.sec_dto.UserLoginDto;
@@ -8,6 +10,8 @@ import de.aittr.online_lessons.services.UserService;
 import io.jsonwebtoken.Claims;
 import jakarta.annotation.Nonnull;
 import jakarta.security.auth.message.AuthException;
+import jakarta.transaction.Transactional;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,17 +26,15 @@ public class AuthService {
 
     private TokenService tokenService;
 
-    private Map<String, String> refreshStorage;
-
     private BCryptPasswordEncoder encoder;
 
     public AuthService(UserService userService, TokenService tokenService, BCryptPasswordEncoder encoder) {
         this.userService = userService;
         this.tokenService = tokenService;
-        this.refreshStorage = new HashMap<>();
         this.encoder = encoder;
     }
 
+    @Transactional
     public TokenResponseDto login(@Nonnull UserLoginDto inboundUser) throws AuthException {
         String email = inboundUser.getEmail();
         User foundUser = userService.getUserByEmail(email);
@@ -40,7 +42,8 @@ public class AuthService {
         if (encoder.matches(inboundUser.getPassword(), foundUser.getPassword())) {
             String accessToken = tokenService.generateAccessToken(foundUser);
             String refreshToken = tokenService.generateRefreshToken(foundUser);
-            refreshStorage.put(foundUser.getUsername(), refreshToken);
+            Token token = tokenService.saveRefreshToken(refreshToken, foundUser);
+            foundUser.setToken(token);
             return new TokenResponseDto(accessToken, refreshToken);
         } else {
             throw new AuthException("Password is incorrect");
@@ -51,10 +54,13 @@ public class AuthService {
         if (tokenService.validateRefreshToken(refreshToken)) {
             Claims refreshClaims = tokenService.getRefreshClaims(refreshToken);
             String username = refreshClaims.getSubject();
-            String savedRefreshToken = refreshStorage.get(username);
+            User user = (User) userService.loadUserByUsername(username);
+            if (user.getToken() == null) {
+                throw new UserNotAuthenticated("User has never logged in");
+            }
+            String savedRefreshToken = user.getToken().getRefreshToken();
 
             if (savedRefreshToken != null && savedRefreshToken.equals(refreshToken)) {
-                User user = (User) userService.loadUserByUsername(username);
                 String accessToken = tokenService.generateAccessToken(user);
                 return new TokenResponseDto(accessToken, null);
             }
@@ -63,6 +69,10 @@ public class AuthService {
     }
 
     public AuthInfo getAuthInfo() {
-        return (AuthInfo) SecurityContextHolder.getContext().getAuthentication();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getPrincipal().equals("anonymousUser")) {
+            throw new UserNotAuthenticated("User is not authenticated");
+        }
+        return (AuthInfo) auth;
     }
 }

@@ -1,5 +1,6 @@
 package de.aittr.online_lessons.controllers.api;
 
+import de.aittr.online_lessons.security.sec_dto.AuthInfo;
 import de.aittr.online_lessons.security.sec_dto.RefreshRequestDto;
 import de.aittr.online_lessons.security.sec_dto.TokenResponseDto;
 import de.aittr.online_lessons.security.sec_dto.UserLoginDto;
@@ -55,4 +56,8 @@ public interface AuthApi {
             @Parameter(description = "Object of a response that will be transferred to a client")
             HttpServletResponse response
     );
+
+    @GetMapping("/auth_info")
+    @Operation(description = "Getting auth info")
+    AuthInfo getAuthInfo();
 }

@@ -83,4 +83,10 @@ public class CommonAdvice {
         Response response = new Response(e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(UserNotAuthenticated.class)
+    public ResponseEntity<Response> handleException(UserNotAuthenticated e) {
+        Response response = new Response(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 }
