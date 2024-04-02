@@ -6,12 +6,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-  mvc:
-    cors:
-      allowed-origins: "http://localhost:5173"
-      allowed-methods: [ GET, POST, PUT, DELETE, OPTIONS ]
-      allowed-headers: [ Authorization, Content-Type, Accept ]
-      max-age: 3600
 
 logging:
   file:
