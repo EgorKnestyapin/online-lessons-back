@@ -113,4 +113,9 @@ public class UserService implements UserDetailsService {
         }
         return false;
     }
+
+    public void deleteUserByUsername(String username) {
+        User user = (User) loadUserByUsername(username);
+        userRepository.delete(user);
+    }
 }

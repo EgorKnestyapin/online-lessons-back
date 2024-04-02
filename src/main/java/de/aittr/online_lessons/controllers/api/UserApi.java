@@ -82,4 +82,15 @@ public interface UserApi {
             @RequestBody
             ChangePasswordDto dto
     );
+
+    @DeleteMapping("/delete/{username}")
+    @Operation(
+            summary = "Удаление пользователя",
+            description = "Удаление пользователя из базы данных по никнейму, переданному в строке запроса"
+    )
+    void deleteUser(
+            @PathVariable
+            @Parameter(description = "Никнейм пользователя")
+            String username
+    );
 }

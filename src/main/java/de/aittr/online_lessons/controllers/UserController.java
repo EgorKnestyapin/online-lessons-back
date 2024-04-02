@@ -33,4 +33,9 @@ public class UserController implements UserApi {
     public boolean changePassword(String username, ChangePasswordDto dto) {
         return service.changePassword(username, dto);
     }
+
+    @Override
+    public void deleteUser(String username) {
+        service.deleteUserByUsername(username);
+    }
 }
