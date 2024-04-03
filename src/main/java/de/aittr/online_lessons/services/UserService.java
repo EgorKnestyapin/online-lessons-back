@@ -52,10 +52,15 @@ public class UserService implements UserDetailsService {
     public UserDto register(UserDto userDto) {
         User user = mappingService.mapDtoToEntity(userDto);
         User foundUser = userRepository.findByUsername(user.getUsername());
-
         if (foundUser != null) {
-            throw new UserAlreadyExistsException("User with the same nickname already exists");
+            throw new UserAlreadyExistsException("This nickname is already taken");
         }
+
+        foundUser = userRepository.findByEmail(user.getEmail());
+        if (foundUser != null) {
+            throw new UserAlreadyExistsException("User with the same email already exists");
+        }
+
         user.clearRoles();
         Role role = new Role(1, "ROLE_USER");
         user.addRole(role);
