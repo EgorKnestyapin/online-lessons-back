@@ -20,7 +20,7 @@ public class Cart {
     @Column
     private Integer id;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "cart_course",
             joinColumns = @JoinColumn(name = "cart_id"),

@@ -1,12 +1,15 @@
 package de.aittr.online_lessons.domain.jpa;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Schema(description = "Course entity")
 @NoArgsConstructor
@@ -53,10 +56,15 @@ public class Course {
     @Column(name = "description", length = 1800)
     private String description;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @ToString.Exclude
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @JsonIgnore
+    private Set<Enrollment> enrollments = new HashSet<>();
 
     public int getId() {
         return id;
