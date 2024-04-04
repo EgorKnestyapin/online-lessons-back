@@ -42,7 +42,7 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findByUsername(username);
 
         if (user == null) {
-            throw new UsernameNotFoundException("User with username " + username + " not found");
+            throw new UsernameNotFoundException("User with this username not found");
         }
 
         return user;
@@ -53,7 +53,7 @@ public class UserService implements UserDetailsService {
         User user = mappingService.mapDtoToEntity(userDto);
         User foundUser = userRepository.findByUsername(user.getUsername());
         if (foundUser != null) {
-            throw new UserAlreadyExistsException("Nickname " + user.getUsername() + " is already taken");
+            throw new UserAlreadyExistsException("This nickname is already taken");
         }
 
         foundUser = userRepository.findByEmail(user.getEmail());
@@ -80,7 +80,7 @@ public class UserService implements UserDetailsService {
     public void setRoleAdmin(String username) {
         User user = (User) loadUserByUsername(username);
         if (user == null) {
-            throw new UserNotFoundException("User with nickname " + username + " was not found");
+            throw new UserNotFoundException("User with this nickname was not found");
         }
         user.addRole(new Role(2, "ROLE_ADMIN"));
     }
