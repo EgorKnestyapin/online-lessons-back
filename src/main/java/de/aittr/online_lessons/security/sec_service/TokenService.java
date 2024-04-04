@@ -117,7 +117,11 @@ public class TokenService {
 
     public AuthInfo generateAuthInfo(Claims claims) {
         String username = claims.getSubject();
-        int id = (int) claims.get("cartId");
+        int id = 0;
+        try {
+            id = (int) claims.get("cartId");
+        } catch (Exception ignored) {
+        }
         List<LinkedHashMap<String, String>> rolesList = (List<LinkedHashMap<String, String>>) claims.get("roles");
         Set<Role> roles = new HashSet<>();
 
