@@ -42,7 +42,7 @@ public interface AuthApi {
                     description = "User logged in",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = TokenResponseDto.class))),
-            @ApiResponse(responseCode = "401",
+            @ApiResponse(responseCode = "400",
                     description = "Login or password is incorrect",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = TokenResponseDto.class))),

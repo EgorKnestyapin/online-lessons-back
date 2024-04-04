@@ -14,10 +14,13 @@ public class AuthInfo implements Authentication {
 
     private final String username;
 
+    private final int cartId;
+
     private final Set<Role> roles;
 
-    public AuthInfo(String username, Set<Role> roles) {
+    public AuthInfo(String username, int cartId, Set<Role> roles) {
         this.username = username;
+        this.cartId = cartId;
         this.roles = roles;
     }
 
@@ -54,6 +57,10 @@ public class AuthInfo implements Authentication {
     @Override
     public String getName() {
         return username;
+    }
+
+    public int getCartId() {
+        return cartId;
     }
 
     @Override

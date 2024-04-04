@@ -10,6 +10,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.security.auth.login.LoginException;
+
 @ControllerAdvice
 public class CommonAdvice {
     @ExceptionHandler(UserAlreadyExistsException.class)
@@ -63,7 +65,7 @@ public class CommonAdvice {
     @ExceptionHandler(PasswordMismatchException.class)
     public ResponseEntity<Response> handleException(PasswordMismatchException e) {
         Response response = new Response(e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(EnrollmentAlreadyExistsException.class)
@@ -74,6 +76,12 @@ public class CommonAdvice {
 
     @ExceptionHandler(AuthException.class)
     public ResponseEntity<Response> handleException(AuthException e) {
+        Response response = new Response(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(LoginException.class)
+    public ResponseEntity<Response> handleException(LoginException e) {
         Response response = new Response(e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }

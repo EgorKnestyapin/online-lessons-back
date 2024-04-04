@@ -3,10 +3,7 @@ package de.aittr.online_lessons.controllers.api;
 import de.aittr.online_lessons.domain.dto.ChangePasswordDto;
 import de.aittr.online_lessons.domain.dto.UserDto;
 import de.aittr.online_lessons.exception_handling.exceptions.UserAlreadyExistsException;
-import de.aittr.online_lessons.validation.dto.ForbiddenErrorDto;
-import de.aittr.online_lessons.validation.dto.UserAlreadyExistsErrorDto;
-import de.aittr.online_lessons.validation.dto.UserNotFoundErrorDto;
-import de.aittr.online_lessons.validation.dto.UserValidationErrorDto;
+import de.aittr.online_lessons.validation.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -105,6 +102,10 @@ public interface UserApi {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "The user's password has changed"),
+            @ApiResponse(responseCode = "400",
+                    description = "Incorrect password fields",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = PasswordMismatchErrorDto.class))),
             @ApiResponse(responseCode = "403",
                     description = "Access is denied",
                     content = @Content(mediaType = "application/json",
@@ -114,7 +115,7 @@ public interface UserApi {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = UserNotFoundErrorDto.class))),
     })
-    boolean changePassword(
+    void changePassword(
             @PathVariable
             @Parameter(description = "User nickname")
             String username,

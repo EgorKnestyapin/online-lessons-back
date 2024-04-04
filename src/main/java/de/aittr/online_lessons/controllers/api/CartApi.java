@@ -73,46 +73,86 @@ public interface CartApi {
     })
     void addCourseToCart(
             @PathVariable
-            @Parameter(description = "Идентификатор корзины")
+            @Parameter(description = "Cart ID")
             int cartId,
             @PathVariable
-            @Parameter(description = "Идентификатор курса")
+            @Parameter(description = "Course ID")
             int courseId
     );
 
     @DeleteMapping("/{cartId}/{courseId}")
     @Operation(
-            summary = "Удаление курса из корзины",
-            description = "Удаление курса из базы данных корзины по идентификатору, переданному в строке запроса"
+            summary = "Removing a course from the cart",
+            description = "Removing a course from the cart database using the ID passed in the query string"
     )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Course removed from cart"),
+            @ApiResponse(responseCode = "403",
+                    description = "Access is denied",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ForbiddenErrorDto.class))),
+            @ApiResponse(responseCode = "404",
+                    description = "Cart not found",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CartNotFoundErrorDto.class))),
+    })
     void deleteCourseFromCart(
             @PathVariable
-            @Parameter(description = "Идентификатор корзины")
+            @Parameter(description = "Cart ID")
             int cartId,
             @PathVariable
-            @Parameter(description = "Идентификатор курса")
+            @Parameter(description = "Course ID")
             int courseId
     );
 
     @DeleteMapping("/clear/{cartId}")
     @Operation(
-            summary = "Очищение корзины",
-            description = "Удаление всех курсов из базы данных корзины, идентификатор которой передан в строке запроса"
+            summary = "Emptying the shopping cart",
+            description = "Removing all courses from the cart database whose ID is passed in the query string"
     )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "All courses have been removed from the cart"),
+            @ApiResponse(responseCode = "403",
+                    description = "Access is denied",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ForbiddenErrorDto.class))),
+            @ApiResponse(responseCode = "404",
+                    description = "Cart not found",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CartNotFoundErrorDto.class))),
+    })
     void clearCart(
             @PathVariable
-            @Parameter(description = "Идентификатор корзины")
+            @Parameter(description = "Cart ID")
             int cartId
     );
 
     @PutMapping("/buy/{cartId}")
     @Operation(
-            summary = "Покупка всех курсов в корзине",
-            description = "Добавление новой записи в базу данных таблицы enrollment и очищение корзины"
+            summary = "Purchasing all courses in the cart",
+            description = "Adding a new entry to the enrollment table database and emptying the shopping cart"
     )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Courses successfully paid for"),
+            @ApiResponse(responseCode = "403",
+                    description = "Access is denied",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ForbiddenErrorDto.class))),
+            @ApiResponse(responseCode = "404",
+                    description = "Cart not found",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CartNotFoundErrorDto.class))),
+            @ApiResponse(responseCode = "409",
+                    description = "Course has already been purchased",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CartNotFoundErrorDto.class))),
+    })
     void buyCourses(
             @PathVariable
-            @Parameter(description = "Идентификатор корзины")
+            @Parameter(description = "Cart ID")
             int cartId
     );
 }

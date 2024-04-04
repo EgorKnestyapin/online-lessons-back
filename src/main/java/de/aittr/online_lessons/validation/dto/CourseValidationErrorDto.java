@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Schema(name = "CartNotFoundError", description = "Cart not found")
-public class CartNotFoundErrorDto {
+@Schema(name = "CourseValidationError", description = "Incorrect course fields")
+public class CourseValidationErrorDto {
 
-    @Schema(description = "Error message", example = "Cart with this ID not found")
+    @Schema(description = "Error message", example = "Incorrect values of course fields")
     private String message;
 }

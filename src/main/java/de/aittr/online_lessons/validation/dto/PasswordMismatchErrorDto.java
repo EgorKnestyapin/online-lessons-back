@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Schema(name = "CartNotFoundError", description = "Cart not found")
-public class CartNotFoundErrorDto {
+@Schema(name = "PasswordMismatchError", description = "Password mismatch")
+public class PasswordMismatchErrorDto {
 
-    @Schema(description = "Error message", example = "Cart with this ID not found")
+    @Schema(description = "Error message", example = "New password and confirm password mismatch")
     private String message;
 }

@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Schema(name = "CartNotFoundError", description = "Cart not found")
-public class CartNotFoundErrorDto {
+@Schema(name = "CourseNotFoundError", description = "Course not found")
+public class CourseNotFoundErrorDto {
 
-    @Schema(description = "Error message", example = "Cart with this ID not found")
+    @Schema(description = "Error message", example = "Course with this ID not found")
     private String message;
 }

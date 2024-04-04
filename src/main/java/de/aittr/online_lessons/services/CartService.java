@@ -54,7 +54,7 @@ public class CartService {
     private Cart getCartById(int cartId) {
         Cart cart = cartRepository.findById(cartId).orElse(null);
         if (cart == null) {
-            throw new CartNotFoundException("Cart with this ID not found");
+            throw new CartNotFoundException("Cart with ID " + cartId + " not found");
         }
         return cart;
     }

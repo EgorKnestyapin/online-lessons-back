@@ -62,7 +62,7 @@ public class CourseService {
     public Course getCourseEntityById(int id) {
         Course course = repository.findById(id).orElse(null);
         if (course == null) {
-            throw new CourseNotFoundException("Course not found");
+            throw new CourseNotFoundException("Course not found with id " + id);
         }
         return course;
     }
@@ -74,7 +74,11 @@ public class CourseService {
         Course course = courseMappingService.mapDtoToEntity(courseDto);
         course.setId(id);
 
-        course = repository.save(course);
+        try {
+            course = repository.save(course);
+        } catch (Exception e) {
+            throw new CourseValidationException("Incorrect values of course fields", e);
+        }
 
         return courseMappingService.mapEntityToDto(course);
     }

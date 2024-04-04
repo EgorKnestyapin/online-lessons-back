@@ -42,7 +42,7 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findByUsername(username);
 
         if (user == null) {
-            throw new UsernameNotFoundException("User not found");
+            throw new UsernameNotFoundException("User with username " + username + " not found");
         }
 
         return user;
@@ -53,12 +53,12 @@ public class UserService implements UserDetailsService {
         User user = mappingService.mapDtoToEntity(userDto);
         User foundUser = userRepository.findByUsername(user.getUsername());
         if (foundUser != null) {
-            throw new UserAlreadyExistsException("This nickname is already taken");
+            throw new UserAlreadyExistsException("Nickname " + user.getUsername() + " is already taken");
         }
 
         foundUser = userRepository.findByEmail(user.getEmail());
         if (foundUser != null) {
-            throw new UserAlreadyExistsException("User with the same email already exists");
+            throw new UserAlreadyExistsException("User with email " + user.getEmail() + " already exists");
         }
 
         user.clearRoles();
@@ -80,7 +80,7 @@ public class UserService implements UserDetailsService {
     public void setRoleAdmin(String username) {
         User user = (User) loadUserByUsername(username);
         if (user == null) {
-            throw new UserNotFoundException("User with this nickname was not found");
+            throw new UserNotFoundException("User with nickname " + username + " was not found");
         }
         user.addRole(new Role(2, "ROLE_ADMIN"));
     }
@@ -89,7 +89,7 @@ public class UserService implements UserDetailsService {
     public User getUserById(int id) {
         User user = userRepository.findById(id).orElse(null);
         if (user == null) {
-            throw new UsernameNotFoundException("User not found");
+            throw new UsernameNotFoundException("User with id " + id + " not found");
         }
         return user;
     }
@@ -102,24 +102,24 @@ public class UserService implements UserDetailsService {
     public User getUserByEmail(String email) {
         User user = userRepository.findByEmail(email);
         if (user == null) {
-            throw new UserNotFoundException("User with this email was not found");
+            throw new UserNotFoundException("User with email " + email + " was not found");
         }
         return user;
     }
 
     @Transactional
-    public boolean changePassword(String username, ChangePasswordDto dto) {
+    public void changePassword(String username, ChangePasswordDto dto) {
         User user = (User) loadUserByUsername(username);
         String oldPassword = dto.getOldPassword();
 
         if (!dto.getNewPassword().equals(dto.getConfirmNewPassword())) {
             throw new PasswordMismatchException("New password and confirm password mismatch");
         }
-        if (encoder.matches(oldPassword, user.getPassword())) {
-            user.setPassword(encoder.encode(dto.getNewPassword()));
-            return true;
+
+        if (!encoder.matches(oldPassword, user.getPassword())) {
+            throw new PasswordMismatchException("Current password is incorrect");
         }
-        return false;
+        user.setPassword(encoder.encode(dto.getNewPassword()));
     }
 
     public void deleteUserByUsername(String username) {
