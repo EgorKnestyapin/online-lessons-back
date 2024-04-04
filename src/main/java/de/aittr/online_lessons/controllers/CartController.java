@@ -22,8 +22,8 @@ public class CartController implements CartApi {
     }
 
     @Override
-    public boolean addCourseToCart(int cartId, int courseId) {
-        return cartService.addCourseToCart(cartId, courseId);
+    public void addCourseToCart(int cartId, int courseId) {
+       cartService.addCourseToCart(cartId, courseId);
     }
 
     @Override

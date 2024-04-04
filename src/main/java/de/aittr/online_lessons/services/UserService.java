@@ -79,6 +79,9 @@ public class UserService implements UserDetailsService {
     @Transactional
     public void setRoleAdmin(String username) {
         User user = (User) loadUserByUsername(username);
+        if (user == null) {
+            throw new UserNotFoundException("User with this nickname was not found");
+        }
         user.addRole(new Role(2, "ROLE_ADMIN"));
     }
 
