@@ -119,6 +119,7 @@ public interface UserApi {
             @PathVariable
             @Parameter(description = "User nickname")
             String username,
+            @Valid
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO object for changing password")
             @RequestBody
             ChangePasswordDto dto
