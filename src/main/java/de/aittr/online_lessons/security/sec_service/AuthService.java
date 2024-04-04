@@ -3,6 +3,7 @@ package de.aittr.online_lessons.security.sec_service;
 import de.aittr.online_lessons.domain.jpa.Token;
 import de.aittr.online_lessons.domain.jpa.User;
 import de.aittr.online_lessons.exception_handling.exceptions.UserNotAuthenticated;
+import de.aittr.online_lessons.repositories.jpa.UserRepository;
 import de.aittr.online_lessons.security.sec_dto.AuthInfo;
 import de.aittr.online_lessons.security.sec_dto.TokenResponseDto;
 import de.aittr.online_lessons.security.sec_dto.UserLoginDto;
@@ -16,20 +17,21 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Service
 public class AuthService {
 
     private UserService userService;
 
+    private UserRepository userRepository;
+
     private TokenService tokenService;
 
     private BCryptPasswordEncoder encoder;
 
-    public AuthService(UserService userService, TokenService tokenService, BCryptPasswordEncoder encoder) {
+    public AuthService(UserService userService, UserRepository userRepository, TokenService tokenService,
+                       BCryptPasswordEncoder encoder) {
         this.userService = userService;
+        this.userRepository = userRepository;
         this.tokenService = tokenService;
         this.encoder = encoder;
     }
@@ -37,17 +39,17 @@ public class AuthService {
     @Transactional
     public TokenResponseDto login(@Nonnull UserLoginDto inboundUser) throws AuthException {
         String email = inboundUser.getEmail();
-        User foundUser = userService.getUserByEmail(email);
+        User foundUser = userRepository.findByEmail(email);
 
-        if (encoder.matches(inboundUser.getPassword(), foundUser.getPassword())) {
-            String accessToken = tokenService.generateAccessToken(foundUser);
-            String refreshToken = tokenService.generateRefreshToken(foundUser);
-            Token token = tokenService.saveRefreshToken(refreshToken, foundUser);
-            foundUser.setToken(token);
-            return new TokenResponseDto(accessToken, refreshToken);
-        } else {
-            throw new AuthException("Password is incorrect");
+        if (foundUser == null || !encoder.matches(inboundUser.getPassword(), foundUser.getPassword())) {
+            throw new AuthException("Email or password is incorrect");
         }
+
+        String accessToken = tokenService.generateAccessToken(foundUser);
+        String refreshToken = tokenService.generateRefreshToken(foundUser);
+        Token token = tokenService.saveRefreshToken(refreshToken, foundUser);
+        foundUser.setToken(token);
+        return new TokenResponseDto(accessToken, refreshToken);
     }
 
     public TokenResponseDto getAccessToken(@Nonnull String refreshToken) {

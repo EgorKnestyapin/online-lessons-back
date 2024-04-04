@@ -6,6 +6,7 @@ import de.aittr.online_lessons.domain.jpa.Course;
 import de.aittr.online_lessons.domain.jpa.Enrollment;
 import de.aittr.online_lessons.domain.jpa.User;
 import de.aittr.online_lessons.exception_handling.exceptions.CartNotFoundException;
+import de.aittr.online_lessons.exception_handling.exceptions.CourseDuplicateException;
 import de.aittr.online_lessons.exception_handling.exceptions.EnrollmentAlreadyExistsException;
 import de.aittr.online_lessons.exception_handling.exceptions.EnrollmentValidationException;
 import de.aittr.online_lessons.repositories.jpa.CartRepository;
@@ -41,20 +42,19 @@ public class CartService {
     }
 
     @Transactional
-    public boolean addCourseToCart(int cartId, int courseId) {
+    public void addCourseToCart(int cartId, int courseId) {
         Cart cart = getCartById(cartId);
         Course course = courseService.getCourseEntityById(courseId);
-        if (!cart.getCourses().contains(course)) {
-            cart.addCourse(course);
-            return true;
+        if (cart.getCourses().contains(course)) {
+            throw new CourseDuplicateException("Course is already in the cart");
         }
-        return false;
+        cart.addCourse(course);
     }
 
     private Cart getCartById(int cartId) {
         Cart cart = cartRepository.findById(cartId).orElse(null);
         if (cart == null) {
-            throw new CartNotFoundException("Cart not found");
+            throw new CartNotFoundException("Cart with ID " + cartId + " not found");
         }
         return cart;
     }

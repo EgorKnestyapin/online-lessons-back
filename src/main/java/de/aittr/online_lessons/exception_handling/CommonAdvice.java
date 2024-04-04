@@ -10,18 +10,20 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.security.auth.login.LoginException;
+
 @ControllerAdvice
 public class CommonAdvice {
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<Response> handleException(UserAlreadyExistsException e) {
         Response response = new Response(e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<Response> handleException(UsernameNotFoundException e) {
         Response response = new Response(e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UserValidationException.class)
@@ -33,13 +35,13 @@ public class CommonAdvice {
     @ExceptionHandler(CartNotFoundException.class)
     public ResponseEntity<Response> handleException(CartNotFoundException e) {
         Response response = new Response(e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(CourseNotFoundException.class)
     public ResponseEntity<Response> handleException(CourseNotFoundException e) {
         Response response = new Response(e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(CourseValidationException.class)
@@ -69,24 +71,36 @@ public class CommonAdvice {
     @ExceptionHandler(EnrollmentAlreadyExistsException.class)
     public ResponseEntity<Response> handleException(EnrollmentAlreadyExistsException e) {
         Response response = new Response(e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(AuthException.class)
     public ResponseEntity<Response> handleException(AuthException e) {
         Response response = new Response(e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(LoginException.class)
+    public ResponseEntity<Response> handleException(LoginException e) {
+        Response response = new Response(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<Response> handleException(UserNotFoundException e) {
         Response response = new Response(e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UserNotAuthenticated.class)
     public ResponseEntity<Response> handleException(UserNotAuthenticated e) {
         Response response = new Response(e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(CourseDuplicateException.class)
+    public ResponseEntity<Response> handleException(CourseDuplicateException e) {
+        Response response = new Response(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 }

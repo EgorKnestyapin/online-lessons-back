@@ -30,8 +30,8 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public boolean changePassword(String username, ChangePasswordDto dto) {
-        return service.changePassword(username, dto);
+    public void changePassword(String username, ChangePasswordDto dto) {
+        service.changePassword(username, dto);
     }
 
     @Override

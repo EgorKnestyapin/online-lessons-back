@@ -2,7 +2,13 @@ package de.aittr.online_lessons.controllers.api;
 
 import de.aittr.online_lessons.domain.dto.CourseDto;
 import de.aittr.online_lessons.domain.dto.EnrollmentResponseDto;
+import de.aittr.online_lessons.validation.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -22,40 +28,93 @@ public interface CourseApi {
 
     @PostMapping("/{username}")
     @Operation(
-            summary = "Создание курса",
-            description = "Сохранение в базу данных нового курса, переданного в теле запроса"
+            summary = "Creating a course",
+            description = "Saving a new course passed in the body of the request to the database"
     )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "Course was successfully created",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CourseDto.class))),
+            @ApiResponse(responseCode = "400",
+                    description = "Incorrect course fields",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CourseValidationErrorDto.class))),
+            @ApiResponse(responseCode = "403",
+                    description = "Access is denied",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ForbiddenErrorDto.class))),
+            @ApiResponse(responseCode = "404",
+                    description = "Course not found",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CourseNotFoundErrorDto.class))),
+    })
     CourseDto createCourse(
             @Valid
             @RequestBody
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Объект ДТО курса")
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Course DTO object")
             CourseDto courseDto,
             @PathVariable String username
     );
 
     @GetMapping
     @Operation(
-            summary = "Получение всех курсов",
-            description = "Получение списка всех объектов курсов, хранящихся в базе данных"
+            summary = "Getting all courses",
+            description = "Getting a list of all course objects stored in the database"
     )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "Getting a list of courses",
+                    content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(
+                                    schema = @Schema(implementation = CourseDto.class)))),
+    })
     List<CourseDto> getAll();
 
     @GetMapping("/{id}")
     @Operation(
-            summary = "Получение конкретного курса по идентификатору",
-            description = "Получение объекта курса, соответствующего переданному идентификатору"
+            summary = "Getting a specific course by identifier",
+            description = "Getting the course object corresponding to the passed ID"
     )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "Course received",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CourseDto.class))),
+            @ApiResponse(responseCode = "404",
+                    description = "Course not found",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CourseNotFoundErrorDto.class))),
+    })
     CourseDto getById(
             @PathVariable
-            @Parameter(description = "Идентификатор курса")
+            @Parameter(description = "Course ID")
             int id
     );
 
     @PutMapping("/{id}")
     @Operation(
-            summary = "Обновление курса",
-            description = "Обновление данных курса с заданным ID"
+            summary = "Course update",
+            description = "Updating course data with a given ID"
     )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "Course was successfully updated",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CourseDto.class))),
+            @ApiResponse(responseCode = "400",
+                    description = "Incorrect course fields",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CourseValidationErrorDto.class))),
+            @ApiResponse(responseCode = "403",
+                    description = "Access is denied",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ForbiddenErrorDto.class))),
+            @ApiResponse(responseCode = "404",
+                    description = "Course not found",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CourseNotFoundErrorDto.class))),
+    })
     CourseDto updateCourse(
             @PathVariable int id,
             @Valid
@@ -63,30 +122,74 @@ public interface CourseApi {
 
     @DeleteMapping("/{id}")
     @Operation(
-            summary = "Удаление курса",
-            description = "Удаление курса с заданным ID"
+            summary = "Deleting a course",
+            description = "Deleting a course with a given ID"
     )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "Course was successfully deleted",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CourseDto.class))),
+            @ApiResponse(responseCode = "403",
+                    description = "Access is denied",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ForbiddenErrorDto.class))),
+            @ApiResponse(responseCode = "404",
+                    description = "Course not found",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CourseNotFoundErrorDto.class))),
+    })
     void deleteCourse(@PathVariable int id);
 
     @GetMapping("/available/{username}")
     @Operation(
-            summary = "Получение курсов, доступных пользователю",
-            description = "Получение списка курсов из базы данных, доступные конкретному пользователю"
+            summary = "Getting the courses available to the user",
+            description = "Getting a list of courses from the database available to a specific user"
     )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "Getting available courses",
+                    content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(
+                                    schema = @Schema(implementation = EnrollmentResponseDto.class)))),
+            @ApiResponse(responseCode = "403",
+                    description = "Access is denied",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ForbiddenErrorDto.class))),
+            @ApiResponse(responseCode = "404",
+                    description = "User not found",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UserNotFoundErrorDto.class))),
+    })
     Set<EnrollmentResponseDto> getAvailableCourses(
             @PathVariable
-            @Parameter(description = "Никнейм пользователя")
+            @Parameter(description = "User nickname")
             String username
     );
 
     @GetMapping("/created/{username}")
     @Operation(
-            summary = "Получение курсов, созданных пользователем",
-            description = "Получение списка курсов из базы данных, созданные конкретным пользователем"
+            summary = "Getting user-created courses",
+            description = "Getting a list of courses from the database created by a specific user"
     )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "Getting available courses",
+                    content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(
+                                    schema = @Schema(implementation = CourseDto.class)))),
+            @ApiResponse(responseCode = "403",
+                    description = "Access is denied",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ForbiddenErrorDto.class))),
+            @ApiResponse(responseCode = "404",
+                    description = "User not found",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UserNotFoundErrorDto.class))),
+    })
     Set<CourseDto> getCreatedCourses(
             @PathVariable
-            @Parameter(description = "Никнейм пользователя")
+            @Parameter(description = "User nickname")
             String username
     );
 }
