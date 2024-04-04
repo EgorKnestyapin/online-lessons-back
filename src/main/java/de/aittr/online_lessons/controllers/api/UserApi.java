@@ -89,6 +89,7 @@ public interface UserApi {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = UserNotFoundErrorDto.class))),
     })
+    @ResponseStatus(HttpStatus.CREATED)
     UserDto getUserInfo(
             @PathVariable
             @Parameter(description = "User nickname")

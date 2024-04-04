@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,6 +50,7 @@ public interface CourseApi {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = CourseNotFoundErrorDto.class))),
     })
+    @ResponseStatus(HttpStatus.CREATED)
     CourseDto createCourse(
             @Valid
             @RequestBody
@@ -69,6 +71,7 @@ public interface CourseApi {
                             array = @ArraySchema(
                                     schema = @Schema(implementation = CourseDto.class)))),
     })
+    @ResponseStatus(HttpStatus.CREATED)
     List<CourseDto> getAll();
 
     @GetMapping("/{id}")
@@ -86,6 +89,7 @@ public interface CourseApi {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = CourseNotFoundErrorDto.class))),
     })
+    @ResponseStatus(HttpStatus.CREATED)
     CourseDto getById(
             @PathVariable
             @Parameter(description = "Course ID")
@@ -115,6 +119,7 @@ public interface CourseApi {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = CourseNotFoundErrorDto.class))),
     })
+    @ResponseStatus(HttpStatus.CREATED)
     CourseDto updateCourse(
             @PathVariable int id,
             @Valid
@@ -126,7 +131,7 @@ public interface CourseApi {
             description = "Deleting a course with a given ID"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201",
+            @ApiResponse(responseCode = "200",
                     description = "Course was successfully deleted",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = CourseDto.class))),
@@ -161,6 +166,7 @@ public interface CourseApi {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = UserNotFoundErrorDto.class))),
     })
+    @ResponseStatus(HttpStatus.CREATED)
     Set<EnrollmentResponseDto> getAvailableCourses(
             @PathVariable
             @Parameter(description = "User nickname")
@@ -187,6 +193,7 @@ public interface CourseApi {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = UserNotFoundErrorDto.class))),
     })
+    @ResponseStatus(HttpStatus.CREATED)
     Set<CourseDto> getCreatedCourses(
             @PathVariable
             @Parameter(description = "User nickname")

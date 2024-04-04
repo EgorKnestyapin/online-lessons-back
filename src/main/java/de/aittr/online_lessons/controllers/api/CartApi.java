@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,6 +45,7 @@ public interface CartApi {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = UserNotAuthenticatedErrorDto.class))),
     })
+    @ResponseStatus(HttpStatus.CREATED)
     List<CourseDto> getCourses(
             @PathVariable
             @Parameter(description = "Cart ID")

@@ -17,11 +17,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Tags(
         @Tag(
@@ -47,6 +45,7 @@ public interface AuthApi {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = TokenResponseDto.class))),
     })
+    @ResponseStatus(HttpStatus.CREATED)
     ResponseEntity<TokenResponseDto> login(
             @RequestBody @io.swagger.v3.oas.annotations.parameters
                     .RequestBody(description = "Object of an user that logging in") UserLoginDto dto,
@@ -69,6 +68,7 @@ public interface AuthApi {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = TokenResponseDto.class))),
     })
+    @ResponseStatus(HttpStatus.CREATED)
     ResponseEntity<TokenResponseDto> getNewAccessToken(
             @RequestBody @io.swagger.v3.oas.annotations.parameters
                     .RequestBody(description = "Object of an inbound request that contains a refresh token")
@@ -97,5 +97,6 @@ public interface AuthApi {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = UserNotAuthenticatedErrorDto.class))),
     })
+    @ResponseStatus(HttpStatus.CREATED)
     AuthInfo getAuthInfo();
 }
