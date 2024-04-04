@@ -20,10 +20,10 @@ public class UserDto {
 
     private int id;
 
-    @Pattern.List({
-            @Pattern(regexp = "[a-zA-Z]{3,10}", message = "Invalid nickname format"),
-            @Pattern(regexp = "[a-zA-Z0-9_-]{3,10}", message = "Invalid nickname format")
-    })
+    @Pattern(
+            regexp = "^(?![\\d-]+$)(?=(?:[^a-zA-Z]*[a-zA-Z]){3})[a-zA-Z0-9_-]{3,10}$",
+            message = "Invalid nickname format"
+    )
     private String nickname;
 
     @Email
