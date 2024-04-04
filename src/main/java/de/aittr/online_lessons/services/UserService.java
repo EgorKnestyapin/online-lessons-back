@@ -58,7 +58,7 @@ public class UserService implements UserDetailsService {
 
         foundUser = userRepository.findByEmail(user.getEmail());
         if (foundUser != null) {
-            throw new UserAlreadyExistsException("User with email " + user.getEmail() + " already exists");
+            throw new UserAlreadyExistsException("User with this email already exists");
         }
 
         user.clearRoles();
@@ -102,7 +102,7 @@ public class UserService implements UserDetailsService {
     public User getUserByEmail(String email) {
         User user = userRepository.findByEmail(email);
         if (user == null) {
-            throw new UserNotFoundException("User with email " + email + " was not found");
+            throw new UserNotFoundException("User with this email already exists");
         }
         return user;
     }
