@@ -36,7 +36,7 @@ public interface AuthApi {
             description = "Logging into the system"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201",
+            @ApiResponse(responseCode = "200",
                     description = "User logged in",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = TokenResponseDto.class))),
@@ -45,7 +45,6 @@ public interface AuthApi {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = TokenResponseDto.class))),
     })
-    @ResponseStatus(HttpStatus.CREATED)
     ResponseEntity<TokenResponseDto> login(
             @RequestBody @io.swagger.v3.oas.annotations.parameters
                     .RequestBody(description = "Object of an user that logging in") UserLoginDto dto,

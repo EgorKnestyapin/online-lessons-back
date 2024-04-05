@@ -56,7 +56,7 @@ public class Course {
     @Column(name = "description", length = 1800)
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @ToString.Exclude
     @JoinColumn(name = "user_id")
     private User user;
