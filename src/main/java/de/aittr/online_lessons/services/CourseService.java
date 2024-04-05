@@ -85,7 +85,7 @@ public class CourseService {
 
     public void deleteById(int id) {
         if (!repository.existsById(id)) {
-            throw new RuntimeException("Course not found with id " + id);
+            throw new CourseNotFoundException("Course not found with id " + id);
         }
 
         repository.deleteById(id);
