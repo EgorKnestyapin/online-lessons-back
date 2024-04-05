@@ -59,6 +59,8 @@ public class SecurityConfig {
                                 .hasRole("USER")
                                 .requestMatchers(HttpMethod.PUT, "/api/users/change_password/{username}")
                                 .hasRole("USER")
+                                .requestMatchers(HttpMethod.DELETE, "/api/users/delete/{username}")
+                                .hasRole("USER")
                                 .requestMatchers(HttpMethod.GET, "/api/courses").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/courses/{id}").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/courses/{username}").hasRole("USER")
