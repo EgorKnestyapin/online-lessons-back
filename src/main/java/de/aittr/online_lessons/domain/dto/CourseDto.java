@@ -1,9 +1,6 @@
 package de.aittr.online_lessons.domain.dto;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
@@ -25,10 +22,12 @@ public class CourseDto {
     private String title;
 
     @NotNull
+    @Min(value = 0, message = "The price must be positive.")
     @Max(value = 9999, message = "The price cannot be more than 9999.")
     private int price;
 
     @NotNull
+    @NotBlank
     private String photoPath;
 
     private String presentationPath;
