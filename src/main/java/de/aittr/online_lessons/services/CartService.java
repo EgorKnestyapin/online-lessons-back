@@ -16,6 +16,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -76,19 +77,21 @@ public class CartService {
     public void buyCourses(int cartId) {
         Cart cart = getCartById(cartId);
         User user = cart.getUser();
-        List<Course> courses = cart.getCourses();
-        for (Course course : courses) {
-            Enrollment enrollment = enrollmentRepository.findByCourseId(course.getId());
-            if (enrollment != null) {
-                throw new EnrollmentAlreadyExistsException("Enrollment with that course already exists");
-            }
-            enrollment = new Enrollment(0, LocalDateTime.now(), "active", user, course);
-            try {
-                enrollmentRepository.save(enrollment);
-            } catch (Exception e) {
-                throw new EnrollmentValidationException("Incorrect values of enrollment fields.", e);
-            }
-        }
+        List<Course> courses = new ArrayList<>(cart.getCourses());
+
+        courses.forEach(course -> {
+                    Enrollment enrollment = enrollmentRepository.findByCourseId(course.getId());
+                    if (enrollment != null && enrollment.getUser().equals(user)) {
+                        throw new EnrollmentAlreadyExistsException("Enrollment with that course already exists");
+                    }
+                    enrollment = new Enrollment(0, LocalDateTime.now(), "active", user, course);
+                    try {
+                        enrollmentRepository.save(enrollment);
+                    } catch (Exception e) {
+                        throw new EnrollmentValidationException("Incorrect values of enrollment fields.", e);
+                    }
+                });
+
         cart.getCourses().clear();
     }
 }
