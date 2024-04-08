@@ -68,11 +68,12 @@ public class CourseService {
     }
 
     public CourseDto update(int id, CourseDto courseDto) {
-        repository.findById(id)
+        Course foundCourse = repository.findById(id)
                 .orElseThrow(() -> new CourseNotFoundException("Course not found with id " + id));
 
         Course course = courseMappingService.mapDtoToEntity(courseDto);
         course.setId(id);
+        course.setUser(foundCourse.getUser());
 
         try {
             course = repository.save(course);
