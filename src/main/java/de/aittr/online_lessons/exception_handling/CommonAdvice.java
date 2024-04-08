@@ -109,4 +109,16 @@ public class CommonAdvice {
         ValidationResponse response = new ValidationResponse(e.getMessage(), e.getCause().getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(LessonNotFoundException.class)
+    public ResponseEntity<Response> handleException(LessonNotFoundException e) {
+        Response response = new Response(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(LessonValidationException.class)
+    public ResponseEntity<Response> handleException(LessonValidationException e) {
+        ValidationResponse response = new ValidationResponse(e.getMessage(), e.getCause().getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 }

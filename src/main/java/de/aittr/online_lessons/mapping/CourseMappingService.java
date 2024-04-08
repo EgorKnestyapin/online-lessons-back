@@ -36,7 +36,7 @@ import java.util.Set;
 public interface CourseMappingService {
     Course mapDtoToEntity(CourseDto dto);
 
-    CourseDto mapEntityToDto(Course user);
+    CourseDto mapEntityToDto(Course course);
 
     Set<CourseDto> mapSetEntityToSetDto(Set<Course> courses);
 }
