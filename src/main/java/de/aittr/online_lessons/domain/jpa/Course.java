@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -77,6 +78,10 @@ public class Course {
     @ToString.Exclude
     @JsonIgnore
     private Set<Enrollment> enrollments = new HashSet<>();
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Lesson> createdLessons = new LinkedHashSet<>();
 
     public int getId() {
         return id;
@@ -152,6 +157,21 @@ public class Course {
 
     public void setOldPrice(int oldPrice) {
         this.oldPrice = oldPrice;
+
+    public Set<Enrollment> getEnrollments() {
+        return enrollments;
+    }
+
+    public void setEnrollments(Set<Enrollment> enrollments) {
+        this.enrollments = enrollments;
+    }
+
+    public Set<Lesson> getCreatedLessons() {
+        return createdLessons;
+    }
+
+    public void setCreatedLessons(Set<Lesson> createdLessons) {
+        this.createdLessons = createdLessons;
     }
 
     @Override
