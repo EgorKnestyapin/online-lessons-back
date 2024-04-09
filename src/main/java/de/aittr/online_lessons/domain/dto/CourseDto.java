@@ -4,8 +4,6 @@ import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
-import java.util.Objects;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
@@ -21,6 +19,10 @@ public class CourseDto {
     )
     private String title;
 
+    @Min(value = 0, message = "The price must be positive.")
+    @Max(value = 9999, message = "The price cannot be more than 9999.")
+    private int oldPrice;
+
     @NotNull
     @Min(value = 0, message = "The price must be positive.")
     @Max(value = 9999, message = "The price cannot be more than 9999.")
@@ -35,6 +37,8 @@ public class CourseDto {
     @NotNull
     @Length(min = 300, message = "The description field must contain minimum 300 characters.")
     private String description;
+
+    private int counter;
 
 
     public int getId() {
@@ -83,5 +87,21 @@ public class CourseDto {
 
     public void setPresentationPath(String presentationPath) {
         this.presentationPath = presentationPath;
+    }
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public void setCounter(int counter) {
+        this.counter = counter;
+    }
+
+    public int getOldPrice() {
+        return oldPrice;
+    }
+
+    public void setOldPrice(int oldPrice) {
+        this.oldPrice = oldPrice;
     }
 }

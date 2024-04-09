@@ -9,9 +9,9 @@ import de.aittr.online_lessons.exception_handling.exceptions.CartNotFoundExcepti
 import de.aittr.online_lessons.exception_handling.exceptions.CourseDuplicateException;
 import de.aittr.online_lessons.exception_handling.exceptions.EnrollmentAlreadyExistsException;
 import de.aittr.online_lessons.exception_handling.exceptions.EnrollmentValidationException;
+import de.aittr.online_lessons.mapping.CourseMappingService;
 import de.aittr.online_lessons.repositories.jpa.CartRepository;
 import de.aittr.online_lessons.repositories.jpa.EnrollmentRepository;
-import de.aittr.online_lessons.mapping.CourseMappingService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -80,17 +80,20 @@ public class CartService {
         List<Course> courses = new ArrayList<>(cart.getCourses());
 
         courses.forEach(course -> {
-                    Enrollment enrollment = enrollmentRepository.findByCourseId(course.getId());
-                    if (enrollment != null && enrollment.getUser().equals(user)) {
-                        throw new EnrollmentAlreadyExistsException("Enrollment with that course already exists");
-                    }
-                    enrollment = new Enrollment(0, LocalDateTime.now(), "active", user, course);
-                    try {
-                        enrollmentRepository.save(enrollment);
-                    } catch (Exception e) {
-                        throw new EnrollmentValidationException("Incorrect values of enrollment fields.", e);
-                    }
-                });
+            Enrollment enrollment = enrollmentRepository.findByCourseId(course.getId());
+
+            if (enrollment != null && enrollment.getUser().equals(user)) {
+                throw new EnrollmentAlreadyExistsException("Enrollment with that course already exists");
+            }
+
+            enrollment = new Enrollment(0, LocalDateTime.now(), "active", user, course);
+            try {
+                enrollmentRepository.save(enrollment);
+                course.setCounter(course.getCounter() + 1);
+            } catch (Exception e) {
+                throw new EnrollmentValidationException("Incorrect values of enrollment fields.", e);
+            }
+        });
 
         cart.getCourses().clear();
     }

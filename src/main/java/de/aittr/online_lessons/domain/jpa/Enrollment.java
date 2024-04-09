@@ -81,11 +81,13 @@ public class Enrollment {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Enrollment that = (Enrollment) o;
-        return Objects.equals(id, that.id) && Objects.equals(enrollmentDate, that.enrollmentDate) && Objects.equals(status, that.status);
+        return Objects.equals(id, that.id) && Objects.equals(enrollmentDate, that.enrollmentDate)
+                && Objects.equals(status, that.status) && Objects.equals(user, that.user)
+                && Objects.equals(course, that.course);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, enrollmentDate, status);
+        return Objects.hash(id, enrollmentDate, status, user, course);
     }
 }

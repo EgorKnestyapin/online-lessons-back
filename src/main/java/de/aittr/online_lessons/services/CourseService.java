@@ -36,6 +36,12 @@ public class CourseService {
     public CourseDto save(CourseDto courseDto, String username) {
         Course course = courseMappingService.mapDtoToEntity(courseDto);
         course.setId(0);
+        course.setCounter(0);
+
+        if (course.getOldPrice() == 0) {
+            course.setOldPrice((int) (course.getPrice() * 1.2));
+        }
+
         User user = (User) userService.loadUserByUsername(username);
         course.setUser(user);
 
@@ -73,6 +79,8 @@ public class CourseService {
 
         Course course = courseMappingService.mapDtoToEntity(courseDto);
         course.setId(id);
+        course.setOldPrice(foundCourse.getPrice());
+        course.setCounter(foundCourse.getCounter());
         course.setUser(foundCourse.getUser());
 
         try {
