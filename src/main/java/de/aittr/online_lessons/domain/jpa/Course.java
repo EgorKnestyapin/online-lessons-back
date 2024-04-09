@@ -157,6 +157,7 @@ public class Course {
 
     public void setOldPrice(int oldPrice) {
         this.oldPrice = oldPrice;
+    }
 
     public Set<Enrollment> getEnrollments() {
         return enrollments;
