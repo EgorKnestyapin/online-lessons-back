@@ -36,6 +36,7 @@ public class CourseService {
     public CourseDto save(CourseDto courseDto, String username) {
         Course course = courseMappingService.mapDtoToEntity(courseDto);
         course.setId(0);
+        course.setCounter(0);
         User user = (User) userService.loadUserByUsername(username);
         course.setUser(user);
 
@@ -73,6 +74,7 @@ public class CourseService {
 
         Course course = courseMappingService.mapDtoToEntity(courseDto);
         course.setId(id);
+        course.setCounter(foundCourse.getCounter());
         course.setUser(foundCourse.getUser());
 
         try {

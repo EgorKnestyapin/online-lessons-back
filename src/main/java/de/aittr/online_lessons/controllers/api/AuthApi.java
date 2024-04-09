@@ -1,13 +1,10 @@
 package de.aittr.online_lessons.controllers.api;
 
-import de.aittr.online_lessons.domain.dto.UserDto;
 import de.aittr.online_lessons.security.sec_dto.AuthInfo;
 import de.aittr.online_lessons.security.sec_dto.RefreshRequestDto;
 import de.aittr.online_lessons.security.sec_dto.TokenResponseDto;
 import de.aittr.online_lessons.security.sec_dto.UserLoginDto;
-import de.aittr.online_lessons.validation.dto.ForbiddenErrorDto;
 import de.aittr.online_lessons.validation.dto.UserNotAuthenticatedErrorDto;
-import de.aittr.online_lessons.validation.dto.UserNotFoundErrorDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

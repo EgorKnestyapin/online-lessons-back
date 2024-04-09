@@ -3,9 +3,11 @@ package de.aittr.online_lessons.domain.jpa;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import lombok.*;
-import org.hibernate.validator.constraints.Length;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -55,6 +57,11 @@ public class Course {
     @NotNull
     @Column(name = "description", length = 1800)
     private String description;
+
+    @Schema(description = "Course counter", example = "123")
+    @NotNull
+    @Column(name = "counter")
+    private int counter;
 
     @ManyToOne
     @ToString.Exclude
@@ -124,6 +131,14 @@ public class Course {
 
     public void setPresentationPath(String presentationPath) {
         this.presentationPath = presentationPath;
+    }
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public void setCounter(int counter) {
+        this.counter = counter;
     }
 
     @Override
