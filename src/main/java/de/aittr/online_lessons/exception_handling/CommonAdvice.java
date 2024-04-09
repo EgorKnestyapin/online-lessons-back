@@ -113,6 +113,8 @@ public class CommonAdvice {
     @ExceptionHandler(RefreshTokenValidationException.class)
     public ResponseEntity<Response> handleException(RefreshTokenValidationException e) {
         Response response = new Response(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(LessonNotFoundException.class)
     public ResponseEntity<Response> handleException(LessonNotFoundException e) {
