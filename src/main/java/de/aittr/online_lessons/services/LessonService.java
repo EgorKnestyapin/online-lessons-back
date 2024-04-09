@@ -12,8 +12,10 @@ import de.aittr.online_lessons.mapping.LessonMappingService;
 import de.aittr.online_lessons.repositories.jpa.LessonRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class LessonService {
@@ -56,10 +58,10 @@ public class LessonService {
         return mappingService.mapSetEntityToSetDto(course.getCreatedLessons());
     }
 
-    // not implemented
     public Set<LessonDto> getDemoLessonsByCourseId(int courseId) {
         Course course = courseService.getCourseEntityById(courseId);
-        return mappingService.mapSetEntityToSetDto(course.getCreatedLessons());
+        Set<Lesson> lessons = course.getCreatedLessons().stream().limit(2).collect(Collectors.toSet());
+        return mappingService.mapSetEntityToSetDto(lessons);
     }
 
     public LessonDto updateById(LessonDto dto, int lessonId) {

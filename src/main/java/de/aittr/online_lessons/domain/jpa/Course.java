@@ -8,6 +8,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -68,7 +69,7 @@ public class Course {
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<Lesson> createdLessons = new HashSet<>();
+    private Set<Lesson> createdLessons = new LinkedHashSet<>();
 
     public int getId() {
         return id;
