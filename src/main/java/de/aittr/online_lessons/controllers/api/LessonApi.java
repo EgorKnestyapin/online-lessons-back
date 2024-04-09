@@ -105,7 +105,7 @@ public interface LessonApi {
 
     @GetMapping("/demo/{courseId}")
     @Operation(
-            summary = "NOT IMPLEMENTED YET Getting demo lessons from a specific course",
+            summary = "Getting demo lessons from a specific course",
             description = "Getting two lessons from the database belonging to a specific course"
     )
     @ApiResponses(value = {

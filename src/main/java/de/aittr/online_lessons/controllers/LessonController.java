@@ -33,7 +33,7 @@ public class LessonController implements LessonApi {
 
     @Override
     public Set<LessonDto> getDemoLessons(int courseId) {
-        return null;
+        return service.getDemoLessonsByCourseId(courseId);
     }
 
     @Override
