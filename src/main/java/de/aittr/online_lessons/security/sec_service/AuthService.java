@@ -2,6 +2,7 @@ package de.aittr.online_lessons.security.sec_service;
 
 import de.aittr.online_lessons.domain.jpa.Token;
 import de.aittr.online_lessons.domain.jpa.User;
+import de.aittr.online_lessons.exception_handling.exceptions.RefreshTokenValidationException;
 import de.aittr.online_lessons.exception_handling.exceptions.UserNotAuthenticated;
 import de.aittr.online_lessons.repositories.jpa.UserRepository;
 import de.aittr.online_lessons.security.sec_dto.AuthInfo;
@@ -67,7 +68,7 @@ public class AuthService {
                 return new TokenResponseDto(accessToken, null);
             }
         }
-        return new TokenResponseDto(null, null);
+        throw new RefreshTokenValidationException("Refresh token is not valid");
     }
 
     public AuthInfo getAuthInfo() {

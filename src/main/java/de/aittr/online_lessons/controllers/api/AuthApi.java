@@ -4,6 +4,7 @@ import de.aittr.online_lessons.security.sec_dto.AuthInfo;
 import de.aittr.online_lessons.security.sec_dto.RefreshRequestDto;
 import de.aittr.online_lessons.security.sec_dto.TokenResponseDto;
 import de.aittr.online_lessons.security.sec_dto.UserLoginDto;
+import de.aittr.online_lessons.validation.dto.RefreshTokenValidationErrorDto;
 import de.aittr.online_lessons.validation.dto.UserNotAuthenticatedErrorDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -62,7 +63,7 @@ public interface AuthApi {
             @ApiResponse(responseCode = "400",
                     description = "Incorrect refresh token",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = TokenResponseDto.class))),
+                            schema = @Schema(implementation = RefreshTokenValidationErrorDto.class))),
     })
     @ResponseStatus(HttpStatus.CREATED)
     ResponseEntity<TokenResponseDto> getNewAccessToken(

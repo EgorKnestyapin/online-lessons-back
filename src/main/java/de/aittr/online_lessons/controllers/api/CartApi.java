@@ -3,6 +3,7 @@ package de.aittr.online_lessons.controllers.api;
 import de.aittr.online_lessons.domain.dto.CourseDto;
 import de.aittr.online_lessons.security.sec_dto.AuthInfo;
 import de.aittr.online_lessons.validation.dto.CartNotFoundErrorDto;
+import de.aittr.online_lessons.validation.dto.CourseDuplicateErrorDto;
 import de.aittr.online_lessons.validation.dto.ForbiddenErrorDto;
 import de.aittr.online_lessons.validation.dto.UserNotAuthenticatedErrorDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -71,7 +72,7 @@ public interface CartApi {
             @ApiResponse(responseCode = "409",
                     description = "Course is already in the cart",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = CartNotFoundErrorDto.class))),
+                            schema = @Schema(implementation = CourseDuplicateErrorDto.class))),
     })
     void addCourseToCart(
             @PathVariable
@@ -150,7 +151,7 @@ public interface CartApi {
             @ApiResponse(responseCode = "409",
                     description = "Course has already been purchased",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = CartNotFoundErrorDto.class))),
+                            schema = @Schema(implementation = CourseDuplicateErrorDto.class))),
     })
     void buyCourses(
             @PathVariable
