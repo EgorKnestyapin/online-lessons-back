@@ -19,6 +19,10 @@ public class CourseDto {
     )
     private String title;
 
+    @Min(value = 0, message = "The price must be positive.")
+    @Max(value = 9999, message = "The price cannot be more than 9999.")
+    private int oldPrice;
+
     @NotNull
     @Min(value = 0, message = "The price must be positive.")
     @Max(value = 9999, message = "The price cannot be more than 9999.")
@@ -91,5 +95,13 @@ public class CourseDto {
 
     public void setCounter(int counter) {
         this.counter = counter;
+    }
+
+    public int getOldPrice() {
+        return oldPrice;
+    }
+
+    public void setOldPrice(int oldPrice) {
+        this.oldPrice = oldPrice;
     }
 }

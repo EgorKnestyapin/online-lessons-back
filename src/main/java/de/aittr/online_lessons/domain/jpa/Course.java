@@ -33,7 +33,12 @@ public class Course {
     @NotNull
     private String title;
 
-    @Schema(description = "Course price", example = "300.0")
+    @Schema(description = "Course old price", example = "360")
+    @Column(name = "old_price")
+    @NotNull
+    private int oldPrice;
+
+    @Schema(description = "Course price", example = "300")
     @Column(name = "price")
     @NotNull
     private int price;
@@ -139,6 +144,14 @@ public class Course {
 
     public void setCounter(int counter) {
         this.counter = counter;
+    }
+
+    public int getOldPrice() {
+        return oldPrice;
+    }
+
+    public void setOldPrice(int oldPrice) {
+        this.oldPrice = oldPrice;
     }
 
     @Override
