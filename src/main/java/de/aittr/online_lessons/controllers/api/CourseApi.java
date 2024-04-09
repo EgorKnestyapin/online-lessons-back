@@ -123,6 +123,7 @@ public interface CourseApi {
     CourseDto updateCourse(
             @PathVariable int id,
             @Valid
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Course DTO object")
             @RequestBody CourseDto courseDto);
 
     @DeleteMapping("/{id}")
@@ -180,7 +181,7 @@ public interface CourseApi {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",
-                    description = "Getting available courses",
+                    description = "Getting created courses",
                     content = @Content(mediaType = "application/json",
                             array = @ArraySchema(
                                     schema = @Schema(implementation = CourseDto.class)))),

@@ -66,6 +66,10 @@ public class Course {
     @JsonIgnore
     private Set<Enrollment> enrollments = new HashSet<>();
 
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Lesson> createdLessons = new HashSet<>();
+
     public int getId() {
         return id;
     }
@@ -124,6 +128,22 @@ public class Course {
 
     public void setPresentationPath(String presentationPath) {
         this.presentationPath = presentationPath;
+    }
+
+    public Set<Enrollment> getEnrollments() {
+        return enrollments;
+    }
+
+    public void setEnrollments(Set<Enrollment> enrollments) {
+        this.enrollments = enrollments;
+    }
+
+    public Set<Lesson> getCreatedLessons() {
+        return createdLessons;
+    }
+
+    public void setCreatedLessons(Set<Lesson> createdLessons) {
+        this.createdLessons = createdLessons;
     }
 
     @Override
