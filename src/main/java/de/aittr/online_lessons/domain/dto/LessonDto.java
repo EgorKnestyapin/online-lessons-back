@@ -25,6 +25,10 @@ public class LessonDto {
     @NotBlank
     private String photoPath;
 
+    @NotNull
+    @NotBlank
+    private String content;
+
     public int getId() {
         return id;
     }
@@ -47,5 +51,13 @@ public class LessonDto {
 
     public void setPhotoPath(String photoPath) {
         this.photoPath = photoPath;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

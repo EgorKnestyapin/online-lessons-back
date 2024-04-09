@@ -68,6 +68,10 @@ public interface LessonApi {
                     content = @Content(mediaType = "application/json",
                             array = @ArraySchema(
                                     schema = @Schema(implementation = LessonDto.class)))),
+            @ApiResponse(responseCode = "403",
+                    description = "Access is denied",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ForbiddenErrorDto.class)))
     })
     @ResponseStatus(HttpStatus.CREATED)
     List<LessonDto> getAll();
@@ -94,6 +98,29 @@ public interface LessonApi {
     })
     @ResponseStatus(HttpStatus.CREATED)
     Set<LessonDto> getCreatedLessons(
+            @PathVariable
+            @Parameter(description = "Course ID")
+            int courseId
+    );
+
+    @GetMapping("/demo/{courseId}")
+    @Operation(
+            summary = "NOT IMPLEMENTED YET Getting demo lessons from a specific course",
+            description = "Getting two lessons from the database belonging to a specific course"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "Getting demo lessons",
+                    content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(
+                                    schema = @Schema(implementation = LessonDto.class)))),
+            @ApiResponse(responseCode = "404",
+                    description = "Course not found",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = CourseNotFoundErrorDto.class))),
+    })
+    @ResponseStatus(HttpStatus.CREATED)
+    Set<LessonDto> getDemoLessons(
             @PathVariable
             @Parameter(description = "Course ID")
             int courseId

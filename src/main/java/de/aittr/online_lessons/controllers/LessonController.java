@@ -32,6 +32,11 @@ public class LessonController implements LessonApi {
     }
 
     @Override
+    public Set<LessonDto> getDemoLessons(int courseId) {
+        return null;
+    }
+
+    @Override
     public LessonDto updateCourse(int lessonId, LessonDto lessonDto) {
         return service.updateById(lessonDto, lessonId);
     }

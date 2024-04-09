@@ -39,10 +39,19 @@ public class Lesson {
     @NotNull
     private String photoPath;
 
+    @Schema(
+            description = "Additional educational material",
+            example = "In this lesson we looked at the technology..."
+    )
+    @Column(name = "content")
+    @NotNull
+    private String content;
+
     @ManyToOne
     @ToString.Exclude
     @JoinColumn(name = "course_id")
     private Course course;
+
 
     public Integer getId() {
         return id;
@@ -74,6 +83,14 @@ public class Lesson {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @Override

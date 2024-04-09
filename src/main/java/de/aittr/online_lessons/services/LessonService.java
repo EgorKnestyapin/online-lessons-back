@@ -56,6 +56,12 @@ public class LessonService {
         return mappingService.mapSetEntityToSetDto(course.getCreatedLessons());
     }
 
+    // not implemented
+    public Set<LessonDto> getDemoLessonsByCourseId(int courseId) {
+        Course course = courseService.getCourseEntityById(courseId);
+        return mappingService.mapSetEntityToSetDto(course.getCreatedLessons());
+    }
+
     public LessonDto updateById(LessonDto dto, int lessonId) {
         Lesson foundLesson = lessonRepository.findById(lessonId)
                 .orElseThrow(() -> new LessonNotFoundException("Lesson not found with id " + lessonId));
