@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -24,14 +25,7 @@ public class FileService {
     @SneakyThrows
     public Response upload(MultipartFile file) {
 
-        String originalFileName = file.getOriginalFilename();
-
-        String extension;
-        if (originalFileName != null) {
-            extension = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
-        } else {
-            throw new IllegalArgumentException("Null original file name.");
-        }
+        String extension = getExtension(file);
 
         String uuid = UUID.randomUUID().toString();
         String newFileName = uuid + "." + extension;
@@ -52,6 +46,22 @@ public class FileService {
         return Response.builder()
                 .message(link)
                 .build();
+    }
+
+    private static String getExtension(MultipartFile file) {
+        String originalFileName = file.getOriginalFilename();
+        List<String> validExtensions = List.of("jpeg", "png", "gif", "bmp", "tiff", "svg", "webp", "heif", "jpg");
+
+        String extension;
+        if (originalFileName != null) {
+            extension = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
+            if (!validExtensions.contains(extension)) {
+                throw new IllegalArgumentException("Invalid file extension");
+            }
+        } else {
+            throw new IllegalArgumentException("Null original file name.");
+        }
+        return extension;
     }
 }
 

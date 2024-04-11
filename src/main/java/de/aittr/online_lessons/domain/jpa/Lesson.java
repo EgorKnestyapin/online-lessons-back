@@ -43,7 +43,7 @@ public class Lesson {
             description = "Additional educational material",
             example = "In this lesson we looked at the technology..."
     )
-    @Column(name = "content")
+    @Column(name = "content", length = 1800)
     @NotNull
     private String content;
 
