@@ -47,6 +47,14 @@ public class Lesson {
     @NotNull
     private String content;
 
+    @Schema(
+            description = "Lesson serial number",
+            example = "3"
+    )
+    @Column(name = "number")
+    @NotNull
+    private int number;
+
     @ManyToOne
     @ToString.Exclude
     @JoinColumn(name = "course_id")
@@ -91,6 +99,14 @@ public class Lesson {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     @Override

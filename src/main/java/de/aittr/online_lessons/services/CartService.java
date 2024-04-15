@@ -80,13 +80,14 @@ public class CartService {
         List<Course> courses = new ArrayList<>(cart.getCourses());
 
         courses.forEach(course -> {
-            Enrollment enrollment = enrollmentRepository.findByCourseId(course.getId());
+            List<Enrollment> enrollments = enrollmentRepository.findByCourseId(course.getId());
+            enrollments.forEach(enrollment -> {
+                if (enrollment.getUser().equals(user)) {
+                    throw new EnrollmentAlreadyExistsException("Enrollment with that course already exists");
+                }
+            });
 
-            if (enrollment != null && enrollment.getUser().equals(user)) {
-                throw new EnrollmentAlreadyExistsException("Enrollment with that course already exists");
-            }
-
-            enrollment = new Enrollment(0, LocalDateTime.now(), "active", user, course);
+            Enrollment enrollment = new Enrollment(0, LocalDateTime.now(), "active", user, course);
             try {
                 enrollmentRepository.save(enrollment);
                 course.setCounter(course.getCounter() + 1);
