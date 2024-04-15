@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("cartService")
+@Service
 public class CartService {
     private CartRepository cartRepository;
     private CourseService courseService;
