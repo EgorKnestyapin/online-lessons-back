@@ -19,12 +19,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Service("cartService")
 public class CartService {
-    private final CartRepository cartRepository;
-    private final CourseService courseService;
-    private final CourseMappingService courseMappingService;
-    private final EnrollmentRepository enrollmentRepository;
+    private CartRepository cartRepository;
+    private CourseService courseService;
+    private CourseMappingService courseMappingService;
+    private EnrollmentRepository enrollmentRepository;
 
     public CartService(CartRepository cartRepository, CourseService courseService,
                        CourseMappingService courseMappingService, EnrollmentRepository enrollmentRepository) {
