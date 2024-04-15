@@ -29,6 +29,9 @@ public class LessonDto {
     @NotBlank
     private String content;
 
+    @NotNull
+    private int number;
+
     public int getId() {
         return id;
     }
@@ -59,5 +62,13 @@ public class LessonDto {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 }
