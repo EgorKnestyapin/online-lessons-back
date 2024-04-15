@@ -43,9 +43,17 @@ public class Lesson {
             description = "Additional educational material",
             example = "In this lesson we looked at the technology..."
     )
-    @Column(name = "content")
+    @Column(name = "content", length = 1800)
     @NotNull
     private String content;
+
+    @Schema(
+            description = "Lesson serial number",
+            example = "3"
+    )
+    @Column(name = "number")
+    @NotNull
+    private int number;
 
     @ManyToOne
     @ToString.Exclude
@@ -91,6 +99,14 @@ public class Lesson {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     @Override
