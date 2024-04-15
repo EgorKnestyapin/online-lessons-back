@@ -114,11 +114,12 @@ public class Lesson {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Lesson lesson = (Lesson) o;
-        return Objects.equals(id, lesson.id) && Objects.equals(title, lesson.title) && Objects.equals(photoPath, lesson.photoPath) && Objects.equals(course, lesson.course);
+        return number == lesson.number && Objects.equals(id, lesson.id) && Objects.equals(title, lesson.title)
+                && Objects.equals(photoPath, lesson.photoPath) && Objects.equals(content, lesson.content);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, photoPath, course);
+        return Objects.hash(id, title, photoPath, content, number);
     }
 }

@@ -52,7 +52,7 @@ public class CartService {
         cart.addCourse(course);
     }
 
-    private Cart getCartById(int cartId) {
+    public Cart getCartById(int cartId) {
         Cart cart = cartRepository.findById(cartId).orElse(null);
         if (cart == null) {
             throw new CartNotFoundException("Cart with ID " + cartId + " not found");

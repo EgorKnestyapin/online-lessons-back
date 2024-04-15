@@ -10,4 +10,6 @@ import java.util.Set;
 public interface EnrollmentMappingService {
 
     Set<EnrollmentResponseDto> mapSetEntityToSetDto(Set<Enrollment> enrollments);
+
+    Set<Enrollment> mapSetDtoToSetEntity(Set<EnrollmentResponseDto> enrollments);
 }

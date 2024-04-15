@@ -180,11 +180,15 @@ public class Course {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Course course = (Course) o;
-        return Objects.equals(id, course.id) && price == course.price && Objects.equals(title, course.title) && Objects.equals(description, course.description) && Objects.equals(user, course.user);
+        return oldPrice == course.oldPrice && price == course.price && counter == course.counter &&
+                Objects.equals(id, course.id) && Objects.equals(title, course.title) &&
+                Objects.equals(photoPath, course.photoPath) &&
+                Objects.equals(presentationPath, course.presentationPath)
+                && Objects.equals(description, course.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, price, description, user);
+        return Objects.hash(id, title, oldPrice, price, photoPath, presentationPath, description, counter);
     }
 }
