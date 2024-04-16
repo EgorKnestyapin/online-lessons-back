@@ -13,10 +13,11 @@ public class LessonDto {
 
     private int id;
 
-//    @Pattern(
-//            regexp = "[A-ZА-Яa-zа-я\\s]{5,}",
-//            message = "The title field must contain only letters and be a minimum of 5 characters."
-//    )
+    @Pattern(
+            regexp = "(?=.*[A-Za-zА-Яа-я])[A-ZА-Яa-zа-я0-9\\s]{5,80}",
+            message = "The title field must contain only letters and be a minimum of 5 characters " +
+                    "and a maximum of 80 characters"
+    )
     @NotNull
     @NotBlank
     private String title;
@@ -27,6 +28,7 @@ public class LessonDto {
 
     @NotNull
     @NotBlank
+    @Length(min = 5, max = 300, message = "The content field must contain minimum 5 and maximum 300 characters.")
     private String content;
 
     @NotNull
