@@ -66,6 +66,7 @@ public class User implements UserDetails {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
+    @JsonIgnore
     private Cart cart;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
