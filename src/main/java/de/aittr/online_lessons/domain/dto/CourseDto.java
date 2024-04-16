@@ -14,8 +14,9 @@ public class CourseDto {
     private int id;
 
     @Pattern(
-            regexp = "[A-ZА-Яa-zа-я\\s]{5,}",
-            message = "The title field must contain only letters and be a minimum of 5 characters."
+            regexp = "[A-ZА-Яa-zа-я\\s]{5,80}",
+            message = "The title field must contain only letters and be a minimum of 5 characters and " +
+                    "a maximum of 80 characters."
     )
     private String title;
 
@@ -35,7 +36,10 @@ public class CourseDto {
     private String presentationPath;
 
     @NotNull
-    @Length(min = 300, message = "The description field must contain minimum 300 characters.")
+    @Length(
+            min = 300, max = 1800,
+            message = "The description field must contain minimum 300 and maximum 1800 characters."
+    )
     private String description;
 
     private int counter;
