@@ -2,6 +2,7 @@ package de.aittr.online_lessons.services;
 
 import de.aittr.online_lessons.domain.dto.CourseDto;
 import de.aittr.online_lessons.domain.dto.EnrollmentResponseDto;
+import de.aittr.online_lessons.domain.jpa.Cart;
 import de.aittr.online_lessons.domain.jpa.Course;
 import de.aittr.online_lessons.domain.jpa.User;
 import de.aittr.online_lessons.exception_handling.exceptions.CourseNotFoundException;
@@ -12,6 +13,7 @@ import de.aittr.online_lessons.repositories.jpa.CourseRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -92,11 +94,16 @@ public class CourseService {
         return courseMappingService.mapEntityToDto(course);
     }
 
+    @Transactional
     public void deleteById(int id) {
         if (!repository.existsById(id)) {
             throw new CourseNotFoundException("Course not found with id " + id);
         }
-
+        Course foundCourse = getCourseEntityById(id);
+        List<Cart> carts = new ArrayList<>(foundCourse.getCarts());
+        carts.forEach(cart -> {
+            cart.removeCourse(foundCourse);
+        });
         repository.deleteById(id);
     }
 

@@ -112,13 +112,14 @@ public class UserService implements UserDetailsService {
         User user = (User) loadUserByUsername(username);
         String oldPassword = dto.getOldPassword();
 
+        if (!encoder.matches(oldPassword, user.getPassword())) {
+            throw new PasswordMismatchException("Current password is incorrect");
+        }
+
         if (!dto.getNewPassword().equals(dto.getConfirmNewPassword())) {
             throw new PasswordMismatchException("New password and confirm password mismatch");
         }
 
-        if (!encoder.matches(oldPassword, user.getPassword())) {
-            throw new PasswordMismatchException("Current password is incorrect");
-        }
         user.setPassword(encoder.encode(dto.getNewPassword()));
     }
 

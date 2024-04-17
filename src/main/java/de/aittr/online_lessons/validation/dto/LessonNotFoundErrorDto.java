@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Schema(name = "LessonNotFoundError", description = "Lesson not found")
 public class LessonNotFoundErrorDto {

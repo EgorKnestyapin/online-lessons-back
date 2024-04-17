@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Schema(name = "ForbiddenError", description = "Forbidden")
 public class ForbiddenErrorDto {

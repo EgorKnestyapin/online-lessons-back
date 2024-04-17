@@ -1,10 +1,10 @@
 package de.aittr.online_lessons.services;
 
 import de.aittr.online_lessons.domain.dto.LessonDto;
-import de.aittr.online_lessons.domain.jpa.Course;
 import de.aittr.online_lessons.domain.jpa.Lesson;
+import de.aittr.online_lessons.exception_handling.exceptions.CartNotFoundException;
+import de.aittr.online_lessons.exception_handling.exceptions.CourseNotFoundException;
 import de.aittr.online_lessons.mapping.LessonMappingService;
-import de.aittr.online_lessons.repositories.jpa.CourseRepository;
 import de.aittr.online_lessons.repositories.jpa.LessonRepository;
 import jakarta.transaction.Transactional;
 import org.junit.Assert;
@@ -18,10 +18,9 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -75,7 +74,7 @@ class LessonServiceTest {
 
     @Test
     void getLessonsByCourseId() {
-        Set<LessonDto> lessonsByCourseId = lessonService.getLessonsByCourseId(2);
+        Set<LessonDto> lessonsByCourseId = lessonService.getLessonsByCourseId(3);
         Set<Lesson> expected = lessonMappingService.mapSetDtoToSetEntity(lessonsByCourseId);
         Set<Lesson> actual = lessonRepository.findByCourseId(2);
 
@@ -84,17 +83,17 @@ class LessonServiceTest {
 
     @Test
     void getDemoLessonsByCourseId() {
-        Set<LessonDto> demoLessonsByCourseId = lessonService.getDemoLessonsByCourseId(2);
+        Set<LessonDto> demoLessonsByCourseId = lessonService.getDemoLessonsByCourseId(3);
         Set<Lesson> actual = lessonMappingService.mapSetDtoToSetEntity(demoLessonsByCourseId);
 
-        Assert.assertEquals(2, actual.size());
+        Assert.assertEquals(0, actual.size());
     }
 
     @Test
     void updateById() {
-        String oldTitle = "Cool lesson3";
-        int oldNumber = 2;
-        Lesson lesson = lessonRepository.findById(2).orElse(null);
+        String oldTitle = "LESSON 6";
+        int oldNumber = 5;
+        Lesson lesson = lessonRepository.findById(17).orElse(null);
 
         assert lesson != null;
         Assert.assertEquals(oldTitle, lesson.getTitle());
@@ -107,7 +106,7 @@ class LessonServiceTest {
                         "your existing skills, this course offers a structured learning path to master the " +
                         "essentials of web development and advance towards more complex topics.", 4);
         Lesson expected = lessonMappingService.mapDtoToEntity(lessonDto);
-        LessonDto updatedDto = lessonService.updateById(lessonDto, 2);
+        LessonDto updatedDto = lessonService.updateById(lessonDto, 17);
         Lesson actual = lessonMappingService.mapDtoToEntity(updatedDto);
 
         Assert.assertEquals(expected.getTitle(), actual.getTitle());
@@ -116,17 +115,28 @@ class LessonServiceTest {
     }
 
     @Test
-    void deleteById() {
+    void deleteByIdPositiveTest() {
         int lessonSizeBefore = lessonRepository.findAll().size();
-        Lesson foundLesson = lessonRepository.findById(2).orElse(null);
+        Lesson foundLesson = lessonRepository.findById(17).orElse(null);
 
         Assert.assertNotNull(foundLesson);
 
-        lessonService.deleteById(2);
+        lessonService.deleteById(17);
         int lessonSizeAfter = lessonRepository.findAll().size();
-        foundLesson = lessonRepository.findById(2).orElse(null);
+        foundLesson = lessonRepository.findById(17).orElse(null);
 
         Assert.assertNull(foundLesson);
         Assert.assertEquals(lessonSizeBefore - 1, lessonSizeAfter);
+    }
+
+    @Test
+    void deleteByIdNegativeTest() {
+        Exception exception = assertThrows(CourseNotFoundException.class, () -> {
+            lessonService.deleteById(124);
+        });
+        String expectedMessage = "Lesson not found with id 124";
+        String actualMessage = exception.getMessage();
+
+        Assert.assertEquals(expectedMessage, actualMessage);
     }
 }

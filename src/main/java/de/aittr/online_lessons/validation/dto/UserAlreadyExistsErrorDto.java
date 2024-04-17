@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Schema(name = "UserAlreadyExistsError", description = "User already exists")
 public class UserAlreadyExistsErrorDto {

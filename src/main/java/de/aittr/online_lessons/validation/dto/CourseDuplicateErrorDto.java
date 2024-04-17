@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Schema(name = "CourseDuplicateError", description = "Duplicate courses")
 public class CourseDuplicateErrorDto {

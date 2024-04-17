@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Schema(name = "EnrollmentAlreadyExistsError", description = "Enrollment has already been saved")
 public class EnrollmentAlreadyExistsErrorDto {

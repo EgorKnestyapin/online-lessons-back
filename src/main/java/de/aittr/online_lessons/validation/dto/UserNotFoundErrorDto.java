@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Schema(name = "UserNotFoundError", description = "User is not found")
 public class UserNotFoundErrorDto {

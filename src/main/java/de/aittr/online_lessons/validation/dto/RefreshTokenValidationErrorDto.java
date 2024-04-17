@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Schema(name = "RefreshTokenValidationError", description = "Incorrect refresh token")
 public class RefreshTokenValidationErrorDto {

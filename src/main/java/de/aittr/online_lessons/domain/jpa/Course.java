@@ -9,10 +9,7 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Schema(description = "Course entity")
 @NoArgsConstructor
@@ -82,6 +79,11 @@ public class Course {
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Lesson> createdLessons = new LinkedHashSet<>();
+
+    @ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<Cart> carts = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -173,6 +175,14 @@ public class Course {
 
     public void setCreatedLessons(Set<Lesson> createdLessons) {
         this.createdLessons = createdLessons;
+    }
+
+    public List<Cart> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(List<Cart> carts) {
+        this.carts = carts;
     }
 
     @Override
