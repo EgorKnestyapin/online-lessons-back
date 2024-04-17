@@ -1,5 +1,6 @@
 package de.aittr.online_lessons.controllers.api;
 
+import de.aittr.online_lessons.controllers.FilesController;
 import de.aittr.online_lessons.exception_handling.Response;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -10,6 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * API for file controller {@link FilesController}
+ *
+ * @author EgorKnestyapin
+ * @version 1.0.0
+ */
 @Tags(value = @Tag(name = "files"))
 public interface FileApi {
 

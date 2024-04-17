@@ -15,12 +15,27 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Service containing tools for working with files
+ *
+ * @author aliyasagut
+ * @version 1.0.0
+ */
 @Service
 @RequiredArgsConstructor
 public class FileService {
 
+    /**
+     * {@link AmazonS3}
+     */
     private final AmazonS3 amazonS3;
 
+    /**
+     * Uploading photos to the server
+     *
+     * @param file File to upload
+     * @return Response message
+     */
     @Transactional
     @SneakyThrows
     public Response upload(MultipartFile file) {
@@ -48,6 +63,13 @@ public class FileService {
                 .build();
     }
 
+    /**
+     * Getting extension from the filename
+     *
+     * @param file File to upload
+     * @return Extension
+     * @throws IllegalArgumentException Invalid file extension
+     */
     private static String getExtension(MultipartFile file) {
         String originalFileName = file.getOriginalFilename();
         List<String> validExtensions = List.of("jpeg", "png", "gif", "bmp", "tiff", "svg", "webp", "heif", "jpg");

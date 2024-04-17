@@ -5,7 +5,6 @@ import de.aittr.online_lessons.domain.dto.EnrollmentResponseDto;
 import de.aittr.online_lessons.domain.jpa.Course;
 import de.aittr.online_lessons.domain.jpa.Enrollment;
 import de.aittr.online_lessons.domain.jpa.User;
-import de.aittr.online_lessons.exception_handling.exceptions.CartNotFoundException;
 import de.aittr.online_lessons.exception_handling.exceptions.CourseNotFoundException;
 import de.aittr.online_lessons.exception_handling.exceptions.CourseValidationException;
 import de.aittr.online_lessons.mapping.CourseMappingService;
@@ -31,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Transactional
-@TestPropertySource(locations = "classpath:application.properties")
+@TestPropertySource(locations = "classpath:test.properties")
 class CourseServiceTest {
 
     @Autowired
@@ -57,7 +56,7 @@ class CourseServiceTest {
     void savePositiveTest() {
         int courseSizeBefore = courseRepository.findAll().size();
         CourseDto courseDto = new CourseDto(0, "Web programming", 0, 330,
-                "https://rsv.ru/blog/wp-content/uploads/2021/09/onlajn-kurs-918x516.jpg", null,
+                "https://rsv.ru/blog/wp-content/uploads/2021/09/onlajn-kurs-918x516.jpg",
                 "Embark on a comprehensive exploration of marketing, from its foundational elements to " +
                         "cutting-edge strategies. Begin by understanding market segmentation, targeting, and " +
                         "positioning to tailor your messages effectively. Dive deep into the realm of branding, " +
@@ -103,7 +102,7 @@ class CourseServiceTest {
                         "content marketing and analytics, leveraging data-driven insights to optimize your " +
                         "campaigns and drive tangible results. Your journey in marketing will not only enrich your " +
                         "skill set but also empower you to shape the future of brands and businesses in an ",
-                null, "Embark on a comprehensive exploration of marketing.", 0);
+                "Embark on a comprehensive exploration of marketing.", 0);
         Exception exception = assertThrows(CourseValidationException.class, () -> {
             courseService.save(courseDto, "user123");
         });
@@ -155,7 +154,7 @@ class CourseServiceTest {
         Course foundCourse = courseService.getCourseEntityById(3);
         int oldPrice = foundCourse.getPrice();
         CourseDto courseDto = new CourseDto(0, "Java programming", 0, 150,
-                "https://wsltech.com.br/wp-content/uploads/2021/02/photo-1532618403260-5aeffed45f6e-1051x640-2.jpg", null,
+                "https://wsltech.com.br/wp-content/uploads/2021/02/photo-1532618403260-5aeffed45f6e-1051x640-2.jpg",
                 "Embark on a comprehensive exploration of marketing, from its foundational elements to " +
                         "cutting-edge strategies. Begin by understanding market segmentation, targeting, and " +
                         "positioning to tailor your messages effectively. Dive deep into the realm of branding, " +

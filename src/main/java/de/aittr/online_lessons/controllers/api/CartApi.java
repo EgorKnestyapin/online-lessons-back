@@ -1,7 +1,7 @@
 package de.aittr.online_lessons.controllers.api;
 
+import de.aittr.online_lessons.controllers.CartController;
 import de.aittr.online_lessons.domain.dto.CourseDto;
-import de.aittr.online_lessons.security.sec_dto.AuthInfo;
 import de.aittr.online_lessons.validation.dto.CartNotFoundErrorDto;
 import de.aittr.online_lessons.validation.dto.CourseDuplicateErrorDto;
 import de.aittr.online_lessons.validation.dto.ForbiddenErrorDto;
@@ -20,6 +20,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * API for cart controller {@link CartController}
+ *
+ * @author EgorKnestyapin
+ * @version 1.0.0
+ */
 @Tags(
         @Tag(name = "Cart controller", description = "Controller for some operations with cart")
 )

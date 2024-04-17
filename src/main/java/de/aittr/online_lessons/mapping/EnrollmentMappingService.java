@@ -6,6 +6,12 @@ import org.mapstruct.Mapper;
 
 import java.util.Set;
 
+/**
+ * Service containing tools for enrollment mapping {@link Enrollment}
+ *
+ * @author EgorKnestyapin
+ * @version 1.0.0
+ */
 @Mapper(componentModel = "spring")
 public interface EnrollmentMappingService {
 

@@ -4,10 +4,8 @@ import de.aittr.online_lessons.domain.dto.ChangePasswordDto;
 import de.aittr.online_lessons.domain.dto.UserDto;
 import de.aittr.online_lessons.domain.jpa.Role;
 import de.aittr.online_lessons.domain.jpa.User;
-import de.aittr.online_lessons.exception_handling.exceptions.EnrollmentAlreadyExistsException;
 import de.aittr.online_lessons.exception_handling.exceptions.PasswordMismatchException;
 import de.aittr.online_lessons.exception_handling.exceptions.UserAlreadyExistsException;
-import de.aittr.online_lessons.exception_handling.exceptions.UserNotFoundException;
 import de.aittr.online_lessons.mapping.UserMappingService;
 import de.aittr.online_lessons.repositories.jpa.CartRepository;
 import de.aittr.online_lessons.repositories.jpa.UserRepository;
@@ -29,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Transactional
-@TestPropertySource(locations = "classpath:application.properties")
+@TestPropertySource(locations = "classpath:test.properties")
 class UserServiceTest {
 
     @Autowired

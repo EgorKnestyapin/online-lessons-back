@@ -1,8 +1,11 @@
 package de.aittr.online_lessons.controllers.api;
 
-import de.aittr.online_lessons.domain.dto.CourseDto;
+import de.aittr.online_lessons.controllers.LessonController;
 import de.aittr.online_lessons.domain.dto.LessonDto;
-import de.aittr.online_lessons.validation.dto.*;
+import de.aittr.online_lessons.validation.dto.CourseNotFoundErrorDto;
+import de.aittr.online_lessons.validation.dto.ForbiddenErrorDto;
+import de.aittr.online_lessons.validation.dto.LessonNotFoundErrorDto;
+import de.aittr.online_lessons.validation.dto.LessonValidationErrorDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -19,6 +22,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * API for lesson controller {@link LessonController}
+ *
+ * @author EgorKnestyapin
+ * @version 1.0.0
+ */
 @Tags(
         @Tag(name = "Lesson controller", description = "Controller for some operations with lessons")
 )

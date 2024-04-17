@@ -17,16 +17,43 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Service containing tools for working with course entity {@link Course}
+ *
+ * @author EgorKnestyapin
+ * @version 1.0.0
+ */
 @Service
 public class CourseService {
+
+    /**
+     * {@link CourseRepository}
+     */
     private final CourseRepository repository;
 
+    /**
+     * {@link CourseMappingService}
+     */
     private final CourseMappingService courseMappingService;
 
+    /**
+     * {@link EnrollmentMappingService}
+     */
     private final EnrollmentMappingService enrollmentMappingService;
 
+    /**
+     * {@link UserService}
+     */
     private final UserService userService;
 
+    /**
+     * Constructor for creating course service
+     *
+     * @param repository               Course repository
+     * @param courseMappingService     Mapping service for course
+     * @param enrollmentMappingService Mapping service for enrollment
+     * @param userService              User service
+     */
     public CourseService(CourseRepository repository, CourseMappingService courseMappingService, EnrollmentMappingService enrollmentMappingService, UserService userService) {
         this.repository = repository;
         this.courseMappingService = courseMappingService;
@@ -34,6 +61,14 @@ public class CourseService {
         this.userService = userService;
     }
 
+    /**
+     * Saving course to database
+     *
+     * @param courseDto Course DTO
+     * @param username  User nickname
+     * @return Saved course DTO
+     * @throws CourseValidationException Incorrect values of course fields
+     */
     @Transactional
     public CourseDto save(CourseDto courseDto, String username) {
         Course course = courseMappingService.mapDtoToEntity(courseDto);
@@ -55,18 +90,33 @@ public class CourseService {
         return courseMappingService.mapEntityToDto(course);
     }
 
+    /**
+     * Getting all courses from the database
+     *
+     * @return List of courses
+     */
     public List<CourseDto> getAllCourses() {
-        return repository.findAll().stream()
-                .map(courseMappingService::mapEntityToDto)
-                .toList();
+        return repository.findAll().stream().map(courseMappingService::mapEntityToDto).toList();
     }
 
+    /**
+     * Getting course by ID from the database
+     *
+     * @param courseId Course ID
+     * @return Course
+     */
     public CourseDto getCourseById(int courseId) {
         Course course = getCourseEntityById(courseId);
         return courseMappingService.mapEntityToDto(course);
     }
 
-
+    /**
+     * Getting course entity by ID from the database
+     *
+     * @param id Course ID
+     * @return Course entity
+     * @throws CourseNotFoundException Course not found
+     */
     public Course getCourseEntityById(int id) {
         Course course = repository.findById(id).orElse(null);
         if (course == null) {
@@ -75,9 +125,15 @@ public class CourseService {
         return course;
     }
 
+    /**
+     * Updating course fields
+     *
+     * @param id        Course ID
+     * @param courseDto Course DTO
+     * @return Updated course
+     */
     public CourseDto update(int id, CourseDto courseDto) {
-        Course foundCourse = repository.findById(id)
-                .orElseThrow(() -> new CourseNotFoundException("Course not found with id " + id));
+        Course foundCourse = repository.findById(id).orElseThrow(() -> new CourseNotFoundException("Course not found with id " + id));
 
         Course course = courseMappingService.mapDtoToEntity(courseDto);
         course.setId(id);
@@ -94,6 +150,12 @@ public class CourseService {
         return courseMappingService.mapEntityToDto(course);
     }
 
+    /**
+     * Deleting a course by ID
+     *
+     * @param id Course ID
+     * @throws CourseNotFoundException Course not found
+     */
     @Transactional
     public void deleteById(int id) {
         if (!repository.existsById(id)) {
@@ -107,11 +169,23 @@ public class CourseService {
         repository.deleteById(id);
     }
 
+    /**
+     * Getting enrollments related to the course from the database
+     *
+     * @param username User nickname
+     * @return Set of enrollments
+     */
     public Set<EnrollmentResponseDto> getEnrollmentsByUsername(String username) {
         User user = (User) userService.loadUserByUsername(username);
         return enrollmentMappingService.mapSetEntityToSetDto(user.getEnrollments());
     }
 
+    /**
+     * Getting courses created by the user
+     *
+     * @param username User nickname
+     * @return Set of created courses
+     */
     public Set<CourseDto> getCreatedCoursesByUsername(String username) {
         User user = (User) userService.loadUserByUsername(username);
         return courseMappingService.mapSetEntityToSetDto(user.getCreatedCourses());

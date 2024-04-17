@@ -2,7 +2,6 @@ package de.aittr.online_lessons.services;
 
 import de.aittr.online_lessons.domain.dto.LessonDto;
 import de.aittr.online_lessons.domain.jpa.Lesson;
-import de.aittr.online_lessons.exception_handling.exceptions.CartNotFoundException;
 import de.aittr.online_lessons.exception_handling.exceptions.CourseNotFoundException;
 import de.aittr.online_lessons.mapping.LessonMappingService;
 import de.aittr.online_lessons.repositories.jpa.LessonRepository;
@@ -26,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Transactional
-@TestPropertySource(locations = "classpath:application.properties")
+@TestPropertySource(locations = "classpath:test.properties")
 class LessonServiceTest {
 
     @Autowired

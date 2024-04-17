@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Transactional
-@TestPropertySource(locations = "classpath:application.properties")
+@TestPropertySource(locations = "classpath:test.properties")
 class CartServiceTest {
 
     @Autowired

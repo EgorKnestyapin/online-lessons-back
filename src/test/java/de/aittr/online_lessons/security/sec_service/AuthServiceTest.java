@@ -2,10 +2,8 @@ package de.aittr.online_lessons.security.sec_service;
 
 import de.aittr.online_lessons.domain.dto.UserDto;
 import de.aittr.online_lessons.domain.jpa.User;
-import de.aittr.online_lessons.exception_handling.exceptions.EnrollmentAlreadyExistsException;
 import de.aittr.online_lessons.exception_handling.exceptions.RefreshTokenValidationException;
 import de.aittr.online_lessons.exception_handling.exceptions.UserNotAuthenticated;
-import de.aittr.online_lessons.repositories.jpa.UserRepository;
 import de.aittr.online_lessons.security.sec_dto.TokenResponseDto;
 import de.aittr.online_lessons.security.sec_dto.UserLoginDto;
 import de.aittr.online_lessons.services.UserService;
@@ -27,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Transactional
-@TestPropertySource(locations = "classpath:application.properties")
+@TestPropertySource(locations = "classpath:test.properties")
 class AuthServiceTest {
 
     @Autowired

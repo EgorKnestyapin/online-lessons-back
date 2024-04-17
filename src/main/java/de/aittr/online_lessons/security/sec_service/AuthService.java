@@ -18,17 +18,44 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service containing tools for working with authorization information and tokens
+ * {@link AuthInfo} {@link TokenResponseDto}
+ *
+ * @author EgorKnestyapin
+ * @version 1.0.0
+ */
 @Service
 public class AuthService {
 
+    /**
+     * {@link UserService}
+     */
     private UserService userService;
 
+    /**
+     * {@link UserRepository}
+     */
     private UserRepository userRepository;
 
+    /**
+     * {@link TokenService}
+     */
     private TokenService tokenService;
 
+    /**
+     * Encoder
+     */
     private BCryptPasswordEncoder encoder;
 
+    /**
+     * Constructor for creating authorization service
+     *
+     * @param userService    User service
+     * @param userRepository User repository
+     * @param tokenService   Token service
+     * @param encoder        Encoder
+     */
     public AuthService(UserService userService, UserRepository userRepository, TokenService tokenService,
                        BCryptPasswordEncoder encoder) {
         this.userService = userService;
@@ -37,6 +64,13 @@ public class AuthService {
         this.encoder = encoder;
     }
 
+    /**
+     * User login to receive tokens
+     *
+     * @param inboundUser User DTO for login
+     * @return Access token and refresh token
+     * @throws AuthException Incorrect fields in user DTO
+     */
     @Transactional
     public TokenResponseDto login(@Nonnull UserLoginDto inboundUser) throws AuthException {
         String email = inboundUser.getEmail();
@@ -53,6 +87,14 @@ public class AuthService {
         return new TokenResponseDto(accessToken, refreshToken);
     }
 
+    /**
+     * Getting access token
+     *
+     * @param refreshToken Refresh token
+     * @return Access token
+     * @throws UserNotAuthenticated            User has never logged in
+     * @throws RefreshTokenValidationException Refresh token is not valid
+     */
     public TokenResponseDto getAccessToken(@Nonnull String refreshToken) {
         if (tokenService.validateRefreshToken(refreshToken)) {
             Claims refreshClaims = tokenService.getRefreshClaims(refreshToken);
@@ -71,6 +113,12 @@ public class AuthService {
         throw new RefreshTokenValidationException("Refresh token is not valid");
     }
 
+    /**
+     * Getting information about the current authorized user
+     *
+     * @return Authorization information
+     * @throws UserNotAuthenticated User is not authenticated
+     */
     public AuthInfo getAuthInfo() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth.getPrincipal().equals("anonymousUser")) {

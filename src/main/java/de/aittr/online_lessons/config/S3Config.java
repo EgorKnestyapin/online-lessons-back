@@ -10,6 +10,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Class for file service configuration.
+ *
+ * @author EgorKnestyapin
+ * @version 1.0.0
+ */
 @Configuration
 public class S3Config {
 

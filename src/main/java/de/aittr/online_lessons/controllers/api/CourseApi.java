@@ -1,9 +1,14 @@
 package de.aittr.online_lessons.controllers.api;
 
+import de.aittr.online_lessons.controllers.CourseController;
 import de.aittr.online_lessons.domain.dto.CourseDto;
 import de.aittr.online_lessons.domain.dto.EnrollmentResponseDto;
-import de.aittr.online_lessons.validation.dto.*;
+import de.aittr.online_lessons.validation.dto.CourseNotFoundErrorDto;
+import de.aittr.online_lessons.validation.dto.CourseValidationErrorDto;
+import de.aittr.online_lessons.validation.dto.ForbiddenErrorDto;
+import de.aittr.online_lessons.validation.dto.UserNotFoundErrorDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -11,7 +16,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
-import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +23,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Set;
 
-
+/**
+ * API for course controller {@link CourseController}
+ *
+ * @author EgorKnestyapin
+ * @version 1.0.0
+ */
 @Tags(
         @Tag(name = "Course controller", description = "Controller for some operations with courses")
 )

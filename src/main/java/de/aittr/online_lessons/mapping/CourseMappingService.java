@@ -33,6 +33,12 @@ import org.mapstruct.Mapper;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Service containing tools for course mapping {@link Course}
+ *
+ * @author EgorKnestyapin
+ * @version 1.0.0
+ */
 @Mapper(componentModel = "spring")
 public interface CourseMappingService {
     Course mapDtoToEntity(CourseDto dto);

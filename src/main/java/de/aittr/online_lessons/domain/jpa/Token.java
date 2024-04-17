@@ -1,13 +1,18 @@
 package de.aittr.online_lessons.domain.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.Objects;
 
+/**
+ * Class describing the token.
+ *
+ * @author EgorKnestyapin
+ * @version 1.0.0
+ */
 @Getter
 @Setter
 @ToString
@@ -18,15 +23,24 @@ import java.util.Objects;
 @Table(name = "token")
 public class Token {
 
+    /**
+     * Token ID
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
+    /**
+     * Refresh token
+     */
     @Column(name = "refresh_token")
     @NotNull
     private String refreshToken;
 
+    /**
+     * User who owns the token
+     */
     @OneToOne
     @JsonIgnore
     @ToString.Exclude

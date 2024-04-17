@@ -6,6 +6,7 @@ import de.aittr.online_lessons.domain.jpa.User;
 import de.aittr.online_lessons.repositories.jpa.RoleRepository;
 import de.aittr.online_lessons.repositories.jpa.TokenRepository;
 import de.aittr.online_lessons.security.sec_dto.AuthInfo;
+import de.aittr.online_lessons.security.sec_dto.TokenResponseDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -20,17 +21,43 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
 
+/**
+ * Service containing tools for working with  tokens {@link TokenResponseDto}
+ *
+ * @author EgorKnestyapin
+ * @version 1.0.0
+ */
 @Service
 public class TokenService {
 
+    /**
+     * Access token secret key
+     */
     private SecretKey accessKey;
 
+    /**
+     * Refresh token secret key
+     */
     private SecretKey refreshKey;
 
+    /**
+     * {@link RoleRepository}
+     */
     private RoleRepository roleRepository;
 
+    /**
+     * {@link TokenRepository}
+     */
     private TokenRepository tokenRepository;
 
+    /**
+     * Constructor for creating token service
+     *
+     * @param accessKey       Access token secret key
+     * @param refreshKey      Refresh token secret key
+     * @param roleRepository  Role repository
+     * @param tokenRepository Token repository
+     */
     public TokenService(
             @Value("${access.key}") String accessKey,
             @Value("${refresh.key}") String refreshKey,
@@ -42,6 +69,12 @@ public class TokenService {
         this.tokenRepository = tokenRepository;
     }
 
+    /**
+     * Access token creation
+     *
+     * @param user User
+     * @return Access token
+     */
     public String generateAccessToken(@Nonnull User user) {
         LocalDateTime currentDate = LocalDateTime.now();
         Instant expirationInstant = currentDate.plusDays(7).atZone(ZoneId.systemDefault()).toInstant();
@@ -57,7 +90,12 @@ public class TokenService {
                 .compact();
     }
 
-
+    /**
+     * Refresh token creation
+     *
+     * @param user User
+     * @return Refresh token
+     */
     public String generateRefreshToken(@Nonnull User user) {
         LocalDateTime currentDate = LocalDateTime.now();
         Instant expirationInstant = currentDate.plusDays(30).atZone(ZoneId.systemDefault()).toInstant();
@@ -70,14 +108,33 @@ public class TokenService {
                 .compact();
     }
 
+    /**
+     * Checking the validity of the access token
+     *
+     * @param accessToken Access token
+     * @return Information whether the token is valid
+     */
     public boolean validateAccessToken(@Nonnull String accessToken) {
         return validateToken(accessToken, accessKey);
     }
 
+    /**
+     * Checking the validity of the refresh token
+     *
+     * @param refreshToken Refresh token
+     * @return Information whether the token is valid
+     */
     public boolean validateRefreshToken(@Nonnull String refreshToken) {
         return validateToken(refreshToken, refreshKey);
     }
 
+    /**
+     * Checking the validity of the token
+     *
+     * @param token Token
+     * @param key   Secret key
+     * @return Information whether the token is valid
+     */
     private boolean validateToken(@Nonnull String token, @Nonnull SecretKey key) {
         try {
             Jwts.parser()
@@ -90,6 +147,13 @@ public class TokenService {
         }
     }
 
+    /**
+     * Saving the refresh token to the database
+     *
+     * @param refreshToken Refresh token
+     * @param user         User
+     * @return Saved refresh token
+     */
     public Token saveRefreshToken(String refreshToken, User user) {
         int id = 0;
         if (user.getToken() != null) {
@@ -99,14 +163,33 @@ public class TokenService {
         return tokenRepository.save(newToken);
     }
 
+    /**
+     * Getting access token claims
+     *
+     * @param accessToken Access token
+     * @return Access token claims
+     */
     public Claims getAccessClaims(@Nonnull String accessToken) {
         return getClaims(accessToken, accessKey);
     }
 
+    /**
+     * Getting refresh token claims
+     *
+     * @param refreshToken Refresh token
+     * @return Refresh token claims
+     */
     public Claims getRefreshClaims(@Nonnull String refreshToken) {
         return getClaims(refreshToken, refreshKey);
     }
 
+    /**
+     * Getting token claims
+     *
+     * @param token Token
+     * @param key   Secret key
+     * @return Token claims
+     */
     private Claims getClaims(@Nonnull String token, @Nonnull SecretKey key) {
         return Jwts.parser()
                 .verifyWith(key)
@@ -115,6 +198,12 @@ public class TokenService {
                 .getPayload();
     }
 
+    /**
+     * Authorization information creation
+     *
+     * @param claims Token claims
+     * @return Authorization information
+     */
     public AuthInfo generateAuthInfo(Claims claims) {
         String username = claims.getSubject();
         int id = 0;
