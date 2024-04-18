@@ -49,7 +49,7 @@ public class Cart {
      */
     @OneToOne
     @JsonIgnore
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "account_id")
     private User user;
 
     /**

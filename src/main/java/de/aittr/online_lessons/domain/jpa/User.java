@@ -30,7 +30,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "user")
+@Table(name = "account")
 public class User implements UserDetails {
 
     /**
@@ -69,7 +69,7 @@ public class User implements UserDetails {
     /**
      * User enrollments
      */
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     @ToString.Exclude
     @JsonIgnore
     private Set<Enrollment> enrollments = new HashSet<>();
@@ -77,7 +77,7 @@ public class User implements UserDetails {
     /**
      * Courses created by the user
      */
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Course> createdCourses = new HashSet<>();
 
@@ -87,8 +87,8 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnore
     @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
+            name = "account_role",
+            joinColumns = @JoinColumn(name = "account_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
@@ -96,7 +96,7 @@ public class User implements UserDetails {
     /**
      * User-owned cart
      */
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
     @ToString.Exclude
     @JsonIgnore
     private Cart cart;
@@ -104,7 +104,7 @@ public class User implements UserDetails {
     /**
      * User token
      */
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
     @ToString.Exclude
     private Token token;
 

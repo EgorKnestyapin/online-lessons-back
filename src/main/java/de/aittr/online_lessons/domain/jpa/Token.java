@@ -44,7 +44,7 @@ public class Token {
     @OneToOne
     @JsonIgnore
     @ToString.Exclude
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "account_id")
     private User user;
 
     @Override

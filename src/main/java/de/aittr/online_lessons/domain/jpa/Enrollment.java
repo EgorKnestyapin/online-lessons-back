@@ -49,7 +49,7 @@ public class Enrollment {
      * User who signed up for the course
      */
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "account_id")
     private User user;
 
     /**
