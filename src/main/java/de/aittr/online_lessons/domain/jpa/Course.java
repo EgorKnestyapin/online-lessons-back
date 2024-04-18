@@ -93,7 +93,7 @@ public class Course {
      */
     @ManyToOne
     @ToString.Exclude
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "account_id")
     private User user;
 
     /**
