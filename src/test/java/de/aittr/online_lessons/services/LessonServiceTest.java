@@ -2,7 +2,7 @@ package de.aittr.online_lessons.services;
 
 import de.aittr.online_lessons.domain.dto.LessonDto;
 import de.aittr.online_lessons.domain.jpa.Lesson;
-import de.aittr.online_lessons.exception_handling.exceptions.CourseNotFoundException;
+import de.aittr.online_lessons.exception_handling.exceptions.LessonNotFoundException;
 import de.aittr.online_lessons.mapping.LessonMappingService;
 import de.aittr.online_lessons.repositories.jpa.LessonRepository;
 import jakarta.transaction.Transactional;
@@ -130,7 +130,7 @@ class LessonServiceTest {
 
     @Test
     void deleteByIdNegativeTest() {
-        Exception exception = assertThrows(CourseNotFoundException.class, () -> {
+        Exception exception = assertThrows(LessonNotFoundException.class, () -> {
             lessonService.deleteById(124);
         });
         String expectedMessage = "Lesson not found with id 124";

@@ -49,6 +49,7 @@ public class FileService {
 
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentType(file.getContentType());
+        metadata.setContentLength(file.getSize());
 
         PutObjectRequest request =
                 new PutObjectRequest("online-lessons-files", newFileName, inputStream, metadata)
