@@ -1,25 +1,25 @@
-# шаг сборки - build
-# maven - это образ Linux + Maven
+# build step
+# maven - this is a Linux + Maven image
 FROM maven as build
-# создаем папку внутри этого Linux-а и называем ее app
+# create a folder inside this Linux and call it app
 WORKDIR /workspace/app
-# в эту папку копируем наш pom.xml
+# copy our pom.xml to this folder
 COPY pom.xml .
-# также в эту папку копируем наш исходный код
+# We also copy our source code to this folder
 COPY src src
-# запускаем maven на сборку
+# run maven to build
 RUN mvn clean package
-# создаем папку, которая называется dependency и в нее копируем все, что находится внутри нашего jar и имеет расширение jar
+# create a folder called dependency and copy into it everything that is inside our jar and has the jar extension
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
-# переходим к новому шагу
-# берем linux, в котором уже нет maven-а и прочего мусора, а есть только JRE (Виртуальная машина)
+# move on to the next step
+# we take linux, which no longer has maven and other garbage, but only JRE (Virtual machine)
 FROM eclipse-temurin:17-jre-alpine
-# назвали нашу папку с зависимостями DEPENDENCY
+# named our dependency folder DEPENDENCY
 ARG DEPENDENCY=/workspace/app/target/dependency
-# из предыдущего шага забираем все зависимости и копируем их в новый linux
+# from the previous step we take all the dependencies and copy them to the new linux
 COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
-# запускаем приложение вместе со всеми библиотеками
+# launch the application along with all the libraries
 ENTRYPOINT ["java","-cp","app:app/lib/*", "de.aittr.online_lessons.OnlineLessonsApplication"]
