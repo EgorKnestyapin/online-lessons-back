@@ -11,7 +11,7 @@
     <groupId>de.ait-tr</groupId>
     <artifactId>online_lessons</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>online_lessons</name>
     <description>Demo project for Spring Boot</description>
     <properties>
