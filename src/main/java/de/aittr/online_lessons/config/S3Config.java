@@ -19,16 +19,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class S3Config {
 
-    @Value("${s3.accessKey}")
+    @Value("${s3_accessKey}")
     private String s3AccessKey;
 
-    @Value("${s3.secretKey}")
+    @Value("${s3_secretKey}")
     private String s3SecretKey;
 
-    @Value("${s3.endpoint}")
+    @Value("${s3_endpoint}")
     private String s3Endpoint;
 
-    @Value("${s3.region}")
+    @Value("${s3_region}")
     private String s3Region;
 
     @Bean
