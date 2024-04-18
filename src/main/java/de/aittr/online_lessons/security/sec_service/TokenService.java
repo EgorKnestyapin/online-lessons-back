@@ -59,8 +59,8 @@ public class TokenService {
      * @param tokenRepository Token repository
      */
     public TokenService(
-            @Value("${access.key}") String accessKey,
-            @Value("${refresh.key}") String refreshKey,
+            @Value("${access_key}") String accessKey,
+            @Value("${refresh_key}") String refreshKey,
             RoleRepository roleRepository, TokenRepository tokenRepository
     ) {
         this.accessKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(accessKey));
