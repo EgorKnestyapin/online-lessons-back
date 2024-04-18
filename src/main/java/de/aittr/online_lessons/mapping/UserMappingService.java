@@ -1,17 +1,18 @@
 package de.aittr.online_lessons.mapping;
 
 import de.aittr.online_lessons.domain.dto.UserDto;
-import de.aittr.online_lessons.domain.jpa.Role;
 import de.aittr.online_lessons.domain.jpa.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
-
+/**
+ * Service containing tools for user mapping {@link User}
+ *
+ * @author EgorKnestyapin
+ * @version 1.0.0
+ */
 @Mapper(componentModel = "spring")
 public interface UserMappingService {
 

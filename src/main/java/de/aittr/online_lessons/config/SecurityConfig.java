@@ -23,21 +23,48 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+/**
+ * Class for security configuration.
+ *
+ * @author EgorKnestyapin
+ * @version 1.0.0
+ */
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
+
+    /**
+     * {@link TokenFilter}
+     */
     private TokenFilter filter;
 
+    /**
+     * Constructor for creating security config
+     *
+     * @param filter Filter for HTTP requests
+     */
     public SecurityConfig(TokenFilter filter) {
         this.filter = filter;
     }
 
+    /**
+     * Getter
+     *
+     * @return Encoder
+     */
     @Bean
     public BCryptPasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Setting up and protecting endpoints, security configuration
+     *
+     * @param http HTTP request
+     * @return Security filter chain
+     * @throws Exception Unexpected failure
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -94,6 +121,11 @@ public class SecurityConfig {
                 .build();
     }
 
+    /**
+     * Swagger setup
+     *
+     * @return API
+     */
     @Bean
     public OpenAPI openAPI() {
         return new OpenAPI().addSecurityItem(new SecurityRequirement().
@@ -102,8 +134,8 @@ public class SecurityConfig {
                         ("Bearer Authentication", createAPIKeyScheme()))
                 .info(new Info().title("Online lessons")
                         .description("Application for online lessons")
-                        .version("1.0.0").contact(new Contact().name("Example")
-                                .email("test@test.com").url("http://www.learn.com/"))
+                        .version("1.0.0").contact(new Contact().name("Learn")
+                                .email("learn@example.com").url("http://www.learn.com/"))
                         .license(new License().name("@Example")
                                 .url("http://www.learn.com/")));
     }

@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Schema(name = "CartNotFoundError", description = "Cart not found")
 public class CartNotFoundErrorDto {

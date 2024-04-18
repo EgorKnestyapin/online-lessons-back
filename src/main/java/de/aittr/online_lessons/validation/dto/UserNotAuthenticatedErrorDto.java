@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Schema(name = "UserNotAuthenticated", description = "User is not authenticated")
 public class UserNotAuthenticatedErrorDto {

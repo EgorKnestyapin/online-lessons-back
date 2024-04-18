@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Schema(name = "PasswordMismatchError", description = "Password mismatch")
 public class PasswordMismatchErrorDto {

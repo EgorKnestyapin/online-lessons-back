@@ -12,6 +12,8 @@ import de.aittr.online_lessons.exception_handling.exceptions.EnrollmentValidatio
 import de.aittr.online_lessons.mapping.CourseMappingService;
 import de.aittr.online_lessons.repositories.jpa.CartRepository;
 import de.aittr.online_lessons.repositories.jpa.EnrollmentRepository;
+import de.aittr.online_lessons.repositories.jpa.RoleRepository;
+import de.aittr.online_lessons.security.sec_dto.TokenResponseDto;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +21,43 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service containing tools for working with cart entity {@link Cart}
+ *
+ * @author EgorKnestyapin
+ * @version 1.0.0
+ */
 @Service
 public class CartService {
-    private final CartRepository cartRepository;
-    private final CourseService courseService;
-    private final CourseMappingService courseMappingService;
-    private final EnrollmentRepository enrollmentRepository;
 
+    /**
+     * {@link CartRepository}
+     */
+    private CartRepository cartRepository;
+
+    /**
+     * {@link CourseService}
+     */
+    private CourseService courseService;
+
+    /**
+     * {@link CourseMappingService}
+     */
+    private CourseMappingService courseMappingService;
+
+    /**
+     * {@link EnrollmentRepository}
+     */
+    private EnrollmentRepository enrollmentRepository;
+
+    /**
+     * Constructor for creating cart service
+     *
+     * @param cartRepository       Cart repository
+     * @param courseService        Course service
+     * @param courseMappingService Mapping service for course
+     * @param enrollmentRepository Enrollment repository
+     */
     public CartService(CartRepository cartRepository, CourseService courseService,
                        CourseMappingService courseMappingService, EnrollmentRepository enrollmentRepository) {
         this.cartRepository = cartRepository;
@@ -34,6 +66,12 @@ public class CartService {
         this.enrollmentRepository = enrollmentRepository;
     }
 
+    /**
+     * Receiving courses in the cart
+     *
+     * @param cartId Cart ID
+     * @return List of courses
+     */
     public List<CourseDto> getCourses(int cartId) {
         Cart cart = getCartById(cartId);
         List<Course> courses = cart.getCourses();
@@ -42,6 +80,13 @@ public class CartService {
                 .toList();
     }
 
+    /**
+     * Adding a course to cart
+     *
+     * @param cartId   Cart ID
+     * @param courseId Course ID
+     * @throws CourseDuplicateException Course is already in the cart
+     */
     @Transactional
     public void addCourseToCart(int cartId, int courseId) {
         Cart cart = getCartById(cartId);
@@ -52,7 +97,14 @@ public class CartService {
         cart.addCourse(course);
     }
 
-    private Cart getCartById(int cartId) {
+    /**
+     * Getting cart by ID from the database
+     *
+     * @param cartId Cart ID
+     * @return Cart
+     * @throws CartNotFoundException Cart not found
+     */
+    public Cart getCartById(int cartId) {
         Cart cart = cartRepository.findById(cartId).orElse(null);
         if (cart == null) {
             throw new CartNotFoundException("Cart with ID " + cartId + " not found");
@@ -60,6 +112,12 @@ public class CartService {
         return cart;
     }
 
+    /**
+     * Removing a course from the cart
+     *
+     * @param cartId   Cart ID
+     * @param courseId Course ID
+     */
     @Transactional
     public void deleteCourseFromCart(int cartId, int courseId) {
         Cart cart = getCartById(cartId);
@@ -67,12 +125,24 @@ public class CartService {
         cart.removeCourse(course);
     }
 
+    /**
+     * Removing all courses from the cart
+     *
+     * @param cartId Cart ID
+     */
     @Transactional
     public void clearCart(int cartId) {
         Cart cart = getCartById(cartId);
         cart.getCourses().clear();
     }
 
+    /**
+     * Purchasing all courses in the cart
+     *
+     * @param cartId Cart ID
+     * @throws EnrollmentAlreadyExistsException Enrollment with that course already exists
+     * @throws EnrollmentValidationException    Incorrect values of enrollment fields
+     */
     @Transactional
     public void buyCourses(int cartId) {
         Cart cart = getCartById(cartId);

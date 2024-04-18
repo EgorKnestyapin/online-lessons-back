@@ -1,8 +1,8 @@
 package de.aittr.online_lessons.controllers.api;
 
+import de.aittr.online_lessons.controllers.UserController;
 import de.aittr.online_lessons.domain.dto.ChangePasswordDto;
 import de.aittr.online_lessons.domain.dto.UserDto;
-import de.aittr.online_lessons.exception_handling.exceptions.UserAlreadyExistsException;
 import de.aittr.online_lessons.validation.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -16,6 +16,12 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * API for user controller {@link UserController}
+ *
+ * @author EgorKnestyapin
+ * @version 1.0.0
+ */
 @Tags(
         @Tag(name = "User controller", description = "Controller for some operations with users")
 )

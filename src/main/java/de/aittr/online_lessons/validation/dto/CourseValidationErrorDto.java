@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Schema(name = "CourseValidationError", description = "Incorrect course fields")
 public class CourseValidationErrorDto {

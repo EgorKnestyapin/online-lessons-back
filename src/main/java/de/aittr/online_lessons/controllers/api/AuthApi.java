@@ -1,5 +1,6 @@
 package de.aittr.online_lessons.controllers.api;
 
+import de.aittr.online_lessons.controllers.AuthController;
 import de.aittr.online_lessons.security.sec_dto.AuthInfo;
 import de.aittr.online_lessons.security.sec_dto.RefreshRequestDto;
 import de.aittr.online_lessons.security.sec_dto.TokenResponseDto;
@@ -19,6 +20,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * API for authorization controller {@link AuthController}
+ *
+ * @author EgorKnestyapin
+ * @version 1.0.0
+ */
 @Tags(
         @Tag(
                 name = "Authorization controller",

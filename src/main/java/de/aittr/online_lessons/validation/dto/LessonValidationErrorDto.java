@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Schema(name = "LessonValidationError", description = "Incorrect lesson fields")
 public class LessonValidationErrorDto {

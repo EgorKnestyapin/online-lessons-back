@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Schema(name = "UserValidationError", description = "Incorrect user fields")
 public class UserValidationErrorDto {

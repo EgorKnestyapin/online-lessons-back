@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.security.auth.login.LoginException;
 
+/**
+ * Service containing tools for handling exceptions.
+ *
+ * @author EgorKnestyapin
+ * @version 1.0.0
+ */
 @ControllerAdvice
 public class CommonAdvice {
     @ExceptionHandler(UserAlreadyExistsException.class)
@@ -126,5 +132,11 @@ public class CommonAdvice {
     public ResponseEntity<Response> handleException(LessonValidationException e) {
         ValidationResponse response = new ValidationResponse(e.getMessage(), e.getCause().getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(LessonDuplicateException.class)
+    public ResponseEntity<Response> handleException(LessonDuplicateException e) {
+        Response response = new Response(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
     }
 }
