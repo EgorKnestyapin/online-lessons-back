@@ -69,7 +69,7 @@ public class User implements UserDetails {
     /**
      * User enrollments
      */
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
     @JsonIgnore
     private Set<Enrollment> enrollments = new HashSet<>();
@@ -77,7 +77,7 @@ public class User implements UserDetails {
     /**
      * Courses created by the user
      */
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Course> createdCourses = new HashSet<>();
 
@@ -96,7 +96,7 @@ public class User implements UserDetails {
     /**
      * User-owned cart
      */
-    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
     @JsonIgnore
     private Cart cart;
@@ -104,7 +104,7 @@ public class User implements UserDetails {
     /**
      * User token
      */
-    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
     private Token token;
 
