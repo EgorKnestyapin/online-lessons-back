@@ -115,8 +115,10 @@ public class UserService implements UserDetailsService {
         } catch (Exception e) {
             throw new UserValidationException("Incorrect values of user fields.", e);
         }
+        System.out.println("Creating cart for user:" + user.getUsername());
         Cart cart = new Cart(0, new ArrayList<>(), user);
         cartRepository.save(cart);
+        System.out.println("Cart saved for user:" + user.getUsername());
 
         return mappingService.mapEntityToDto(user);
     }

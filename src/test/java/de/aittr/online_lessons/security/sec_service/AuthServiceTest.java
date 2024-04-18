@@ -1,9 +1,11 @@
 package de.aittr.online_lessons.security.sec_service;
 
 import de.aittr.online_lessons.domain.dto.UserDto;
+import de.aittr.online_lessons.domain.jpa.Cart;
 import de.aittr.online_lessons.domain.jpa.User;
 import de.aittr.online_lessons.exception_handling.exceptions.RefreshTokenValidationException;
 import de.aittr.online_lessons.exception_handling.exceptions.UserNotAuthenticated;
+import de.aittr.online_lessons.repositories.jpa.CartRepository;
 import de.aittr.online_lessons.security.sec_dto.TokenResponseDto;
 import de.aittr.online_lessons.security.sec_dto.UserLoginDto;
 import de.aittr.online_lessons.services.UserService;
@@ -16,8 +18,11 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,13 +42,22 @@ class AuthServiceTest {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    private CartRepository cartRepository;
+
     @BeforeEach
     void setUp() {
+        UserDto userDto = new UserDto(0, "michael123", "michael123@gmail.com", "Qwerty123$",
+                null);
+        userService.register(userDto);
     }
 
     @Test
+    @Transactional
     void loginPositiveTest() throws AuthException {
-        UserLoginDto userLoginDto = new UserLoginDto("user123@example.com", "Testtest1!");
+        UserLoginDto userLoginDto = new UserLoginDto("michael123@gmail.com", "Qwerty123$");
+        User user = (User) userService.loadUserByUsername("michael123");
+        System.out.println(user);
         TokenResponseDto login = authService.login(userLoginDto);
 
         Assert.assertTrue(tokenService.validateRefreshToken(login.getRefreshToken()));
@@ -115,5 +129,6 @@ class AuthServiceTest {
     }
 
     @Test
-    void getAuthInfo() {}
+    void getAuthInfo() {
+    }
 }
