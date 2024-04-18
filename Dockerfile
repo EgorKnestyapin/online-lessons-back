@@ -10,7 +10,7 @@ COPY src src
 # run maven to build
 RUN mvn clean package
 # create a folder called dependency and copy into it everything that is inside our jar and has the jar extension
-RUN mkdir -p target/dependency && (cd target/dependency; war -xf ../*.war)
+RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
 # move on to the next step
 # we take linux, which no longer has maven and other garbage, but only JRE (Virtual machine)
