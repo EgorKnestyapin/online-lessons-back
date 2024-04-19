@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/online_lessons
     username: root
-    password: rootroot
+    password: 221198stepa
   jpa:
     hibernate:
       ddl-auto: update
